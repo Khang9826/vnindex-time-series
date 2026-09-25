@@ -1,0 +1,1693 @@
+{
+  "alpha": 0.05,
+  "note": "Intraday batteries use REGULAR bars only (returns over the timeframe's ordinary interval); bars spanning the overnight gap or lunch break are excluded because they cover a different amount of real time. At H4 every bar is a session bar, so all bars are used.",
+  "series": [
+    {
+      "key": "VNINDEX_1D",
+      "symbol": "VNINDEX",
+      "symbol_label": "VN-Index (HOSE composite)",
+      "asset_class": "equity index",
+      "timeframe": "1D",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 6179,
+      "n_returns_used": 6178,
+      "n_trading_days": 6179,
+      "first_date": "2000-07-28",
+      "last_date": "2025-12-11",
+      "close_first": 100.0,
+      "close_last": 1698.9,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.04584924046292933,
+      "median_pct": 0.0671917221375285,
+      "sd_pct": 1.4384006387535044,
+      "min_pct": -7.65566909237292,
+      "max_pct": 6.656119161068062,
+      "skewness": -0.4192322911236486,
+      "excess_kurtosis": 3.581166192963539,
+      "jarque_bera": {
+        "stat": 3475.0577816844116,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9375511811188277,
+        "p": 1.2845416659306839e-41,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 116,
+          "expected_if_normal": 16.68,
+          "ratio": 6.95
+        },
+        "gt_4_sigma": {
+          "observed": 36,
+          "expected_if_normal": 0.39,
+          "ratio": 91.99
+        }
+      },
+      "level_adf": {
+        "stat": -0.7383734698419889,
+        "p": 0.8365580447975407,
+        "lags": 33,
+        "crit_5pct": -2.862010462176699,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 10.120787508616788,
+        "p": 0.01,
+        "lags": 45,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -17.50975245009796,
+        "p": 4.341298735482719e-30,
+        "lags": 13,
+        "crit_5pct": -2.862009011671878,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.09045183288893226,
+        "p": 0.1,
+        "lags": 26,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.024936306041911317,
+      "acf1_return": 0.23660011834841563,
+      "acf1_abs_return": 0.45963577850516907,
+      "acf1_sq_return": 0.5089345242879613,
+      "n_significant_acf_return": 17,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 40,
+      "ljung_box_return_Q10": 483.46054979515964,
+      "ljung_box_return_p10": 1.5073167355312496e-97,
+      "ljung_box_sq_Q10": 9573.503397566743,
+      "ljung_box_sq_p10": 0.0
+    },
+    {
+      "key": "VN30_1D",
+      "symbol": "VN30",
+      "symbol_label": "VN30 (30 large-cap HOSE stocks)",
+      "asset_class": "equity index",
+      "timeframe": "1D",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 3310,
+      "n_returns_used": 3309,
+      "n_trading_days": 3310,
+      "first_date": "2012-09-10",
+      "last_date": "2025-12-11",
+      "close_first": 455.58999634,
+      "close_last": 1924.29,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.04353940989113453,
+      "median_pct": 0.1157613401902754,
+      "sd_pct": 1.193944513888414,
+      "min_pct": -7.052218943087868,
+      "max_pct": 6.67004684700558,
+      "skewness": -0.8115455717706582,
+      "excess_kurtosis": 4.751969435016381,
+      "jarque_bera": {
+        "stat": 3464.50788773497,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9285249146107285,
+        "p": 3.989632422717038e-37,
+        "n": 3309,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 70,
+          "expected_if_normal": 8.93,
+          "ratio": 7.84
+        },
+        "gt_4_sigma": {
+          "observed": 21,
+          "expected_if_normal": 0.21,
+          "ratio": 100.19
+        }
+      },
+      "level_adf": {
+        "stat": 0.27233691541117044,
+        "p": 0.9760391097348228,
+        "lags": 9,
+        "crit_5pct": -2.862416238396082,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 7.017859173081477,
+        "p": 0.01,
+        "lags": 37,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -18.820514951067747,
+        "p": 2.0222013906618123e-30,
+        "lags": 8,
+        "crit_5pct": -2.862416238396082,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.05983478389294065,
+        "p": 0.1,
+        "lags": 5,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.034072789308925384,
+      "acf1_return": 0.041117250094387915,
+      "acf1_abs_return": 0.19504051836955372,
+      "acf1_sq_return": 0.18104343625601182,
+      "n_significant_acf_return": 5,
+      "n_significant_acf_abs": 37,
+      "n_significant_acf_sq": 27,
+      "ljung_box_return_Q10": 22.80562224483797,
+      "ljung_box_return_p10": 0.011487249513175314,
+      "ljung_box_sq_Q10": 809.5692288801189,
+      "ljung_box_sq_p10": 1.8082668906248602e-167
+    },
+    {
+      "key": "VN100_1D",
+      "symbol": "VN100",
+      "symbol_label": "VN100 (VN30 + VNMidcap)",
+      "asset_class": "equity index",
+      "timeframe": "1D",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 2963,
+      "n_returns_used": 2962,
+      "n_trading_days": 2963,
+      "first_date": "2014-01-27",
+      "last_date": "2025-12-11",
+      "close_first": 559.89,
+      "close_last": 1827.05,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.03992969572616911,
+      "median_pct": 0.1224103393005134,
+      "sd_pct": 1.191068783359711,
+      "min_pct": -7.012807196803318,
+      "max_pct": 6.618016574401656,
+      "skewness": -0.9646076181486658,
+      "excess_kurtosis": 5.2195603210474815,
+      "jarque_bera": {
+        "stat": 3807.2753516962025,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9152148657154617,
+        "p": 7.063355699048475e-38,
+        "n": 2962,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 67,
+          "expected_if_normal": 8.0,
+          "ratio": 8.38
+        },
+        "gt_4_sigma": {
+          "observed": 23,
+          "expected_if_normal": 0.19,
+          "ratio": 122.59
+        }
+      },
+      "level_adf": {
+        "stat": 0.0683179084669963,
+        "p": 0.9638302452566074,
+        "lags": 8,
+        "crit_5pct": -2.8625189227824275,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 7.080725565891826,
+        "p": 0.01,
+        "lags": 32,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -23.420987394552363,
+        "p": 0.0,
+        "lags": 4,
+        "crit_5pct": -2.8625179291294662,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.07095437590641174,
+        "p": 0.1,
+        "lags": 7,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.03601335186415672,
+      "acf1_return": 0.04641394685362248,
+      "acf1_abs_return": 0.23356945799288703,
+      "acf1_sq_return": 0.20040318093996723,
+      "n_significant_acf_return": 5,
+      "n_significant_acf_abs": 36,
+      "n_significant_acf_sq": 26,
+      "ljung_box_return_Q10": 21.64467748341326,
+      "ljung_box_return_p10": 0.017020690879282176,
+      "ljung_box_sq_Q10": 752.4151262169796,
+      "ljung_box_sq_p10": 3.477442804712348e-155
+    },
+    {
+      "key": "VNINDEX_M30",
+      "symbol": "VNINDEX",
+      "symbol_label": "VN-Index (HOSE composite)",
+      "asset_class": "equity index",
+      "timeframe": "M30",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 22212,
+      "n_returns_used": 17747,
+      "n_trading_days": 2233,
+      "first_date": "2017-01-03",
+      "last_date": "2025-12-11",
+      "close_first": 667.37,
+      "close_last": 1698.9,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": -0.0008295656339015321,
+      "median_pct": 0.0023472525410219,
+      "sd_pct": 0.2990815193745877,
+      "min_pct": -3.342367408639241,
+      "max_pct": 2.973312262961427,
+      "skewness": -0.2543707939610155,
+      "excess_kurtosis": 10.846278561662093,
+      "jarque_bera": {
+        "stat": 87128.10369959948,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9015310115468693,
+        "p": 5.963769467138851e-49,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 313,
+          "expected_if_normal": 47.91,
+          "ratio": 6.53
+        },
+        "gt_4_sigma": {
+          "observed": 136,
+          "expected_if_normal": 1.12,
+          "ratio": 120.98
+        }
+      },
+      "level_adf": {
+        "stat": -0.9751273122048012,
+        "p": 0.7622276138322486,
+        "lags": 42,
+        "crit_5pct": -2.861670384368663,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 13.669997672495189,
+        "p": 0.01,
+        "lags": 90,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -20.835167242592032,
+        "p": 0.0,
+        "lags": 39,
+        "crit_5pct": -2.8617032427425415,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.23830950114920652,
+        "p": 0.1,
+        "lags": 15,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.014712741233584325,
+      "acf1_return": 0.053245786940598186,
+      "acf1_abs_return": 0.18718080142545418,
+      "acf1_sq_return": 0.1489687035907658,
+      "n_significant_acf_return": 13,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 40,
+      "ljung_box_return_Q10": 109.49295198173478,
+      "ljung_box_return_p10": 6.751870647153011e-19,
+      "ljung_box_sq_Q10": 1671.0736622971972,
+      "ljung_box_sq_p10": 0.0
+    },
+    {
+      "key": "VN30_M30",
+      "symbol": "VN30",
+      "symbol_label": "VN30 (30 large-cap HOSE stocks)",
+      "asset_class": "equity index",
+      "timeframe": "M30",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 22028,
+      "n_returns_used": 17563,
+      "n_trading_days": 2233,
+      "first_date": "2017-01-03",
+      "last_date": "2025-12-11",
+      "close_first": 630.0,
+      "close_last": 1924.29,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.00048622989981933604,
+      "median_pct": 0.0018939393940011,
+      "sd_pct": 0.3215800178093243,
+      "min_pct": -3.2334752597322782,
+      "max_pct": 3.887725654173469,
+      "skewness": 0.04713905705831424,
+      "excess_kurtosis": 10.731730164976648,
+      "jarque_bera": {
+        "stat": 84233.63242495654,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.8988888088818974,
+        "p": 2.138660486258384e-49,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 298,
+          "expected_if_normal": 47.42,
+          "ratio": 6.28
+        },
+        "gt_4_sigma": {
+          "observed": 130,
+          "expected_if_normal": 1.11,
+          "ratio": 116.86
+        }
+      },
+      "level_adf": {
+        "stat": -0.17607708702697408,
+        "p": 0.9413137370356078,
+        "lags": 43,
+        "crit_5pct": -2.861671481653815,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 13.734263533038094,
+        "p": 0.01,
+        "lags": 90,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -46.886834175486925,
+        "p": 0.0,
+        "lags": 8,
+        "crit_5pct": -2.861704665678964,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.07919976493360457,
+        "p": 0.1,
+        "lags": 17,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.014789609960171821,
+      "acf1_return": 0.04063216446443372,
+      "acf1_abs_return": 0.18896045913618106,
+      "acf1_sq_return": 0.15833950159770277,
+      "n_significant_acf_return": 8,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 40,
+      "ljung_box_return_Q10": 94.53492019101223,
+      "ljung_box_return_p10": 6.722921227555778e-16,
+      "ljung_box_sq_Q10": 1890.9329438681052,
+      "ljung_box_sq_p10": 0.0
+    },
+    {
+      "key": "VN100_M30",
+      "symbol": "VN100",
+      "symbol_label": "VN100 (VN30 + VNMidcap)",
+      "asset_class": "equity index",
+      "timeframe": "M30",
+      "family": "HOSE_DLY",
+      "role": "primary",
+      "n_bars": 22179,
+      "n_returns_used": 17714,
+      "n_trading_days": 2233,
+      "first_date": "2017-01-03",
+      "last_date": "2025-12-11",
+      "close_first": 615.0,
+      "close_last": 1827.05,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": -0.0009888288964375793,
+      "median_pct": 0.0021920863410920498,
+      "sd_pct": 0.31528492015605036,
+      "min_pct": -3.5022685945463623,
+      "max_pct": 3.3400143676304914,
+      "skewness": -0.12690448970129917,
+      "excess_kurtosis": 11.33396488501784,
+      "jarque_bera": {
+        "stat": 94801.63064516263,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.8962827269223091,
+        "p": 7.94589078898664e-50,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 304,
+          "expected_if_normal": 47.82,
+          "ratio": 6.36
+        },
+        "gt_4_sigma": {
+          "observed": 133,
+          "expected_if_normal": 1.12,
+          "ratio": 118.53
+        }
+      },
+      "level_adf": {
+        "stat": -0.39963574002729424,
+        "p": 0.9101595779736147,
+        "lags": 42,
+        "crit_5pct": -2.8616705787564984,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 14.66678964576175,
+        "p": 0.01,
+        "lags": 90,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -47.19111381485412,
+        "p": 0.0,
+        "lags": 8,
+        "crit_5pct": -2.8617032611843674,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.20466433746861645,
+        "p": 0.1,
+        "lags": 16,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.014726439284505465,
+      "acf1_return": 0.05498536491019594,
+      "acf1_abs_return": 0.18947979260861234,
+      "acf1_sq_return": 0.15011272202147968,
+      "n_significant_acf_return": 10,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 40,
+      "ljung_box_return_Q10": 125.91417422822167,
+      "ljung_box_return_p10": 3.1774445915570354e-22,
+      "ljung_box_sq_Q10": 1679.7353877071203,
+      "ljung_box_sq_p10": 0.0
+    },
+    {
+      "key": "VNINDEX_H1",
+      "symbol": "VNINDEX",
+      "symbol_label": "VN-Index (HOSE composite)",
+      "asset_class": "equity index",
+      "timeframe": "H1",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 15924,
+      "n_returns_used": 9546,
+      "n_trading_days": 3193,
+      "first_date": "2012-02-24",
+      "last_date": "2024-12-09",
+      "close_first": 425.72,
+      "close_last": 1273.84,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": -0.003221094292567786,
+      "median_pct": 0.0046631189088826505,
+      "sd_pct": 0.40726650372603956,
+      "min_pct": -4.166516451735318,
+      "max_pct": 3.0777249127544235,
+      "skewness": -0.5609246836255906,
+      "excess_kurtosis": 7.915334636638963,
+      "jarque_bera": {
+        "stat": 25390.42057045311,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9103442243706965,
+        "p": 2.166967764722202e-47,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 155,
+          "expected_if_normal": 25.77,
+          "ratio": 6.01
+        },
+        "gt_4_sigma": {
+          "observed": 65,
+          "expected_if_normal": 0.6,
+          "ratio": 107.5
+        }
+      },
+      "level_adf": {
+        "stat": -1.2133406248114738,
+        "p": 0.6678307453457313,
+        "lags": 35,
+        "crit_5pct": -2.8617219339532385,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 18.164709657251812,
+        "p": 0.01,
+        "lags": 75,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -21.503355240639053,
+        "p": 0.0,
+        "lags": 20,
+        "crit_5pct": -2.86184349028407,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.6745167934232912,
+        "p": 0.01586210968879171,
+        "lags": 7,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "return_verdict": "AMBIGUOUS",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.02006066642248104,
+      "acf1_return": 0.006457349432949793,
+      "acf1_abs_return": 0.1382545454324652,
+      "acf1_sq_return": 0.08926140433919427,
+      "n_significant_acf_return": 7,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 32,
+      "ljung_box_return_Q10": 48.5544022059451,
+      "ljung_box_return_p10": 4.915096212476031e-07,
+      "ljung_box_sq_Q10": 649.3539204629715,
+      "ljung_box_sq_p10": 4.629662578219194e-133
+    },
+    {
+      "key": "VN30_H1",
+      "symbol": "VN30",
+      "symbol_label": "VN30 (30 large-cap HOSE stocks)",
+      "asset_class": "equity index",
+      "timeframe": "H1",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 15252,
+      "n_returns_used": 9146,
+      "n_trading_days": 3054,
+      "first_date": "2012-09-10",
+      "last_date": "2024-12-09",
+      "close_first": 458.16,
+      "close_last": 1336.18,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": -0.001788525091930987,
+      "median_pct": 0.0,
+      "sd_pct": 0.4216132777112109,
+      "min_pct": -4.485304141156362,
+      "max_pct": 3.817319740037945,
+      "skewness": -0.37684654914519294,
+      "excess_kurtosis": 8.201403114985576,
+      "jarque_bera": {
+        "stat": 25817.10570533257,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.91310578786795,
+        "p": 7.090318073949026e-47,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 134,
+          "expected_if_normal": 24.69,
+          "ratio": 5.43
+        },
+        "gt_4_sigma": {
+          "observed": 59,
+          "expected_if_normal": 0.58,
+          "ratio": 101.84
+        }
+      },
+      "level_adf": {
+        "stat": -1.2285115680773697,
+        "p": 0.6612121009382318,
+        "lags": 41,
+        "crit_5pct": -2.8617300446116087,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 16.07054672368669,
+        "p": 0.01,
+        "lags": 74,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -58.24716958601344,
+        "p": 0.0,
+        "lags": 2,
+        "crit_5pct": -2.8618561723247833,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.48923557493338293,
+        "p": 0.04409108672671556,
+        "lags": 5,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "return_verdict": "AMBIGUOUS",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.02049464843504942,
+      "acf1_return": 0.013186887648946084,
+      "acf1_abs_return": 0.14405743845095306,
+      "acf1_sq_return": 0.1049059263145369,
+      "n_significant_acf_return": 6,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 35,
+      "ljung_box_return_Q10": 49.318024548828056,
+      "ljung_box_return_p10": 3.561460371228669e-07,
+      "ljung_box_sq_Q10": 800.0366423419582,
+      "ljung_box_sq_p10": 2.0263400525749717e-165
+    },
+    {
+      "key": "VN100_H1",
+      "symbol": "VN100",
+      "symbol_label": "VN100 (VN30 + VNMidcap)",
+      "asset_class": "equity index",
+      "timeframe": "H1",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 13543,
+      "n_returns_used": 8126,
+      "n_trading_days": 2709,
+      "first_date": "2014-01-27",
+      "last_date": "2024-12-09",
+      "close_first": 558.48,
+      "close_last": 1324.48,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": -0.005025103281606798,
+      "median_pct": 0.00094429538028735,
+      "sd_pct": 0.4218622831754154,
+      "min_pct": -4.321028419611169,
+      "max_pct": 3.653105301034941,
+      "skewness": -0.4971348176537242,
+      "excess_kurtosis": 8.8280480822615,
+      "jarque_bera": {
+        "stat": 26685.022879674492,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9079577379494159,
+        "p": 7.967591067781774e-48,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 129,
+          "expected_if_normal": 21.94,
+          "ratio": 5.88
+        },
+        "gt_4_sigma": {
+          "observed": 59,
+          "expected_if_normal": 0.51,
+          "ratio": 114.63
+        }
+      },
+      "level_adf": {
+        "stat": -1.0405707087370883,
+        "p": 0.7381810789603936,
+        "lags": 41,
+        "crit_5pct": -2.8617541036831398,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 14.473462946030809,
+        "p": 0.01,
+        "lags": 71,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -55.116322795527395,
+        "p": 0.0,
+        "lags": 2,
+        "crit_5pct": -2.8618958810590693,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.8724893453639171,
+        "p": 0.01,
+        "lags": 4,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "return_verdict": "AMBIGUOUS",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.021742909707983656,
+      "acf1_return": 0.016271184875920122,
+      "acf1_abs_return": 0.15468954730447984,
+      "acf1_sq_return": 0.09818284911347662,
+      "n_significant_acf_return": 7,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 32,
+      "ljung_box_return_Q10": 52.00948619845499,
+      "ljung_box_return_p10": 1.1365101724569959e-07,
+      "ljung_box_sq_Q10": 710.3664043913658,
+      "ljung_box_sq_p10": 3.73592657560948e-146
+    },
+    {
+      "key": "VNINDEX_H4",
+      "symbol": "VNINDEX",
+      "symbol_label": "VN-Index (HOSE composite)",
+      "asset_class": "equity index",
+      "timeframe": "H4",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 6378,
+      "n_returns_used": 6377,
+      "n_trading_days": 3193,
+      "first_date": "2012-02-24",
+      "last_date": "2024-12-09",
+      "close_first": 423.43,
+      "close_last": 1273.84,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.017271491741791413,
+      "median_pct": 0.0628462767728726,
+      "sd_pct": 0.7992837519743989,
+      "min_pct": -6.680326735823301,
+      "max_pct": 4.111476947763702,
+      "skewness": -1.172816994463797,
+      "excess_kurtosis": 8.358907843037969,
+      "jarque_bera": {
+        "stat": 19993.366059158972,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9009339208609726,
+        "p": 4.720854205823112e-49,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 119,
+          "expected_if_normal": 17.22,
+          "ratio": 6.91
+        },
+        "gt_4_sigma": {
+          "observed": 47,
+          "expected_if_normal": 0.4,
+          "ratio": 116.36
+        }
+      },
+      "level_adf": {
+        "stat": -1.1235281513924935,
+        "p": 0.7055985395920364,
+        "lags": 25,
+        "crit_5pct": -2.861995127133829,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 10.68926620297596,
+        "p": 0.01,
+        "lags": 51,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -16.677166296328853,
+        "p": 1.5272884787940133e-29,
+        "lags": 23,
+        "crit_5pct": -2.861995055477546,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.06210718323119897,
+        "p": 0.1,
+        "lags": 10,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.024544142450895187,
+      "acf1_return": 0.08550009294218819,
+      "acf1_abs_return": 0.15814524260277035,
+      "acf1_sq_return": 0.07558674971810428,
+      "n_significant_acf_return": 13,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 33,
+      "ljung_box_return_Q10": 129.57557526320204,
+      "ljung_box_return_p10": 5.701711861069374e-23,
+      "ljung_box_sq_Q10": 992.4248617285801,
+      "ljung_box_sq_p10": 8.010260914728041e-207
+    },
+    {
+      "key": "VN30_H4",
+      "symbol": "VN30",
+      "symbol_label": "VN30 (30 large-cap HOSE stocks)",
+      "asset_class": "equity index",
+      "timeframe": "H4",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 6106,
+      "n_returns_used": 6105,
+      "n_trading_days": 3054,
+      "first_date": "2012-09-10",
+      "last_date": "2024-12-09",
+      "close_first": 455.1,
+      "close_last": 1336.18,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.01764214415294972,
+      "median_pct": 0.0548649820878021,
+      "sd_pct": 0.8198605037356258,
+      "min_pct": -6.930734031905635,
+      "max_pct": 4.390235952229955,
+      "skewness": -1.0952025192277801,
+      "excess_kurtosis": 8.09301806241676,
+      "jarque_bera": {
+        "stat": 17849.328762123947,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9083088299148434,
+        "p": 9.218683549599969e-48,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 115,
+          "expected_if_normal": 16.48,
+          "ratio": 6.98
+        },
+        "gt_4_sigma": {
+          "observed": 45,
+          "expected_if_normal": 0.39,
+          "ratio": 116.37
+        }
+      },
+      "level_adf": {
+        "stat": -1.0991890514641436,
+        "p": 0.7153951936976959,
+        "lags": 29,
+        "crit_5pct": -2.8620158061100396,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 10.535968591290272,
+        "p": 0.01,
+        "lags": 45,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -15.695581375301987,
+        "p": 1.4164760742946317e-28,
+        "lags": 24,
+        "crit_5pct": -2.862015493004067,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.05775227701710225,
+        "p": 0.1,
+        "lags": 14,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.025084949855535076,
+      "acf1_return": 0.0723379687856292,
+      "acf1_abs_return": 0.16317134126935962,
+      "acf1_sq_return": 0.09079414048480741,
+      "n_significant_acf_return": 14,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 36,
+      "ljung_box_return_Q10": 96.1071629551369,
+      "ljung_box_return_p10": 3.2672169456890034e-16,
+      "ljung_box_sq_Q10": 1025.032062895884,
+      "ljung_box_sq_p10": 7.570600798167428e-214
+    },
+    {
+      "key": "VN100_H4",
+      "symbol": "VN100",
+      "symbol_label": "VN100 (VN30 + VNMidcap)",
+      "asset_class": "equity index",
+      "timeframe": "H4",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 5417,
+      "n_returns_used": 5416,
+      "n_trading_days": 2709,
+      "first_date": "2014-01-27",
+      "last_date": "2024-12-09",
+      "close_first": 558.08,
+      "close_last": 1324.48,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.01595777118315735,
+      "median_pct": 0.0664633915912838,
+      "sd_pct": 0.8223629446116839,
+      "min_pct": -6.845088545283307,
+      "max_pct": 4.216143692876537,
+      "skewness": -1.2983790829450346,
+      "excess_kurtosis": 8.767389205779072,
+      "jarque_bera": {
+        "stat": 18830.82381537193,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.9001600896301654,
+        "p": 3.493190273461154e-49,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 100,
+          "expected_if_normal": 14.62,
+          "ratio": 6.84
+        },
+        "gt_4_sigma": {
+          "observed": 41,
+          "expected_if_normal": 0.34,
+          "ratio": 119.51
+        }
+      },
+      "level_adf": {
+        "stat": -0.9038826769872281,
+        "p": 0.7866911073519997,
+        "lags": 29,
+        "crit_5pct": -2.8620766785494647,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 9.512244583400276,
+        "p": 0.01,
+        "lags": 43,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -13.845578583163999,
+        "p": 7.15985609270578e-26,
+        "lags": 28,
+        "crit_5pct": -2.8620766785494647,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.05100280180177272,
+        "p": 0.1,
+        "lags": 13,
+        "crit_5pct": 0.463,
+        "reject_H0": false
+      },
+      "return_verdict": "STATIONARY",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.026632794834733558,
+      "acf1_return": 0.08052932271246432,
+      "acf1_abs_return": 0.18270576349589415,
+      "acf1_sq_return": 0.09023425683011073,
+      "n_significant_acf_return": 14,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 36,
+      "ljung_box_return_Q10": 101.1192654960961,
+      "ljung_box_return_p10": 3.252845605228909e-17,
+      "ljung_box_sq_Q10": 872.9933372299428,
+      "ljung_box_sq_p10": 4.1267377095578653e-181
+    },
+    {
+      "key": "USDVND_1D",
+      "symbol": "USDVND",
+      "symbol_label": "USD/VND exchange rate",
+      "asset_class": "foreign exchange",
+      "timeframe": "1D",
+      "family": "HOSE",
+      "role": "primary",
+      "n_bars": 6515,
+      "n_returns_used": 6514,
+      "n_trading_days": 6515,
+      "first_date": "1997-08-20",
+      "last_date": "2024-12-09",
+      "close_first": 11692.0,
+      "close_last": 25370.0,
+      "ohlc_inconsistent_bars": 0,
+      "mean_pct": 0.01189227089902042,
+      "median_pct": 0.0,
+      "sd_pct": 0.3804702418946284,
+      "min_pct": -5.520835455496702,
+      "max_pct": 6.613980250454499,
+      "skewness": 2.298807364010335,
+      "excess_kurtosis": 107.48610683635536,
+      "jarque_bera": {
+        "stat": 3136618.084976961,
+        "p": 0.0,
+        "reject_normal": true
+      },
+      "shapiro_wilk": {
+        "stat": 0.4271309595121363,
+        "p": 4.056348702984939e-83,
+        "n": 5000,
+        "reject_normal": true
+      },
+      "tails": {
+        "gt_3_sigma": {
+          "observed": 67,
+          "expected_if_normal": 17.59,
+          "ratio": 3.81
+        },
+        "gt_4_sigma": {
+          "observed": 54,
+          "expected_if_normal": 0.41,
+          "ratio": 130.87
+        }
+      },
+      "level_adf": {
+        "stat": -1.2767680768128324,
+        "p": 0.6397328026530723,
+        "lags": 24,
+        "crit_5pct": -2.8619854473557638,
+        "reject_H0": false
+      },
+      "level_kpss": {
+        "stat": 12.357137858069795,
+        "p": 0.01,
+        "lags": 51,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "level_verdict": "NON-STATIONARY",
+      "return_adf": {
+        "stat": -14.755358105535505,
+        "p": 2.4487115761186847e-27,
+        "lags": 29,
+        "crit_5pct": -2.8619858596459524,
+        "reject_H0": true
+      },
+      "return_kpss": {
+        "stat": 0.47796500173782264,
+        "p": 0.046629504113103015,
+        "lags": 16,
+        "crit_5pct": 0.463,
+        "reject_H0": true
+      },
+      "return_verdict": "AMBIGUOUS",
+      "acf_lags_tested": 40,
+      "white_noise_band_95": 0.02428466932576168,
+      "acf1_return": -0.3616857655964767,
+      "acf1_abs_return": 0.3910009132322669,
+      "acf1_sq_return": 0.3307305638089771,
+      "n_significant_acf_return": 12,
+      "n_significant_acf_abs": 40,
+      "n_significant_acf_sq": 13,
+      "ljung_box_return_Q10": 892.9666061342987,
+      "ljung_box_return_p10": 2.0781379180575243e-185,
+      "ljung_box_sq_Q10": 733.9565874303871,
+      "ljung_box_sq_p10": 3.209585416219482e-151
+    }
+  ],
+  "cross_family_checks": [
+    {
+      "primary": "VNINDEX_1D",
+      "crosscheck": "VNINDEX_1D__HOSE",
+      "n_common_bars": 5893,
+      "n_only_in_primary": 286,
+      "n_only_in_crosscheck": 1,
+      "close_correlation": 0.9999978733780052,
+      "median_abs_rel_diff": 3.903332410983156e-10,
+      "max_abs_rel_diff": 0.040081739255601365,
+      "pct_bars_differing_gt_0.1pct": 1.901
+    },
+    {
+      "primary": "VN30_1D",
+      "crosscheck": "VN30_1D__HOSE",
+      "n_common_bars": 3034,
+      "n_only_in_primary": 276,
+      "n_only_in_crosscheck": 1,
+      "close_correlation": 0.9999941244555511,
+      "median_abs_rel_diff": 4.969724275136676e-09,
+      "max_abs_rel_diff": 0.03989685272689409,
+      "pct_bars_differing_gt_0.1pct": 2.802
+    },
+    {
+      "primary": "VN100_1D",
+      "crosscheck": "VN100_1D__HOSE",
+      "n_common_bars": 2711,
+      "n_only_in_primary": 252,
+      "n_only_in_crosscheck": 0,
+      "close_correlation": 0.9999999999999976,
+      "median_abs_rel_diff": 4.889886384470566e-09,
+      "max_abs_rel_diff": 7.66172033471129e-08,
+      "pct_bars_differing_gt_0.1pct": 0.0
+    },
+    {
+      "primary": "VNINDEX_M30",
+      "crosscheck": "VNINDEX_M30__HOSE",
+      "n_common_bars": 19662,
+      "n_only_in_primary": 2550,
+      "n_only_in_crosscheck": 2502,
+      "close_correlation": 0.999999791092387,
+      "median_abs_rel_diff": 0.0,
+      "max_abs_rel_diff": 0.0093827614754853,
+      "pct_bars_differing_gt_0.1pct": 0.137
+    },
+    {
+      "primary": "VN30_M30",
+      "crosscheck": "VN30_M30__HOSE",
+      "n_common_bars": 19479,
+      "n_only_in_primary": 2549,
+      "n_only_in_crosscheck": 2498,
+      "close_correlation": 0.9999999470974831,
+      "median_abs_rel_diff": 0.0,
+      "max_abs_rel_diff": 0.006095351059273121,
+      "pct_bars_differing_gt_0.1pct": 0.164
+    },
+    {
+      "primary": "VN100_M30",
+      "crosscheck": "VN100_M30__HOSE",
+      "n_common_bars": 19653,
+      "n_only_in_primary": 2526,
+      "n_only_in_crosscheck": 2505,
+      "close_correlation": 0.9999999934777032,
+      "median_abs_rel_diff": 0.0,
+      "max_abs_rel_diff": 0.0018947578366519699,
+      "pct_bars_differing_gt_0.1pct": 0.036
+    }
+  ],
+  "return_correlations": {
+    "1D": {
+      "timeframe": "1D",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100",
+        "USDVND"
+      ],
+      "n_overlapping_bars": 2700,
+      "overlap_start": "2014-02-06",
+      "overlap_end": "2024-12-09",
+      "pearson": {
+        "VNINDEX": {
+          "VNINDEX": 1.0,
+          "VN30": 0.9656,
+          "VN100": 0.9743,
+          "USDVND": -0.1015
+        },
+        "VN30": {
+          "VNINDEX": 0.9656,
+          "VN30": 1.0,
+          "VN100": 0.9893,
+          "USDVND": -0.101
+        },
+        "VN100": {
+          "VNINDEX": 0.9743,
+          "VN30": 0.9893,
+          "VN100": 1.0,
+          "USDVND": -0.102
+        },
+        "USDVND": {
+          "VNINDEX": -0.1015,
+          "VN30": -0.101,
+          "VN100": -0.102,
+          "USDVND": 1.0
+        }
+      }
+    },
+    "M30": {
+      "timeframe": "M30",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_overlapping_bars": 17471,
+      "overlap_start": "2017-01-03",
+      "overlap_end": "2025-12-11",
+      "pearson": {
+        "VNINDEX": {
+          "VNINDEX": 1.0,
+          "VN30": 0.9536,
+          "VN100": 0.9686
+        },
+        "VN30": {
+          "VNINDEX": 0.9536,
+          "VN30": 1.0,
+          "VN100": 0.9841
+        },
+        "VN100": {
+          "VNINDEX": 0.9686,
+          "VN30": 0.9841,
+          "VN100": 1.0
+        }
+      }
+    },
+    "H1": {
+      "timeframe": "H1",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_overlapping_bars": 8113,
+      "overlap_start": "2014-01-27",
+      "overlap_end": "2024-12-09",
+      "pearson": {
+        "VNINDEX": {
+          "VNINDEX": 1.0,
+          "VN30": 0.9522,
+          "VN100": 0.9641
+        },
+        "VN30": {
+          "VNINDEX": 0.9522,
+          "VN30": 1.0,
+          "VN100": 0.9851
+        },
+        "VN100": {
+          "VNINDEX": 0.9641,
+          "VN30": 0.9851,
+          "VN100": 1.0
+        }
+      }
+    },
+    "H4": {
+      "timeframe": "H4",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_overlapping_bars": 5410,
+      "overlap_start": "2014-01-27",
+      "overlap_end": "2024-12-09",
+      "pearson": {
+        "VNINDEX": {
+          "VNINDEX": 1.0,
+          "VN30": 0.9643,
+          "VN100": 0.9723
+        },
+        "VN30": {
+          "VNINDEX": 0.9643,
+          "VN30": 1.0,
+          "VN100": 0.9876
+        },
+        "VN100": {
+          "VNINDEX": 0.9723,
+          "VN30": 0.9876,
+          "VN100": 1.0
+        }
+      }
+    }
+  },
+  "matched_period_comparison": {
+    "1D": {
+      "timeframe": "1D",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_common": 2962,
+      "start": "2014-02-06",
+      "end": "2025-12-11",
+      "stats": {
+        "VNINDEX": {
+          "n": 2962,
+          "mean_pct": 0.0377,
+          "sd_pct": 1.154,
+          "skewness": -0.98,
+          "excess_kurtosis": 5.283,
+          "acf1": 0.0579,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.036,
+          "ljung_box_Q10": 26.12,
+          "ljung_box_p10": 0.003581846929740497
+        },
+        "VN30": {
+          "n": 2962,
+          "mean_pct": 0.038,
+          "sd_pct": 1.2131,
+          "skewness": -0.835,
+          "excess_kurtosis": 4.825,
+          "acf1": 0.0345,
+          "acf1_significant": false,
+          "white_noise_band_95": 0.036,
+          "ljung_box_Q10": 19.83,
+          "ljung_box_p10": 0.030945816586374974
+        },
+        "VN100": {
+          "n": 2962,
+          "mean_pct": 0.0399,
+          "sd_pct": 1.1911,
+          "skewness": -0.965,
+          "excess_kurtosis": 5.22,
+          "acf1": 0.0464,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.036,
+          "ljung_box_Q10": 21.64,
+          "ljung_box_p10": 0.017020690879282176
+        }
+      }
+    },
+    "M30": {
+      "timeframe": "M30",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_common": 17471,
+      "start": "2017-01-03",
+      "end": "2025-12-11",
+      "stats": {
+        "VNINDEX": {
+          "n": 17471,
+          "mean_pct": -0.0009,
+          "sd_pct": 0.3014,
+          "skewness": -0.252,
+          "excess_kurtosis": 10.632,
+          "acf1": 0.0527,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0148,
+          "ljung_box_Q10": 109.83,
+          "ljung_box_p10": 5.766091217092807e-19
+        },
+        "VN30": {
+          "n": 17471,
+          "mean_pct": 0.0007,
+          "sd_pct": 0.3222,
+          "skewness": 0.048,
+          "excess_kurtosis": 10.695,
+          "acf1": 0.038,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0148,
+          "ljung_box_Q10": 88.21,
+          "ljung_box_p10": 1.2111430377391741e-14
+        },
+        "VN100": {
+          "n": 17471,
+          "mean_pct": -0.0008,
+          "sd_pct": 0.3172,
+          "skewness": -0.125,
+          "excess_kurtosis": 11.175,
+          "acf1": 0.052,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0148,
+          "ljung_box_Q10": 116.89,
+          "ljung_box_p10": 2.163134009828605e-20
+        }
+      }
+    },
+    "H1": {
+      "timeframe": "H1",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_common": 8113,
+      "start": "2014-01-27",
+      "end": "2024-12-09",
+      "stats": {
+        "VNINDEX": {
+          "n": 8113,
+          "mean_pct": -0.0056,
+          "sd_pct": 0.4117,
+          "skewness": -0.607,
+          "excess_kurtosis": 8.256,
+          "acf1": 0.0081,
+          "acf1_significant": false,
+          "white_noise_band_95": 0.0218,
+          "ljung_box_Q10": 43.09,
+          "ljung_box_p10": 4.7954199941358024e-06
+        },
+        "VN30": {
+          "n": 8113,
+          "mean_pct": -0.0043,
+          "sd_pct": 0.4296,
+          "skewness": -0.379,
+          "excess_kurtosis": 8.275,
+          "acf1": 0.014,
+          "acf1_significant": false,
+          "white_noise_band_95": 0.0218,
+          "ljung_box_Q10": 45.79,
+          "ljung_box_p10": 1.5627686967162107e-06
+        },
+        "VN100": {
+          "n": 8113,
+          "mean_pct": -0.0046,
+          "sd_pct": 0.4217,
+          "skewness": -0.495,
+          "excess_kurtosis": 8.851,
+          "acf1": 0.0152,
+          "acf1_significant": false,
+          "white_noise_band_95": 0.0218,
+          "ljung_box_Q10": 52.04,
+          "ljung_box_p10": 1.1212890996669815e-07
+        }
+      }
+    },
+    "H4": {
+      "timeframe": "H4",
+      "symbols": [
+        "VNINDEX",
+        "VN30",
+        "VN100"
+      ],
+      "n_common": 5410,
+      "start": "2014-01-27",
+      "end": "2024-12-09",
+      "stats": {
+        "VNINDEX": {
+          "n": 5410,
+          "mean_pct": 0.0157,
+          "sd_pct": 0.8025,
+          "skewness": -1.292,
+          "excess_kurtosis": 8.918,
+          "acf1": 0.076,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0266,
+          "ljung_box_Q10": 101.36,
+          "ljung_box_p10": 2.906851362896618e-17
+        },
+        "VN30": {
+          "n": 5410,
+          "mean_pct": 0.0145,
+          "sd_pct": 0.8348,
+          "skewness": -1.155,
+          "excess_kurtosis": 8.22,
+          "acf1": 0.0697,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0266,
+          "ljung_box_Q10": 85.19,
+          "ljung_box_p10": 4.7838131929266184e-14
+        },
+        "VN100": {
+          "n": 5410,
+          "mean_pct": 0.0169,
+          "sd_pct": 0.8205,
+          "skewness": -1.284,
+          "excess_kurtosis": 8.742,
+          "acf1": 0.0795,
+          "acf1_significant": true,
+          "white_noise_band_95": 0.0266,
+          "ljung_box_Q10": 100.15,
+          "ljung_box_p10": 5.075716534170398e-17
+        }
+      }
+    }
+  },
+  "frequency_scaling": {
+    "VNINDEX": {
+      "symbol": "VNINDEX",
+      "note": "sd_scaled_to_daily = sd x sqrt(bars per day). Under an i.i.d. random walk these would all equal the daily sd. Samples cover different periods, so treat this as indicative.",
+      "rows": [
+        {
+          "timeframe": "M30",
+          "bars_per_day": 10,
+          "n_returns": 17747,
+          "period": "2017-01-03..2025-12-11",
+          "sd_pct": 0.2991,
+          "sd_scaled_to_daily_pct": 0.9458,
+          "excess_kurtosis": 10.846,
+          "acf1": 0.0532
+        },
+        {
+          "timeframe": "H1",
+          "bars_per_day": 5,
+          "n_returns": 9546,
+          "period": "2012-02-24..2024-12-09",
+          "sd_pct": 0.4073,
+          "sd_scaled_to_daily_pct": 0.9107,
+          "excess_kurtosis": 7.915,
+          "acf1": 0.0065
+        },
+        {
+          "timeframe": "H4",
+          "bars_per_day": 2,
+          "n_returns": 6377,
+          "period": "2012-02-24..2024-12-09",
+          "sd_pct": 0.7993,
+          "sd_scaled_to_daily_pct": 1.1304,
+          "excess_kurtosis": 8.359,
+          "acf1": 0.0855
+        },
+        {
+          "timeframe": "1D",
+          "bars_per_day": 1,
+          "n_returns": 6178,
+          "period": "2000-07-28..2025-12-11",
+          "sd_pct": 1.4384,
+          "sd_scaled_to_daily_pct": 1.4384,
+          "excess_kurtosis": 3.581,
+          "acf1": 0.2366
+        }
+      ]
+    },
+    "VN30": {
+      "symbol": "VN30",
+      "note": "sd_scaled_to_daily = sd x sqrt(bars per day). Under an i.i.d. random walk these would all equal the daily sd. Samples cover different periods, so treat this as indicative.",
+      "rows": [
+        {
+          "timeframe": "M30",
+          "bars_per_day": 10,
+          "n_returns": 17563,
+          "period": "2017-01-03..2025-12-11",
+          "sd_pct": 0.3216,
+          "sd_scaled_to_daily_pct": 1.0169,
+          "excess_kurtosis": 10.732,
+          "acf1": 0.0406
+        },
+        {
+          "timeframe": "H1",
+          "bars_per_day": 5,
+          "n_returns": 9146,
+          "period": "2012-09-10..2024-12-09",
+          "sd_pct": 0.4216,
+          "sd_scaled_to_daily_pct": 0.9428,
+          "excess_kurtosis": 8.201,
+          "acf1": 0.0132
+        },
+        {
+          "timeframe": "H4",
+          "bars_per_day": 2,
+          "n_returns": 6105,
+          "period": "2012-09-10..2024-12-09",
+          "sd_pct": 0.8199,
+          "sd_scaled_to_daily_pct": 1.1595,
+          "excess_kurtosis": 8.093,
+          "acf1": 0.0723
+        },
+        {
+          "timeframe": "1D",
+          "bars_per_day": 1,
+          "n_returns": 3309,
+          "period": "2012-09-10..2025-12-11",
+          "sd_pct": 1.1939,
+          "sd_scaled_to_daily_pct": 1.1939,
+          "excess_kurtosis": 4.752,
+          "acf1": 0.0411
+        }
+      ]
+    },
+    "VN100": {
+      "symbol": "VN100",
+      "note": "sd_scaled_to_daily = sd x sqrt(bars per day). Under an i.i.d. random walk these would all equal the daily sd. Samples cover different periods, so treat this as indicative.",
+      "rows": [
+        {
+          "timeframe": "M30",
+          "bars_per_day": 10,
+          "n_returns": 17714,
+          "period": "2017-01-03..2025-12-11",
+          "sd_pct": 0.3153,
+          "sd_scaled_to_daily_pct": 0.997,
+          "excess_kurtosis": 11.334,
+          "acf1": 0.055
+        },
+        {
+          "timeframe": "H1",
+          "bars_per_day": 5,
+          "n_returns": 8126,
+          "period": "2014-01-27..2024-12-09",
+          "sd_pct": 0.4219,
+          "sd_scaled_to_daily_pct": 0.9433,
+          "excess_kurtosis": 8.828,
+          "acf1": 0.0163
+        },
+        {
+          "timeframe": "H4",
+          "bars_per_day": 2,
+          "n_returns": 5416,
+          "period": "2014-01-27..2024-12-09",
+          "sd_pct": 0.8224,
+          "sd_scaled_to_daily_pct": 1.163,
+          "excess_kurtosis": 8.767,
+          "acf1": 0.0805
+        },
+        {
+          "timeframe": "1D",
+          "bars_per_day": 1,
+          "n_returns": 2962,
+          "period": "2014-01-27..2025-12-11",
+          "sd_pct": 1.1911,
+          "sd_scaled_to_daily_pct": 1.1911,
+          "excess_kurtosis": 5.22,
+          "acf1": 0.0464
+        }
+      ]
+    }
+  }
+}

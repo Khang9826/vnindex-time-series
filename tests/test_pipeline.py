@@ -136,21 +136,24 @@ def meta() -> dict:
     return json.loads(config.RAW_META.read_text(encoding="utf-8"))
 
 
-def test_vendored_source_file_is_present():
+def test_every_catalogued_source_file_is_vendored():
     """The analysis must not depend on a live network fetch."""
-    assert config.KAGGLE_CSV.exists(), (
-        "the primary source file is vendored into data/raw/ on purpose - "
-        "without it the reported numbers are not reproducible"
+    import catalog
+    missing = [s.filename for s in catalog.SERIES if not s.path.exists()]
+    assert not missing, (
+        f"vendored source files missing: {missing}. They are committed on "
+        "purpose - without them the reported numbers are not reproducible"
     )
 
 
 def test_partial_final_bar_was_dropped(meta, raw):
-    assert meta["n_rows_after_dropping_partial_bar"] == meta["n_rows_in_source_file"] - 1
-    dropped_date = pd.Timestamp(meta["dropped_final_partial_bar"]["date"])
-    assert dropped_date not in set(raw["Date"])
+    """The headline series drops exactly one partial daily bar."""
+    assert meta["n_rows_after_trim"] == meta["n_rows_in_source_file"] - 1
+    trim = meta["trim"]
+    assert trim["applied"] is True
+    assert pd.Timestamp(trim["dropped_date"]) not in set(raw["Date"])
     # the drop must be justified by the volume anomaly that motivated it
-    d = meta["dropped_final_partial_bar"]
-    assert d["volume"] < 0.6 * d["median_volume_last_21_sessions"]
+    assert trim["ratio"] < trim["threshold"]
 
 
 def test_indicator_columns_are_not_carried_into_the_analysis(raw, feat):

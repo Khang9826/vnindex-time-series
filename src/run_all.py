@@ -1,16 +1,19 @@
 """
 Reproducible end-to-end pipeline runner.
 
-    python src/run_all.py            # run every implemented stage
-    python src/run_all.py --skip-download   # reuse data/raw/vnindex_raw.csv
+    python src/run_all.py                    # everything
+    python src/run_all.py --headline-only    # only the VN-Index daily deep dive
+    python src/run_all.py --refresh-crosscheck   # re-pull the external API vintage
 
-Each stage writes its artefacts to results/ and figures/ and prints a short
-status line.  Stages that are not implemented yet are listed explicitly so the
-execution status of the project is never ambiguous.
+Stage 1-3 cover all 19 catalogued series; stages 4-7 are the VN-Index daily
+deep dive; stage 8 is the comparative analysis across the whole dataset.
+Each stage prints a short status line, and stages that are not implemented yet
+are listed explicitly so the execution status is never ambiguous.
 """
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import time
 from pathlib import Path
@@ -19,110 +22,135 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import config  # noqa: E402
 
-
-STAGES_NOT_IMPLEMENTED: list[str] = []
+STAGES_NOT_IMPLEMENTED: list[str] = [
+    "ARCH-LM test and GARCH estimation",
+    "Chronological train/validation/test split",
+    "Forecasting models (naive, moving average, exponential smoothing, ARIMA)",
+    "Forecast evaluation against the naive baseline (MAE/RMSE/MAPE/MASE)",
+    "Residual diagnostics of fitted models",
+]
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description="VN-Index time-series pipeline")
+    ap.add_argument("--headline-only", action="store_true",
+                    help="skip the multi-series stages")
     ap.add_argument("--refresh-crosscheck", action="store_true",
-                    help="re-download the secondary feed instead of using the stored vintage")
+                    help="re-download the external API vintage")
     args = ap.parse_args()
 
     t0 = time.time()
-    print("=" * 72)
+    print("=" * 78)
     print("VN-INDEX TIME-SERIES PIPELINE")
-    print("=" * 72)
+    print("=" * 78)
 
-    # 1 - build canonical raw from the vendored primary source -------------
+    import catalog
     import data_loader
-    raw, notes = data_loader.build_raw()
-    data_loader.save_raw(raw, notes)
-    print(f"[1/7] raw build            OK  {len(raw):,} sessions "
-          f"{raw['Date'].min().date()} -> {raw['Date'].max().date()} "
-          f"(dropped 1 partial bar: {notes['dropped_final_partial_bar']['date']})")
-
-    # 2 - data quality -----------------------------------------------------
-    import json
-
     import data_quality
-    raw = data_loader.load_raw()
-    report = data_quality.build_report(raw)
+    import preprocessing
+
+    keys = [catalog.HEADLINE_KEY] if args.headline_only else [s.key for s in catalog.SERIES]
+
+    # 1 - ingest every catalogued series ----------------------------------
+    metas = data_loader.build_all(keys)
+    trimmed = sum(1 for m in metas.values() if m["trim"].get("applied"))
+    total_bars = sum(m["n_rows"] for m in metas.values())
+    print(f"[1/8] ingest               OK  {len(metas)} series, {total_bars:,} bars, "
+          f"{trimmed} incomplete tails trimmed")
+
+    # 2 - preprocessing ----------------------------------------------------
+    feats = preprocessing.build_all(keys)
+    print(f"[2/8] preprocessing        OK  {sum(len(f) for f in feats.values()):,} bars, "
+          f"{sum(int(f['LogReturn'].notna().sum()) for f in feats.values()):,} returns")
+
+    # 3 - data quality across every series ---------------------------------
+    q = {k: data_quality.series_quality(k) for k in keys}
+    (config.RESULTS_DIR / "series_quality.json").write_text(
+        json.dumps(q, indent=2), encoding="utf-8")
+    defects = sum(r["n_duplicate_timestamps"] + r["ohlcv_missing_rows"]
+                  + r["non_positive_price"] + r["high_lt_low"]
+                  + r["ohlc_inconsistent_bars"] + r["weekend_bars"]
+                  for r in q.values())
+    print(f"[3/8] data quality         OK  {len(q)} series checked, {defects} defects found")
+
+    # --- headline deep dive ------------------------------------------------
+    headline = preprocessing.load_features(catalog.HEADLINE_KEY)
+    raw_head = data_loader.load_raw(catalog.HEADLINE_KEY)
+
+    report = data_quality.build_report(raw_head)
     (config.RESULTS_DIR / "data_quality_report.json").write_text(
         json.dumps(report, indent=2), encoding="utf-8")
-    print(f"[2/7] data quality         OK  {report['shape']['n_rows']:,} rows, "
-          f"{report['duplicates']['n_duplicated_dates']} duplicate dates, "
-          f"{report['missing']['rows_with_any_missing']} rows with missing values, "
-          f"{report['gap_anomalies']['n_unexplained']} unexplained gaps")
 
-    # 2b - independent corroboration of the primary source -----------------
     import data_crosscheck
     try:
         cc = data_crosscheck.compare(
-            raw, data_crosscheck.load_crosscheck(refresh=args.refresh_crosscheck)
-        )
+            raw_head, data_crosscheck.load_crosscheck(refresh=args.refresh_crosscheck))
         (config.RESULTS_DIR / "source_crosscheck.json").write_text(
             json.dumps(cc, indent=2), encoding="utf-8")
-        print(f"[2b/7] source cross-check  OK  corr={cc['close_correlation']:.8f}, "
-              f"median |rel diff|={cc['median_abs_rel_diff']:.2e}, "
-              f"{cc['n_sessions_only_in_secondary']} sessions missing from primary")
-    except Exception as exc:  # network down, stored vintage absent, ...
-        print(f"[2b/7] source cross-check  SKIPPED ({type(exc).__name__}: {exc})")
+        print(f"[4/8] external crosscheck  OK  corr={cc['close_correlation']:.8f}, "
+              f"median |rel diff|={cc['median_abs_rel_diff']:.2e}")
+    except Exception as exc:
+        print(f"[4/8] external crosscheck  SKIPPED ({type(exc).__name__}: {exc})")
 
-    # 3 - preprocessing ----------------------------------------------------
-    import preprocessing
-    features = preprocessing.run()
-    print(f"[3/7] preprocessing        OK  {len(features):,} sessions, "
-          f"{int(features['LogReturn'].notna().sum()):,} returns")
-
-    # 4 - descriptive / EDA ------------------------------------------------
+    # 5 - descriptive / EDA -------------------------------------------------
     import analysis
-    desc = analysis.descriptive_table(features)
+    import pandas as pd
+    desc = analysis.descriptive_table(headline)
     desc.to_csv(config.RESULTS_DIR / "descriptive_statistics.csv")
-    norm = (
-        analysis.normality_tests(features["LogReturn_pct"], "Daily log return (%)")
-        + analysis.normality_tests(features["SimpleReturn_pct"], "Daily simple return (%)")
-    )
-    import pandas as _pd
-    _pd.DataFrame(norm).to_csv(config.RESULTS_DIR / "normality_tests.csv", index=False)
+    norm = (analysis.normality_tests(headline["LogReturn_pct"], "Daily log return (%)")
+            + analysis.normality_tests(headline["SimpleReturn_pct"], "Daily simple return (%)"))
+    pd.DataFrame(norm).to_csv(config.RESULTS_DIR / "normality_tests.csv", index=False)
     payload = {
         "normality_tests": norm,
-        "tail_comparison_log_returns": analysis.tail_comparison(features["LogReturn_pct"]),
-        "extreme_moves": analysis.extreme_moves(features),
-        "day_of_week_effect": analysis.day_of_week_effect(features),
-        "month_effect": analysis.month_effect(features),
-        "yearly_summary": analysis.yearly_summary(features),
+        "tail_comparison_log_returns": analysis.tail_comparison(headline["LogReturn_pct"]),
+        "extreme_moves": analysis.extreme_moves(headline),
+        "day_of_week_effect": analysis.day_of_week_effect(headline),
+        "month_effect": analysis.month_effect(headline),
+        "yearly_summary": analysis.yearly_summary(headline),
     }
     (config.RESULTS_DIR / "eda_results.json").write_text(
         json.dumps(payload, indent=2), encoding="utf-8")
-    print("[4/7] descriptive / EDA    OK  descriptive_statistics.csv, eda_results.json")
+    print("[5/8] descriptive / EDA    OK  descriptive_statistics.csv, eda_results.json")
 
-    # 5 - stationarity -----------------------------------------------------
+    # 6 - stationarity -------------------------------------------------------
     import stationarity
-    suite = stationarity.run_suite(features)
+    suite = stationarity.run_suite(headline)
     (config.RESULTS_DIR / "stationarity_tests.json").write_text(
         json.dumps(suite, indent=2), encoding="utf-8")
     stationarity.to_table(suite).to_csv(
         config.RESULTS_DIR / "stationarity_tests.csv", index=False)
-    verdicts = {r["series"] + f" [{r['regression']}]": r["verdict"].split(" (")[0]
-                for r in suite["tests"]}
-    print("[5/7] stationarity         OK")
-    for k, v in verdicts.items():
-        print(f"        {k:<45} {v}")
+    print("[6/8] stationarity         OK")
+    for r in suite["tests"]:
+        print(f"        [{r['regression']}] {r['series']:<38} "
+              f"{r['verdict'].split(' (')[0]}")
 
-    # 6 - autocorrelation + figures ---------------------------------------
+    # 7 - autocorrelation + headline figures ---------------------------------
     import autocorrelation
     import plots
-    figs = plots.build_all(features)
-    ac = autocorrelation.run(features)
+    figs = plots.build_all(headline)
+    ac = autocorrelation.run(headline)
     (config.RESULTS_DIR / "autocorrelation.json").write_text(
         json.dumps(ac, indent=2), encoding="utf-8")
-    import pandas as pd
     pd.DataFrame(ac["ljung_box"]).to_csv(
         config.RESULTS_DIR / "ljung_box_tests.csv", index=False)
-    print(f"[6/7] ACF/PACF + figures   OK  {len(figs) + len(ac['figures'])} figures written")
+    print(f"[7/8] ACF/PACF + figures   OK  {len(figs) + len(ac['figures'])} figures")
 
-    print("-" * 72)
+    # 8 - comparative analysis across the whole dataset ----------------------
+    if args.headline_only:
+        print("[8/8] multi-series         SKIPPED (--headline-only)")
+    else:
+        import multiseries
+        import plots_multiseries
+        mres = multiseries.run()
+        mfigs = plots_multiseries.build_all()
+        n_nonstat = sum(1 for s in mres["series"] if s["level_verdict"] == "NON-STATIONARY")
+        n_nonnorm = sum(1 for s in mres["series"] if s["jarque_bera"]["reject_normal"])
+        print(f"[8/8] multi-series         OK  {len(mres['series'])} series analysed, "
+              f"{len(mfigs)} comparative figures")
+        print(f"        level non-stationary : {n_nonstat}/{len(mres['series'])}")
+        print(f"        returns non-normal   : {n_nonnorm}/{len(mres['series'])}")
+
+    print("-" * 78)
     print(f"Finished in {time.time() - t0:.1f}s")
     if STAGES_NOT_IMPLEMENTED:
         print("\nNOT IMPLEMENTED YET:")

@@ -1,13 +1,13 @@
 series,test,H0,H1,lag,statistic,p_value,df,reject_H0_at_5pct
-Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 5,At least one non-zero autocorrelation up to lag 5,5,435.918131923031,5.3517024850211836e-92,5,True
-Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 10,At least one non-zero autocorrelation up to lag 10,10,483.4605497951595,1.5073167355313356e-97,10,True
-Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,543.1692478226339,2.5838046787761658e-102,20,True
-Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 40,At least one non-zero autocorrelation up to lag 40,40,580.03659386904,5.983527133820806e-97,40,True
+Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 5,At least one non-zero autocorrelation up to lag 5,5,435.9181319230312,5.3517024850207264e-92,5,True
+Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 10,At least one non-zero autocorrelation up to lag 10,10,483.46054979515964,1.5073167355312496e-97,10,True
+Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,543.1692478226341,2.5838046787758704e-102,20,True
+Daily log return (%),Ljung-Box Q,No autocorrelation up to lag 40,At least one non-zero autocorrelation up to lag 40,40,580.0365938690402,5.983527133820122e-97,40,True
 Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 5,At least one non-zero autocorrelation up to lag 5,5,4866.538462048303,0.0,5,True
-Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 10,At least one non-zero autocorrelation up to lag 10,10,8166.21936599142,0.0,10,True
-Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,13025.05760231832,0.0,20,True
+Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 10,At least one non-zero autocorrelation up to lag 10,10,8166.219365991417,0.0,10,True
+Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,13025.057602318318,0.0,20,True
 Absolute log return |r|,Ljung-Box Q,No autocorrelation up to lag 40,At least one non-zero autocorrelation up to lag 40,40,18426.340357135367,0.0,40,True
-Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 5,At least one non-zero autocorrelation up to lag 5,5,5843.898926102588,0.0,5,True
+Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 5,At least one non-zero autocorrelation up to lag 5,5,5843.898926102589,0.0,5,True
 Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 10,At least one non-zero autocorrelation up to lag 10,10,9573.503397566743,0.0,10,True
-Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,15065.133260346633,0.0,20,True
+Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 20,At least one non-zero autocorrelation up to lag 20,20,15065.13326034663,0.0,20,True
 Squared log return r^2,Ljung-Box Q,No autocorrelation up to lag 40,At least one non-zero autocorrelation up to lag 40,40,19078.537140502987,0.0,40,True

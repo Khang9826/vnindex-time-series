@@ -186,8 +186,8 @@
         "regression": "c",
         "H0": "The series contains a unit root (non-stationary)",
         "H1": "The series is stationary",
-        "statistic": -12.1070856268324,
-        "p_value": 1.9576558034083307e-22,
+        "statistic": -12.107085626832442,
+        "p_value": 1.957655803407922e-22,
         "lags_used": 32,
         "n_obs": 6145,
         "critical_values": {
@@ -205,7 +205,7 @@
         "regression": "c",
         "H0": "The series is stationary around a constant",
         "H1": "The series is non-stationary (unit root)",
-        "statistic": 0.10169955407159291,
+        "statistic": 0.10169955407159278,
         "p_value": 0.1,
         "lags_used": 18,
         "critical_values": {
@@ -230,7 +230,7 @@
         "regression": "c",
         "H0": "The series contains a unit root (non-stationary)",
         "H1": "The series is stationary",
-        "statistic": -17.509752450097963,
+        "statistic": -17.50975245009796,
         "p_value": 4.341298735482719e-30,
         "lags_used": 13,
         "n_obs": 6164,
@@ -249,7 +249,7 @@
         "regression": "c",
         "H0": "The series is stationary around a constant",
         "H1": "The series is non-stationary (unit root)",
-        "statistic": 0.09045183288893233,
+        "statistic": 0.09045183288893226,
         "p_value": 0.1,
         "lags_used": 26,
         "critical_values": {

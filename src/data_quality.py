@@ -200,6 +200,80 @@ def build_report(df: pd.DataFrame) -> dict:
     }
 
 
+def series_quality(key: str) -> dict:
+    """
+    Compact quality report for ANY catalogued series, daily or intraday.
+
+    The holiday-gap classifier only makes sense for HOSE-listed equity indices
+    on a daily grid, so it is applied there and skipped elsewhere rather than
+    producing a verdict it has no basis for. Intraday series are instead
+    checked for session completeness: how many trading days carry the full
+    complement of bars.
+    """
+    import catalog
+    from preprocessing import load_features
+
+    series = catalog.get(key)
+    df = load_features(key)
+    price_cols = ["Open", "High", "Low", "Close"]
+
+    rep = {
+        "key": key,
+        "symbol": series.symbol,
+        "timeframe": series.timeframe,
+        "family": series.family,
+        "role": series.role,
+        "n_bars": int(len(df)),
+        "n_trading_days": int(df["Date"].nunique()),
+        "first": str(df["Timestamp"].min()),
+        "last": str(df["Timestamp"].max()),
+        "n_duplicate_timestamps": int(df["Timestamp"].duplicated().sum()),
+        "monotonic": bool(df["Timestamp"].is_monotonic_increasing),
+        "ohlcv_missing_rows": int(df[price_cols].isna().any(axis=1).sum()),
+        "non_positive_price": int((df[price_cols] <= 0).any(axis=1).sum()),
+        "high_lt_low": int((df["High"] < df["Low"]).sum()),
+        "ohlc_inconsistent_bars": int(df["ohlc_inconsistent"].sum()),
+        "weekend_bars": int((df["Timestamp"].dt.dayofweek >= 5).sum()),
+        "has_volume": bool("Volume" in df.columns),
+        "stale_open_share": round(
+            float((df["Open"].sub(df["Close"].shift(1)).abs() < 1e-6).mean()), 4),
+    }
+    if "Volume" in df.columns:
+        rep["zero_volume_bars"] = int((df["Volume"] == 0).sum())
+        rep["negative_volume_bars"] = int((df["Volume"] < 0).sum())
+
+    if series.is_intraday:
+        per_day = df.groupby("Date").size()
+        rep["bars_per_day_expected"] = series.bars_per_day
+        rep["full_session_days"] = int((per_day == series.bars_per_day).sum())
+        rep["partial_session_days"] = int((per_day != series.bars_per_day).sum())
+        rep["pct_full_session_days"] = round(
+            100 * float((per_day == series.bars_per_day).mean()), 2)
+        rep["bars_per_day_distribution"] = {
+            str(k): int(v) for k, v in per_day.value_counts().sort_index().items()}
+        rep["gap_classification"] = "N/A (intraday)"
+    elif catalog.ASSET_CLASS[series.symbol] == "equity index":
+        ga = gap_anomalies(df[["Date"]].copy())
+        rep["gaps_examined"] = ga["n_gaps_examined"]
+        rep["gaps_holiday_consistent"] = ga["n_holiday_consistent"]
+        rep["gaps_unexplained"] = ga["n_unexplained"]
+        rep["unexplained_gap_details"] = ga["unexplained_gaps"]
+        rep["gap_classification"] = "applied (HOSE holiday calendar)"
+    else:
+        gaps = df["MissingBusinessDaysBefore"].dropna()
+        rep["gaps_ge_2_business_days"] = int((gaps >= 2).sum())
+        rep["gap_classification"] = (
+            "NOT APPLIED - this series does not follow the HOSE holiday "
+            "calendar, so classifying its gaps against that calendar would be "
+            "meaningless. Gap counts are reported without a verdict.")
+    return rep
+
+
+def all_series_quality() -> dict:
+    import catalog
+    return {s.key: series_quality(s.key) for s in catalog.SERIES}
+
+
 def _print_report(rep: dict) -> None:
     def show(title, d, indent=2):
         print(f"\n{title}")

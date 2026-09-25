@@ -307,14 +307,14 @@
           "lag": 2,
           "acf": 0.04529670448190596,
           "acf_significant": true,
-          "pacf": -0.011320279651672632,
+          "pacf": -0.011320279651672618,
           "pacf_significant": false
         },
         {
           "lag": 3,
-          "acf": 0.014267421809118792,
+          "acf": 0.014267421809118786,
           "acf_significant": false,
-          "pacf": 0.006472608410542153,
+          "pacf": 0.006472608410542141,
           "pacf_significant": false
         },
         {
@@ -328,54 +328,54 @@
           "lag": 5,
           "acf": 0.09178129447797523,
           "acf_significant": true,
-          "pacf": 0.06705557760084438,
+          "pacf": 0.06705557760084437,
           "pacf_significant": true
         },
         {
           "lag": 6,
           "acf": 0.06471962666598735,
           "acf_significant": true,
-          "pacf": 0.027895772053228796,
+          "pacf": 0.02789577205322881,
           "pacf_significant": true
         },
         {
           "lag": 7,
           "acf": 0.04170877121432218,
           "acf_significant": true,
-          "pacf": 0.019553057903712947,
+          "pacf": 0.01955305790371294,
           "pacf_significant": false
         },
         {
           "lag": 8,
-          "acf": 0.028756898479874622,
+          "acf": 0.028756898479874626,
           "acf_significant": true,
-          "pacf": 0.012130880166179392,
+          "pacf": 0.012130880166179399,
           "pacf_significant": false
         },
         {
           "lag": 9,
-          "acf": 0.014163557546290815,
+          "acf": 0.014163557546290808,
           "acf_significant": false,
-          "pacf": -0.0034535773911179503,
+          "pacf": -0.0034535773911179494,
           "pacf_significant": false
         },
         {
           "lag": 10,
-          "acf": 0.02699146812972512,
+          "acf": 0.02699146812972513,
           "acf_significant": true,
-          "pacf": 0.015518060641957697,
+          "pacf": 0.015518060641957699,
           "pacf_significant": false
         },
         {
           "lag": 11,
-          "acf": 0.03523632548788963,
+          "acf": 0.03523632548788964,
           "acf_significant": true,
           "pacf": 0.0182266154880374,
           "pacf_significant": false
         },
         {
           "lag": 12,
-          "acf": 0.003809999820634755,
+          "acf": 0.0038099998206347543,
           "acf_significant": false,
           "pacf": -0.01719223109740608,
           "pacf_significant": false
@@ -391,133 +391,133 @@
           "lag": 14,
           "acf": 0.0508968649066289,
           "acf_significant": true,
-          "pacf": 0.03367081944327697,
+          "pacf": 0.03367081944327698,
           "pacf_significant": true
         },
         {
           "lag": 15,
-          "acf": 0.037360564190213816,
+          "acf": 0.0373605641902138,
           "acf_significant": true,
-          "pacf": 0.012053747199374977,
+          "pacf": 0.012053747199374966,
           "pacf_significant": false
         },
         {
           "lag": 16,
           "acf": 0.028449345302876326,
           "acf_significant": true,
-          "pacf": 0.013156563456717188,
+          "pacf": 0.013156563456717205,
           "pacf_significant": false
         },
         {
           "lag": 17,
-          "acf": 0.020564466735010976,
+          "acf": 0.020564466735010972,
           "acf_significant": false,
-          "pacf": 0.007653532608739979,
+          "pacf": 0.007653532608739973,
           "pacf_significant": false
         },
         {
           "lag": 18,
-          "acf": 0.013272564831584182,
+          "acf": 0.013272564831584186,
           "acf_significant": false,
-          "pacf": -0.002385095540208019,
+          "pacf": -0.0023850955402080244,
           "pacf_significant": false
         },
         {
           "lag": 19,
           "acf": 0.021165003630387612,
           "acf_significant": false,
-          "pacf": 0.008890979666289859,
+          "pacf": 0.008890979666289872,
           "pacf_significant": false
         },
         {
           "lag": 20,
           "acf": 0.0355441849814646,
           "acf_significant": true,
-          "pacf": 0.02141043556880423,
+          "pacf": 0.02141043556880422,
           "pacf_significant": false
         },
         {
           "lag": 21,
-          "acf": 0.03821221655571,
+          "acf": 0.03821221655570999,
           "acf_significant": true,
-          "pacf": 0.017551278110367913,
+          "pacf": 0.017551278110367916,
           "pacf_significant": false
         },
         {
           "lag": 22,
-          "acf": 0.0346060228361902,
+          "acf": 0.034606022836190194,
           "acf_significant": true,
-          "pacf": 0.01703782541223352,
+          "pacf": 0.017037825412233507,
           "pacf_significant": false
         },
         {
           "lag": 23,
-          "acf": 0.014952693407517433,
+          "acf": 0.014952693407517438,
           "acf_significant": false,
-          "pacf": -0.0008027722878840641,
+          "pacf": -0.0008027722878840633,
           "pacf_significant": false
         },
         {
           "lag": 24,
-          "acf": 0.014860291611565334,
+          "acf": 0.014860291611565338,
           "acf_significant": false,
-          "pacf": 0.003926678851565132,
+          "pacf": 0.003926678851565146,
           "pacf_significant": false
         },
         {
           "lag": 25,
           "acf": 0.02594450698121704,
           "acf_significant": true,
-          "pacf": 0.014177907568267322,
+          "pacf": 0.014177907568267306,
           "pacf_significant": false
         },
         {
           "lag": 26,
-          "acf": 0.002846722502862441,
+          "acf": 0.002846722502862436,
           "acf_significant": false,
-          "pacf": -0.01667952106376394,
+          "pacf": -0.016679521063763945,
           "pacf_significant": false
         },
         {
           "lag": 27,
           "acf": 0.01575827349305427,
           "acf_significant": false,
-          "pacf": 0.009426235845111144,
+          "pacf": 0.00942623584511115,
           "pacf_significant": false
         },
         {
           "lag": 28,
-          "acf": -0.004334032207039087,
+          "acf": -0.004334032207039082,
           "acf_significant": false,
           "pacf": -0.018289257840493442,
           "pacf_significant": false
         },
         {
           "lag": 29,
-          "acf": -0.01657606628941855,
+          "acf": -0.016576066289418552,
           "acf_significant": false,
           "pacf": -0.020757255636176843,
           "pacf_significant": false
         },
         {
           "lag": 30,
-          "acf": 0.011494322852213353,
+          "acf": 0.011494322852213358,
           "acf_significant": false,
-          "pacf": 0.014955525793279292,
+          "pacf": 0.014955525793279302,
           "pacf_significant": false
         },
         {
           "lag": 31,
-          "acf": 0.004723383591420286,
+          "acf": 0.004723383591420284,
           "acf_significant": false,
           "pacf": -0.005993993717567197,
           "pacf_significant": false
         },
         {
           "lag": 32,
-          "acf": 0.008152968815719404,
+          "acf": 0.008152968815719402,
           "acf_significant": false,
-          "pacf": 0.004459640843647466,
+          "pacf": 0.004459640843647457,
           "pacf_significant": false
         },
         {
@@ -529,51 +529,51 @@
         },
         {
           "lag": 34,
-          "acf": 0.015749313515566844,
+          "acf": 0.01574931351556685,
           "acf_significant": false,
-          "pacf": 0.005337691632407758,
+          "pacf": 0.005337691632407752,
           "pacf_significant": false
         },
         {
           "lag": 35,
-          "acf": 0.0033972983398243275,
+          "acf": 0.003397298339824332,
           "acf_significant": false,
-          "pacf": -0.007333467104885097,
+          "pacf": -0.007333467104885091,
           "pacf_significant": false
         },
         {
           "lag": 36,
-          "acf": 0.005875559953748474,
+          "acf": 0.0058755599537484784,
           "acf_significant": false,
-          "pacf": 0.003041831775991154,
+          "pacf": 0.0030418317759911546,
           "pacf_significant": false
         },
         {
           "lag": 37,
-          "acf": -0.003426530414620543,
+          "acf": -0.0034265304146205485,
           "acf_significant": false,
-          "pacf": -0.010268822019443567,
+          "pacf": -0.010268822019443563,
           "pacf_significant": false
         },
         {
           "lag": 38,
-          "acf": 0.0010657710196830532,
+          "acf": 0.0010657710196830534,
           "acf_significant": false,
-          "pacf": -0.004510084271933697,
+          "pacf": -0.004510084271933704,
           "pacf_significant": false
         },
         {
           "lag": 39,
-          "acf": -0.002850782700354931,
+          "acf": -0.0028507827003549247,
           "acf_significant": false,
-          "pacf": -0.00587643895696741,
+          "pacf": -0.005876438956967411,
           "pacf_significant": false
         },
         {
           "lag": 40,
-          "acf": 0.023794949336608702,
+          "acf": 0.02379494933660871,
           "acf_significant": false,
-          "pacf": 0.024296972391224334,
+          "pacf": 0.024296972391224348,
           "pacf_significant": false
         }
       ]
@@ -589,26 +589,26 @@
           "lag": 1,
           "acf": 0.45963577850516907,
           "acf_significant": true,
-          "pacf": 0.4597101893483787,
+          "pacf": 0.45971018934837865,
           "pacf_significant": true
         },
         {
           "lag": 2,
           "acf": 0.4143103597538243,
           "acf_significant": true,
-          "pacf": 0.2575373223767807,
+          "pacf": 0.2575373223767806,
           "pacf_significant": true
         },
         {
           "lag": 3,
           "acf": 0.3771804963715351,
           "acf_significant": true,
-          "pacf": 0.1595881315148229,
+          "pacf": 0.15958813151482293,
           "pacf_significant": true
         },
         {
           "lag": 4,
-          "acf": 0.3610857287732802,
+          "acf": 0.36108572877328027,
           "acf_significant": true,
           "pacf": 0.12611975468867953,
           "pacf_significant": true
@@ -617,14 +617,14 @@
           "lag": 5,
           "acf": 0.3626977897797411,
           "acf_significant": true,
-          "pacf": 0.12234259948849323,
+          "pacf": 0.12234259948849326,
           "pacf_significant": true
         },
         {
           "lag": 6,
           "acf": 0.35492144205385506,
           "acf_significant": true,
-          "pacf": 0.09834031560465843,
+          "pacf": 0.0983403156046584,
           "pacf_significant": true
         },
         {
@@ -638,14 +638,14 @@
           "lag": 8,
           "acf": 0.2968113949200365,
           "acf_significant": true,
-          "pacf": 0.02945225454993439,
+          "pacf": 0.02945225454993446,
           "pacf_significant": true
         },
         {
           "lag": 9,
           "acf": 0.3279216000624577,
           "acf_significant": true,
-          "pacf": 0.09270255404918648,
+          "pacf": 0.09270255404918641,
           "pacf_significant": true
         },
         {
@@ -666,203 +666,203 @@
           "lag": 12,
           "acf": 0.2964685146123879,
           "acf_significant": true,
-          "pacf": 0.023132002932791777,
+          "pacf": 0.023132002932791784,
           "pacf_significant": false
         },
         {
           "lag": 13,
-          "acf": 0.2703720838339077,
+          "acf": 0.27037208383390776,
           "acf_significant": true,
-          "pacf": 0.0001964127693213265,
+          "pacf": 0.0001964127693212528,
           "pacf_significant": false
         },
         {
           "lag": 14,
           "acf": 0.29272273703889345,
           "acf_significant": true,
-          "pacf": 0.05066050800085102,
+          "pacf": 0.05066050800085109,
           "pacf_significant": true
         },
         {
           "lag": 15,
           "acf": 0.29739246893828614,
           "acf_significant": true,
-          "pacf": 0.04517532285016155,
+          "pacf": 0.04517532285016151,
           "pacf_significant": true
         },
         {
           "lag": 16,
           "acf": 0.26640274077791104,
           "acf_significant": true,
-          "pacf": -0.0047574188291587055,
+          "pacf": -0.004757418829158709,
           "pacf_significant": false
         },
         {
           "lag": 17,
           "acf": 0.26878889704588893,
           "acf_significant": true,
-          "pacf": 0.024420196046510835,
+          "pacf": 0.024420196046510884,
           "pacf_significant": false
         },
         {
           "lag": 18,
           "acf": 0.2650427127861272,
           "acf_significant": true,
-          "pacf": 0.02475709264172617,
+          "pacf": 0.024757092641726198,
           "pacf_significant": false
         },
         {
           "lag": 19,
           "acf": 0.24794549946307223,
           "acf_significant": true,
-          "pacf": -0.003821371243213158,
+          "pacf": -0.003821371243213176,
           "pacf_significant": false
         },
         {
           "lag": 20,
-          "acf": 0.2779455292900595,
+          "acf": 0.27794552929005945,
           "acf_significant": true,
-          "pacf": 0.04969222688811385,
+          "pacf": 0.049692226888113825,
           "pacf_significant": true
         },
         {
           "lag": 21,
           "acf": 0.2564813798539224,
           "acf_significant": true,
-          "pacf": 0.00853772142047869,
+          "pacf": 0.008537721420478718,
           "pacf_significant": false
         },
         {
           "lag": 22,
           "acf": 0.24338919457973607,
           "acf_significant": true,
-          "pacf": 0.004624189734779615,
+          "pacf": 0.004624189734779634,
           "pacf_significant": false
         },
         {
           "lag": 23,
           "acf": 0.22867969286164583,
           "acf_significant": true,
-          "pacf": -0.008008905515924336,
+          "pacf": -0.008008905515924286,
           "pacf_significant": false
         },
         {
           "lag": 24,
-          "acf": 0.2399944049194974,
+          "acf": 0.23999440491949733,
           "acf_significant": true,
-          "pacf": 0.017685187732059827,
+          "pacf": 0.017685187732059793,
           "pacf_significant": false
         },
         {
           "lag": 25,
           "acf": 0.24356466066454913,
           "acf_significant": true,
-          "pacf": 0.024283703066061077,
+          "pacf": 0.02428370306606111,
           "pacf_significant": false
         },
         {
           "lag": 26,
           "acf": 0.2136062472526139,
           "acf_significant": true,
-          "pacf": -0.024451474920278014,
+          "pacf": -0.02445147492027806,
           "pacf_significant": false
         },
         {
           "lag": 27,
           "acf": 0.22849918486190599,
           "acf_significant": true,
-          "pacf": 0.022155976239622465,
+          "pacf": 0.022155976239622503,
           "pacf_significant": false
         },
         {
           "lag": 28,
           "acf": 0.21302793552709695,
           "acf_significant": true,
-          "pacf": 0.0027462305499097997,
+          "pacf": 0.002746230549909762,
           "pacf_significant": false
         },
         {
           "lag": 29,
           "acf": 0.21821405683417855,
           "acf_significant": true,
-          "pacf": 0.010492117879477044,
+          "pacf": 0.01049211787947705,
           "pacf_significant": false
         },
         {
           "lag": 30,
-          "acf": 0.21715847656483156,
+          "acf": 0.21715847656483148,
           "acf_significant": true,
-          "pacf": 0.007569942250668712,
+          "pacf": 0.007569942250668797,
           "pacf_significant": false
         },
         {
           "lag": 31,
           "acf": 0.20420277285791835,
           "acf_significant": true,
-          "pacf": -0.004441988252776763,
+          "pacf": -0.004441988252776746,
           "pacf_significant": false
         },
         {
           "lag": 32,
-          "acf": 0.19636114315900816,
+          "acf": 0.19636114315900807,
           "acf_significant": true,
-          "pacf": -0.0037225448487726077,
+          "pacf": -0.0037225448487726745,
           "pacf_significant": false
         },
         {
           "lag": 33,
           "acf": 0.20054310761926966,
           "acf_significant": true,
-          "pacf": 0.014193831069447119,
+          "pacf": 0.014193831069447126,
           "pacf_significant": false
         },
         {
           "lag": 34,
           "acf": 0.188470247339713,
           "acf_significant": true,
-          "pacf": -0.0098271102215455,
+          "pacf": -0.009827110221545499,
           "pacf_significant": false
         },
         {
           "lag": 35,
           "acf": 0.18177682745229665,
           "acf_significant": true,
-          "pacf": -0.01096076720858782,
+          "pacf": -0.010960767208587822,
           "pacf_significant": false
         },
         {
           "lag": 36,
           "acf": 0.16799302497095128,
           "acf_significant": true,
-          "pacf": -0.016304214928727356,
+          "pacf": -0.016304214928727374,
           "pacf_significant": false
         },
         {
           "lag": 37,
-          "acf": 0.1851309668564779,
+          "acf": 0.18513096685647795,
           "acf_significant": true,
-          "pacf": 0.02448287522475583,
+          "pacf": 0.02448287522475593,
           "pacf_significant": false
         },
         {
           "lag": 38,
           "acf": 0.1639423323462771,
           "acf_significant": true,
-          "pacf": -0.014827467555179656,
+          "pacf": -0.014827467555179675,
           "pacf_significant": false
         },
         {
           "lag": 39,
           "acf": 0.17119296921973487,
           "acf_significant": true,
-          "pacf": 0.0030195276287086925,
+          "pacf": 0.0030195276287087523,
           "pacf_significant": false
         },
         {
           "lag": 40,
           "acf": 0.17301154213517586,
           "acf_significant": true,
-          "pacf": 0.01312283104925131,
+          "pacf": 0.01312283104925126,
           "pacf_significant": false
         }
       ]
@@ -878,26 +878,26 @@
           "lag": 1,
           "acf": 0.5089345242879613,
           "acf_significant": true,
-          "pacf": 0.5090169161487815,
+          "pacf": 0.5090169161487816,
           "pacf_significant": true
         },
         {
           "lag": 2,
           "acf": 0.4506154660016502,
           "acf_significant": true,
-          "pacf": 0.2586890397442701,
+          "pacf": 0.2586890397442702,
           "pacf_significant": true
         },
         {
           "lag": 3,
           "acf": 0.40127921978387865,
           "acf_significant": true,
-          "pacf": 0.14422664666653034,
+          "pacf": 0.14422664666653007,
           "pacf_significant": true
         },
         {
           "lag": 4,
-          "acf": 0.4009541416295043,
+          "acf": 0.40095414162950443,
           "acf_significant": true,
           "pacf": 0.14655853623157547,
           "pacf_significant": true
@@ -906,252 +906,252 @@
           "lag": 5,
           "acf": 0.4016666224703568,
           "acf_significant": true,
-          "pacf": 0.13120457657504803,
+          "pacf": 0.13120457657504805,
           "pacf_significant": true
         },
         {
           "lag": 6,
           "acf": 0.3756414506756987,
           "acf_significant": true,
-          "pacf": 0.07353076387101157,
+          "pacf": 0.07353076387101153,
           "pacf_significant": true
         },
         {
           "lag": 7,
-          "acf": 0.31734926907972133,
+          "acf": 0.31734926907972116,
           "acf_significant": true,
-          "pacf": -0.005911391765485968,
+          "pacf": -0.0059113917654858425,
           "pacf_significant": false
         },
         {
           "lag": 8,
           "acf": 0.30281215452596,
           "acf_significant": true,
-          "pacf": 0.02059117650489652,
+          "pacf": 0.0205911765048965,
           "pacf_significant": false
         },
         {
           "lag": 9,
           "acf": 0.36452255152115864,
           "acf_significant": true,
-          "pacf": 0.13845688409294193,
+          "pacf": 0.1384568840929419,
           "pacf_significant": true
         },
         {
           "lag": 10,
-          "acf": 0.369217746955278,
+          "acf": 0.3692177469552779,
           "acf_significant": true,
-          "pacf": 0.09376809705368812,
+          "pacf": 0.09376809705368809,
           "pacf_significant": true
         },
         {
           "lag": 11,
           "acf": 0.33935501018612185,
           "acf_significant": true,
-          "pacf": 0.02722322821590003,
+          "pacf": 0.027223228215899935,
           "pacf_significant": true
         },
         {
           "lag": 12,
           "acf": 0.32402754809342066,
           "acf_significant": true,
-          "pacf": 0.031143204424663895,
+          "pacf": 0.03114320442466392,
           "pacf_significant": true
         },
         {
           "lag": 13,
           "acf": 0.282916545279775,
           "acf_significant": true,
-          "pacf": -0.021646338880178088,
+          "pacf": -0.021646338880178025,
           "pacf_significant": false
         },
         {
           "lag": 14,
           "acf": 0.31840888809962,
           "acf_significant": true,
-          "pacf": 0.05587974659647893,
+          "pacf": 0.05587974659647894,
           "pacf_significant": true
         },
         {
           "lag": 15,
-          "acf": 0.3156717267282301,
+          "acf": 0.31567172672823,
           "acf_significant": true,
-          "pacf": 0.03110309073575717,
+          "pacf": 0.031103090735757195,
           "pacf_significant": true
         },
         {
           "lag": 16,
-          "acf": 0.28606377132922434,
+          "acf": 0.2860637713292244,
           "acf_significant": true,
-          "pacf": -0.0051783711894833094,
+          "pacf": -0.005178371189483356,
           "pacf_significant": false
         },
         {
           "lag": 17,
           "acf": 0.28211966494910196,
           "acf_significant": true,
-          "pacf": 0.029934875949576382,
+          "pacf": 0.029934875949576393,
           "pacf_significant": true
         },
         {
           "lag": 18,
           "acf": 0.26730775304681426,
           "acf_significant": true,
-          "pacf": 0.0047784968374491145,
+          "pacf": 0.004778496837449101,
           "pacf_significant": false
         },
         {
           "lag": 19,
           "acf": 0.25881152608464625,
           "acf_significant": true,
-          "pacf": -0.00978176620132045,
+          "pacf": -0.009781766201320458,
           "pacf_significant": false
         },
         {
           "lag": 20,
           "acf": 0.2921404876271223,
           "acf_significant": true,
-          "pacf": 0.05502020027526464,
+          "pacf": 0.05502020027526467,
           "pacf_significant": true
         },
         {
           "lag": 21,
           "acf": 0.2654796757150119,
           "acf_significant": true,
-          "pacf": -0.0020991554650930944,
+          "pacf": -0.002099155465093121,
           "pacf_significant": false
         },
         {
           "lag": 22,
-          "acf": 0.2492860994917665,
+          "acf": 0.24928609949176658,
           "acf_significant": true,
-          "pacf": 0.0019778155970743773,
+          "pacf": 0.001977815597074355,
           "pacf_significant": false
         },
         {
           "lag": 23,
           "acf": 0.22340623806421825,
           "acf_significant": true,
-          "pacf": -0.02747015983268516,
+          "pacf": -0.027470159832685057,
           "pacf_significant": true
         },
         {
           "lag": 24,
-          "acf": 0.2264330191252723,
+          "acf": 0.2264330191252724,
           "acf_significant": true,
-          "pacf": -0.006695649469292189,
+          "pacf": -0.006695649469292209,
           "pacf_significant": false
         },
         {
           "lag": 25,
           "acf": 0.22619305607456675,
           "acf_significant": true,
-          "pacf": 0.006754500133554904,
+          "pacf": 0.006754500133554932,
           "pacf_significant": false
         },
         {
           "lag": 26,
           "acf": 0.2070788531969673,
           "acf_significant": true,
-          "pacf": -0.025877454271131473,
+          "pacf": -0.025877454271131493,
           "pacf_significant": true
         },
         {
           "lag": 27,
           "acf": 0.19961398766876318,
           "acf_significant": true,
-          "pacf": -0.0013097252967057174,
+          "pacf": -0.0013097252967057451,
           "pacf_significant": false
         },
         {
           "lag": 28,
           "acf": 0.186437461632782,
           "acf_significant": true,
-          "pacf": -0.0021582565945315714,
+          "pacf": -0.0021582565945315766,
           "pacf_significant": false
         },
         {
           "lag": 29,
           "acf": 0.17853433122175866,
           "acf_significant": true,
-          "pacf": -0.02131783296679073,
+          "pacf": -0.021317832966790743,
           "pacf_significant": false
         },
         {
           "lag": 30,
           "acf": 0.17477551609227368,
           "acf_significant": true,
-          "pacf": -0.012822583191431574,
+          "pacf": -0.012822583191431505,
           "pacf_significant": false
         },
         {
           "lag": 31,
           "acf": 0.1832606324200498,
           "acf_significant": true,
-          "pacf": 0.014397819057770449,
+          "pacf": 0.01439781905777049,
           "pacf_significant": false
         },
         {
           "lag": 32,
           "acf": 0.1642945055035149,
           "acf_significant": true,
-          "pacf": -0.012588281695185617,
+          "pacf": -0.012588281695185596,
           "pacf_significant": false
         },
         {
           "lag": 33,
           "acf": 0.15295786503784511,
           "acf_significant": true,
-          "pacf": -0.0058003078386162695,
+          "pacf": -0.005800307838616304,
           "pacf_significant": false
         },
         {
           "lag": 34,
           "acf": 0.14631631488851013,
           "acf_significant": true,
-          "pacf": -0.014159113188566616,
+          "pacf": -0.01415911318856668,
           "pacf_significant": false
         },
         {
           "lag": 35,
-          "acf": 0.12483447629741704,
+          "acf": 0.12483447629741705,
           "acf_significant": true,
-          "pacf": -0.03463051892398034,
+          "pacf": -0.034630518923980357,
           "pacf_significant": true
         },
         {
           "lag": 36,
-          "acf": 0.11446560274880725,
+          "acf": 0.11446560274880724,
           "acf_significant": true,
-          "pacf": -0.026595863424584865,
+          "pacf": -0.026595863424584816,
           "pacf_significant": true
         },
         {
           "lag": 37,
-          "acf": 0.13543474149711246,
+          "acf": 0.13543474149711243,
           "acf_significant": true,
-          "pacf": 0.02716085242384317,
+          "pacf": 0.02716085242384315,
           "pacf_significant": true
         },
         {
           "lag": 38,
-          "acf": 0.10000260977622258,
+          "acf": 0.10000260977622256,
           "acf_significant": true,
-          "pacf": -0.031885186474917226,
+          "pacf": -0.031885186474917254,
           "pacf_significant": true
         },
         {
           "lag": 39,
           "acf": 0.09453483404281274,
           "acf_significant": true,
-          "pacf": -0.016480704064861393,
+          "pacf": -0.016480704064861358,
           "pacf_significant": false
         },
         {
           "lag": 40,
           "acf": 0.10152834684975381,
           "acf_significant": true,
-          "pacf": 0.008361289311999453,
+          "pacf": 0.008361289311999478,
           "pacf_significant": false
         }
       ]
@@ -1164,8 +1164,8 @@
       "H0": "No autocorrelation up to lag 5",
       "H1": "At least one non-zero autocorrelation up to lag 5",
       "lag": 5,
-      "statistic": 435.918131923031,
-      "p_value": 5.3517024850211836e-92,
+      "statistic": 435.9181319230312,
+      "p_value": 5.3517024850207264e-92,
       "df": 5,
       "reject_H0_at_5pct": true
     },
@@ -1175,8 +1175,8 @@
       "H0": "No autocorrelation up to lag 10",
       "H1": "At least one non-zero autocorrelation up to lag 10",
       "lag": 10,
-      "statistic": 483.4605497951595,
-      "p_value": 1.5073167355313356e-97,
+      "statistic": 483.46054979515964,
+      "p_value": 1.5073167355312496e-97,
       "df": 10,
       "reject_H0_at_5pct": true
     },
@@ -1186,8 +1186,8 @@
       "H0": "No autocorrelation up to lag 20",
       "H1": "At least one non-zero autocorrelation up to lag 20",
       "lag": 20,
-      "statistic": 543.1692478226339,
-      "p_value": 2.5838046787761658e-102,
+      "statistic": 543.1692478226341,
+      "p_value": 2.5838046787758704e-102,
       "df": 20,
       "reject_H0_at_5pct": true
     },
@@ -1197,8 +1197,8 @@
       "H0": "No autocorrelation up to lag 40",
       "H1": "At least one non-zero autocorrelation up to lag 40",
       "lag": 40,
-      "statistic": 580.03659386904,
-      "p_value": 5.983527133820806e-97,
+      "statistic": 580.0365938690402,
+      "p_value": 5.983527133820122e-97,
       "df": 40,
       "reject_H0_at_5pct": true
     },
@@ -1219,7 +1219,7 @@
       "H0": "No autocorrelation up to lag 10",
       "H1": "At least one non-zero autocorrelation up to lag 10",
       "lag": 10,
-      "statistic": 8166.21936599142,
+      "statistic": 8166.219365991417,
       "p_value": 0.0,
       "df": 10,
       "reject_H0_at_5pct": true
@@ -1230,7 +1230,7 @@
       "H0": "No autocorrelation up to lag 20",
       "H1": "At least one non-zero autocorrelation up to lag 20",
       "lag": 20,
-      "statistic": 13025.05760231832,
+      "statistic": 13025.057602318318,
       "p_value": 0.0,
       "df": 20,
       "reject_H0_at_5pct": true
@@ -1252,7 +1252,7 @@
       "H0": "No autocorrelation up to lag 5",
       "H1": "At least one non-zero autocorrelation up to lag 5",
       "lag": 5,
-      "statistic": 5843.898926102588,
+      "statistic": 5843.898926102589,
       "p_value": 0.0,
       "df": 5,
       "reject_H0_at_5pct": true
@@ -1274,7 +1274,7 @@
       "H0": "No autocorrelation up to lag 20",
       "H1": "At least one non-zero autocorrelation up to lag 20",
       "lag": 20,
-      "statistic": 15065.133260346633,
+      "statistic": 15065.13326034663,
       "p_value": 0.0,
       "df": 20,
       "reject_H0_at_5pct": true

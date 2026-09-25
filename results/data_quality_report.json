@@ -1,8 +1,9 @@
 {
   "shape": {
     "n_rows": 6179,
-    "n_cols": 7,
+    "n_cols": 8,
     "columns": [
+      "Timestamp",
       "Date",
       "Open",
       "High",
@@ -12,6 +13,7 @@
       "time"
     ],
     "dtypes": {
+      "Timestamp": "datetime64[us]",
       "Date": "datetime64[us]",
       "Open": "float64",
       "High": "float64",
@@ -26,6 +28,7 @@
   },
   "missing": {
     "missing_per_column": {
+      "Timestamp": 0,
       "Date": 0,
       "Open": 0,
       "High": 0,

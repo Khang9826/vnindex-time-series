@@ -24,14 +24,31 @@ REPORTS_DIR = PROJECT_ROOT / "reports"
 for _d in (RAW_DIR, PROCESSED_DIR, FIGURES_DIR, RESULTS_DIR, REPORTS_DIR):
     _d.mkdir(parents=True, exist_ok=True)
 
-# Primary source: the Kaggle dataset the user supplied (vendored into data/raw).
-KAGGLE_CSV = RAW_DIR / "kaggle_HOSE_DLY_VNINDEX1D.csv"
+# Primary source: the Kaggle dataset the user supplied. All 19 CSV files are
+# vendored into data/raw/kaggle/ so the exact vintage ships with the project.
+# src/catalog.py describes what each file is.
+KAGGLE_DIR = RAW_DIR / "kaggle"
 
-# Canonical raw / processed artefacts consumed by every downstream stage.
-RAW_CSV = RAW_DIR / "vnindex_raw.csv"          # built from KAGGLE_CSV by data_loader
+# Canonical artefacts for the HEADLINE series (VN-Index daily). Kept as
+# dedicated names because the deep-dive chapters refer to them directly.
+RAW_CSV = RAW_DIR / "vnindex_raw.csv"
 RAW_META = RAW_DIR / "vnindex_raw_meta.json"
 CLEAN_CSV = PROCESSED_DIR / "vnindex_clean.csv"
 FEATURES_CSV = PROCESSED_DIR / "vnindex_features.csv"
+
+# Per-series artefacts for every other series in the catalogue.
+SERIES_RAW_DIR = PROCESSED_DIR / "series_raw"
+SERIES_FEATURES_DIR = PROCESSED_DIR / "series_features"
+for _d in (SERIES_RAW_DIR, SERIES_FEATURES_DIR):
+    _d.mkdir(parents=True, exist_ok=True)
+
+
+def series_raw_csv(key: str):
+    return SERIES_RAW_DIR / f"{key}_raw.csv"
+
+
+def series_features_csv(key: str):
+    return SERIES_FEATURES_DIR / f"{key}_features.csv"
 
 # --------------------------------------------------------------------------
 # Data source

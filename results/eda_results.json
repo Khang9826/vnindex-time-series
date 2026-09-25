@@ -5,7 +5,7 @@
       "test": "Jarque-Bera",
       "H0": "Sample skewness and kurtosis match a normal distribution",
       "H1": "Skewness and/or kurtosis differ from normal",
-      "statistic": 3475.057781684408,
+      "statistic": 3475.0577816844116,
       "p_value": 0.0,
       "df": 2,
       "n": 6178
@@ -25,8 +25,8 @@
       "test": "Shapiro-Wilk (n=5000 sub-sample)",
       "H0": "Sample comes from a normal distribution",
       "H1": "Sample does not come from a normal distribution",
-      "statistic": 0.9375511811188276,
-      "p_value": 1.2845416659306472e-41,
+      "statistic": 0.9375511811188277,
+      "p_value": 1.2845416659306839e-41,
       "df": null,
       "n": 5000
     },
@@ -55,8 +55,8 @@
       "test": "Shapiro-Wilk (n=5000 sub-sample)",
       "H0": "Sample comes from a normal distribution",
       "H1": "Sample does not come from a normal distribution",
-      "statistic": 0.9397373579758119,
-      "p_value": 4.534741255107306e-41,
+      "statistic": 0.9397373579758124,
+      "p_value": 4.5347412551085365e-41,
       "df": null,
       "n": 5000
     }
@@ -82,11 +82,11 @@
       "expected_days_if_normal": 0.0,
       "ratio_observed_to_normal": 282.34
     },
-    "mean_pct": 0.04584924046292934,
+    "mean_pct": 0.04584924046292933,
     "sd_pct": 1.4384006387535044
   },
   "extreme_moves": {
-    "mean_log_return_pct": 0.04584924046292934,
+    "mean_log_return_pct": 0.04584924046292933,
     "sd_log_return_pct": 1.4384006387535044,
     "sigma_threshold": 4.0,
     "n_beyond_threshold": 36,
@@ -417,8 +417,8 @@
         "test": "One-way ANOVA",
         "H0": "Mean log return is equal across weekdays",
         "H1": "At least one weekday has a different mean log return",
-        "statistic": 6.087891625096041,
-        "p_value": 6.929847983653203e-05
+        "statistic": 6.0878916250960415,
+        "p_value": 6.929847983653192e-05
       },
       {
         "test": "Kruskal-Wallis H",
