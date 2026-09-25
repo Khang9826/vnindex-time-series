@@ -1,0 +1,857 @@
+{
+  "normality_tests": [
+    {
+      "series": "Daily log return (%)",
+      "test": "Jarque-Bera",
+      "H0": "Sample skewness and kurtosis match a normal distribution",
+      "H1": "Skewness and/or kurtosis differ from normal",
+      "statistic": 3475.057781684408,
+      "p_value": 0.0,
+      "df": 2,
+      "n": 6178
+    },
+    {
+      "series": "Daily log return (%)",
+      "test": "DAgostino-Pearson K2",
+      "H0": "Sample comes from a normal distribution",
+      "H1": "Sample does not come from a normal distribution",
+      "statistic": 685.150136079284,
+      "p_value": 1.665475746864407e-149,
+      "df": 2,
+      "n": 6178
+    },
+    {
+      "series": "Daily log return (%)",
+      "test": "Shapiro-Wilk (n=5000 sub-sample)",
+      "H0": "Sample comes from a normal distribution",
+      "H1": "Sample does not come from a normal distribution",
+      "statistic": 0.9375511811188276,
+      "p_value": 1.2845416659306472e-41,
+      "df": null,
+      "n": 5000
+    },
+    {
+      "series": "Daily simple return (%)",
+      "test": "Jarque-Bera",
+      "H0": "Sample skewness and kurtosis match a normal distribution",
+      "H1": "Skewness and/or kurtosis differ from normal",
+      "statistic": 3184.318907761227,
+      "p_value": 0.0,
+      "df": 2,
+      "n": 6178
+    },
+    {
+      "series": "Daily simple return (%)",
+      "test": "DAgostino-Pearson K2",
+      "H0": "Sample comes from a normal distribution",
+      "H1": "Sample does not come from a normal distribution",
+      "statistic": 593.7826532920452,
+      "p_value": 1.1527499517050885e-129,
+      "df": 2,
+      "n": 6178
+    },
+    {
+      "series": "Daily simple return (%)",
+      "test": "Shapiro-Wilk (n=5000 sub-sample)",
+      "H0": "Sample comes from a normal distribution",
+      "H1": "Sample does not come from a normal distribution",
+      "statistic": 0.9397373579758119,
+      "p_value": 4.534741255107306e-41,
+      "df": null,
+      "n": 5000
+    }
+  ],
+  "tail_comparison_log_returns": {
+    "gt_2_sigma": {
+      "observed_days": 390,
+      "expected_days_if_normal": 281.1,
+      "ratio_observed_to_normal": 1.39
+    },
+    "gt_3_sigma": {
+      "observed_days": 116,
+      "expected_days_if_normal": 16.68,
+      "ratio_observed_to_normal": 6.95
+    },
+    "gt_4_sigma": {
+      "observed_days": 36,
+      "expected_days_if_normal": 0.39,
+      "ratio_observed_to_normal": 91.99
+    },
+    "gt_5_sigma": {
+      "observed_days": 1,
+      "expected_days_if_normal": 0.0,
+      "ratio_observed_to_normal": 282.34
+    },
+    "mean_pct": 0.04584924046292934,
+    "sd_pct": 1.4384006387535044
+  },
+  "extreme_moves": {
+    "mean_log_return_pct": 0.04584924046292934,
+    "sd_log_return_pct": 1.4384006387535044,
+    "sigma_threshold": 4.0,
+    "n_beyond_threshold": 36,
+    "pct_of_sample_beyond_threshold": 0.583,
+    "largest_drops": [
+      {
+        "Date": "2001-07-11",
+        "Close": 436.13,
+        "Change": -34.7,
+        "SimpleReturn_pct": -7.37,
+        "LogReturn_pct": -7.6557,
+        "z": -5.3542,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-09-10",
+        "Close": 286.55,
+        "Change": -21.21,
+        "SimpleReturn_pct": -6.8917,
+        "LogReturn_pct": -7.1407,
+        "z": -4.9962,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-06-27",
+        "Close": 531.93,
+        "Change": -39.11,
+        "SimpleReturn_pct": -6.8489,
+        "LogReturn_pct": -7.0947,
+        "z": -4.9643,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-27",
+        "Close": 279.65,
+        "Change": -20.38,
+        "SimpleReturn_pct": -6.7927,
+        "LogReturn_pct": -7.0344,
+        "z": -4.9223,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2025-04-03",
+        "Close": 1229.84,
+        "Change": -87.99,
+        "SimpleReturn_pct": -6.6769,
+        "LogReturn_pct": -6.9102,
+        "z": -4.836,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2021-01-28",
+        "Close": 1023.94,
+        "Change": -73.23,
+        "SimpleReturn_pct": -6.6744,
+        "LogReturn_pct": -6.9076,
+        "z": -4.8342,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-13",
+        "Close": 368.34,
+        "Change": -25.84,
+        "SimpleReturn_pct": -6.5554,
+        "LogReturn_pct": -6.7801,
+        "z": -4.7455,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-29",
+        "Close": 261.35,
+        "Change": -18.3,
+        "SimpleReturn_pct": -6.5439,
+        "LogReturn_pct": -6.7678,
+        "z": -4.737,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-17",
+        "Close": 321.83,
+        "Change": -22.48,
+        "SimpleReturn_pct": -6.529,
+        "LogReturn_pct": -6.7519,
+        "z": -4.7259,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-24",
+        "Close": 300.03,
+        "Change": -20.95,
+        "SimpleReturn_pct": -6.5269,
+        "LogReturn_pct": -6.7496,
+        "z": -4.7243,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-15",
+        "Close": 344.31,
+        "Change": -24.03,
+        "SimpleReturn_pct": -6.5239,
+        "LogReturn_pct": -6.7464,
+        "z": -4.7221,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-10-03",
+        "Close": 214.29,
+        "Change": -14.77,
+        "SimpleReturn_pct": -6.4481,
+        "LogReturn_pct": -6.6654,
+        "z": -4.6658,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2025-04-08",
+        "Close": 1132.79,
+        "Change": -77.88,
+        "SimpleReturn_pct": -6.4328,
+        "LogReturn_pct": -6.649,
+        "z": -4.6544,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-07-09",
+        "Close": 470.83,
+        "Change": -32.1,
+        "SimpleReturn_pct": -6.3826,
+        "LogReturn_pct": -6.5954,
+        "z": -4.6171,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-01",
+        "Close": 395.63,
+        "Change": -26.83,
+        "SimpleReturn_pct": -6.3509,
+        "LogReturn_pct": -6.5615,
+        "z": -4.5936,
+        "ohlc_inconsistent": false
+      }
+    ],
+    "largest_gains": [
+      {
+        "Date": "2001-10-08",
+        "Close": 217.1,
+        "Change": 13.98,
+        "SimpleReturn_pct": 6.8826,
+        "LogReturn_pct": 6.6561,
+        "z": 4.5956,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-09-05",
+        "Close": 296.43,
+        "Change": 19.03,
+        "SimpleReturn_pct": 6.8601,
+        "LogReturn_pct": 6.6351,
+        "z": 4.5809,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2025-04-10",
+        "Close": 1168.34,
+        "Change": 74.0399,
+        "SimpleReturn_pct": 6.766,
+        "LogReturn_pct": 6.5469,
+        "z": 4.5196,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-06-20",
+        "Close": 553.56,
+        "Change": 34.94,
+        "SimpleReturn_pct": 6.7371,
+        "LogReturn_pct": 6.5199,
+        "z": 4.5008,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-06-18",
+        "Close": 518.62,
+        "Change": 32.28,
+        "SimpleReturn_pct": 6.6373,
+        "LogReturn_pct": 6.4263,
+        "z": 4.4358,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-06-15",
+        "Close": 486.34,
+        "Change": 30.16,
+        "SimpleReturn_pct": 6.6114,
+        "LogReturn_pct": 6.4021,
+        "z": 4.4189,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-06-13",
+        "Close": 456.18,
+        "Change": 28.16,
+        "SimpleReturn_pct": 6.5791,
+        "LogReturn_pct": 6.3718,
+        "z": 4.3979,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-08",
+        "Close": 373.63,
+        "Change": 22.94,
+        "SimpleReturn_pct": 6.5414,
+        "LogReturn_pct": 6.3363,
+        "z": 4.3733,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-07-20",
+        "Close": 466.67,
+        "Change": 28.55,
+        "SimpleReturn_pct": 6.5165,
+        "LogReturn_pct": 6.313,
+        "z": 4.357,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-07-18",
+        "Close": 438.12,
+        "Change": 26.69,
+        "SimpleReturn_pct": 6.4871,
+        "LogReturn_pct": 6.2854,
+        "z": 4.3378,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-22",
+        "Close": 320.98,
+        "Change": 18.73,
+        "SimpleReturn_pct": 6.1969,
+        "LogReturn_pct": 6.0124,
+        "z": 4.1481,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-31",
+        "Close": 277.4,
+        "Change": 16.05,
+        "SimpleReturn_pct": 6.1412,
+        "LogReturn_pct": 5.96,
+        "z": 4.1116,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2001-08-10",
+        "Close": 394.18,
+        "Change": 20.55,
+        "SimpleReturn_pct": 5.5001,
+        "LogReturn_pct": 5.3542,
+        "z": 3.6904,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2020-04-06",
+        "Close": 736.75,
+        "Change": 34.95,
+        "SimpleReturn_pct": 4.9801,
+        "LogReturn_pct": 4.86,
+        "z": 3.3469,
+        "ohlc_inconsistent": false
+      },
+      {
+        "Date": "2005-09-30",
+        "Close": 289.33,
+        "Change": 13.38,
+        "SimpleReturn_pct": 4.8487,
+        "LogReturn_pct": 4.7348,
+        "z": 3.2598,
+        "ohlc_inconsistent": false
+      }
+    ],
+    "beyond_threshold_by_year": {
+      "2001": 29,
+      "2014": 1,
+      "2020": 2,
+      "2021": 1,
+      "2025": 3
+    },
+    "n_beyond_threshold_flagged_ohlc": 0
+  },
+  "day_of_week_effect": {
+    "group_summary": [
+      {
+        "Weekday": "Monday",
+        "count": 1239,
+        "mean": -0.0843,
+        "median": 0.0,
+        "std": 1.6708
+      },
+      {
+        "Weekday": "Tuesday",
+        "count": 1191,
+        "mean": -0.0249,
+        "median": 0.0457,
+        "std": 1.3929
+      },
+      {
+        "Weekday": "Wednesday",
+        "count": 1276,
+        "mean": 0.1328,
+        "median": 0.1171,
+        "std": 1.4158
+      },
+      {
+        "Weekday": "Thursday",
+        "count": 1200,
+        "mean": 0.0483,
+        "median": 0.0702,
+        "std": 1.3061
+      },
+      {
+        "Weekday": "Friday",
+        "count": 1272,
+        "mean": 0.1493,
+        "median": 0.1091,
+        "std": 1.3639
+      }
+    ],
+    "tests": [
+      {
+        "test": "One-way ANOVA",
+        "H0": "Mean log return is equal across weekdays",
+        "H1": "At least one weekday has a different mean log return",
+        "statistic": 6.087891625096041,
+        "p_value": 6.929847983653203e-05
+      },
+      {
+        "test": "Kruskal-Wallis H",
+        "H0": "Log-return distributions are identical across weekdays",
+        "H1": "At least one weekday has a different distribution",
+        "statistic": 16.608144796453054,
+        "p_value": 0.0023028214242705692
+      },
+      {
+        "test": "Levene (median-centred)",
+        "H0": "Log-return variance is equal across weekdays",
+        "H1": "Variance differs across weekdays",
+        "statistic": 13.624823871637611,
+        "p_value": 4.62269274193076e-11
+      }
+    ]
+  },
+  "month_effect": {
+    "group_summary": [
+      {
+        "Month": 1,
+        "count": 462,
+        "mean": 0.2196,
+        "median": 0.2057,
+        "std": 1.4543
+      },
+      {
+        "Month": 2,
+        "count": 409,
+        "mean": 0.0572,
+        "median": 0.1311,
+        "std": 1.5762
+      },
+      {
+        "Month": 3,
+        "count": 543,
+        "mean": 0.0127,
+        "median": 0.11,
+        "std": 1.4767
+      },
+      {
+        "Month": 4,
+        "count": 485,
+        "mean": 0.0921,
+        "median": 0.1031,
+        "std": 1.5343
+      },
+      {
+        "Month": 5,
+        "count": 506,
+        "mean": 0.0508,
+        "median": 0.0498,
+        "std": 1.5143
+      },
+      {
+        "Month": 6,
+        "count": 526,
+        "mean": 0.0366,
+        "median": 0.0733,
+        "std": 1.3793
+      },
+      {
+        "Month": 7,
+        "count": 546,
+        "mean": -0.0503,
+        "median": -0.0051,
+        "std": 1.4488
+      },
+      {
+        "Month": 8,
+        "count": 558,
+        "mean": 0.0663,
+        "median": 0.1488,
+        "std": 1.6371
+      },
+      {
+        "Month": 9,
+        "count": 504,
+        "mean": -0.0032,
+        "median": 0.004,
+        "std": 1.2812
+      },
+      {
+        "Month": 10,
+        "count": 559,
+        "mean": -0.0387,
+        "median": 0.0131,
+        "std": 1.3625
+      },
+      {
+        "Month": 11,
+        "count": 539,
+        "mean": 0.0771,
+        "median": 0.0113,
+        "std": 1.315
+      },
+      {
+        "Month": 12,
+        "count": 541,
+        "mean": 0.063,
+        "median": 0.0632,
+        "std": 1.2603
+      }
+    ],
+    "tests": [
+      {
+        "test": "One-way ANOVA",
+        "H0": "Mean daily log return is equal across calendar months",
+        "H1": "At least one month has a different mean daily log return",
+        "statistic": 1.1813157684544593,
+        "p_value": 0.2939618143882319
+      },
+      {
+        "test": "Kruskal-Wallis H",
+        "H0": "Log-return distributions are identical across months",
+        "H1": "At least one month has a different distribution",
+        "statistic": 17.2339782679079,
+        "p_value": 0.10114255738273328
+      }
+    ]
+  },
+  "yearly_summary": [
+    {
+      "Year": 2000,
+      "sessions": 65,
+      "first_close": 101.55,
+      "last_close": 206.83,
+      "mean_log_ret_pct": 1.118,
+      "sd_log_ret_pct": 1.1426,
+      "min_log_ret_pct": -2.9167,
+      "max_log_ret_pct": 4.6776,
+      "year_return_pct": 103.6731,
+      "annualised_vol_pct": 18.1375
+    },
+    {
+      "Year": 2001,
+      "sessions": 151,
+      "first_close": 210.56,
+      "last_close": 235.4,
+      "mean_log_ret_pct": 0.0857,
+      "sd_log_ret_pct": 3.4229,
+      "min_log_ret_pct": -7.6557,
+      "max_log_ret_pct": 6.6561,
+      "year_return_pct": 11.7971,
+      "annualised_vol_pct": 54.3375
+    },
+    {
+      "Year": 2002,
+      "sessions": 238,
+      "first_close": 231.7,
+      "last_close": 183.33,
+      "mean_log_ret_pct": -0.105,
+      "sd_log_ret_pct": 0.8712,
+      "min_log_ret_pct": -2.3352,
+      "max_log_ret_pct": 2.3649,
+      "year_return_pct": -20.8761,
+      "annualised_vol_pct": 13.8305
+    },
+    {
+      "Year": 2003,
+      "sessions": 251,
+      "first_close": 183.41,
+      "last_close": 166.94,
+      "mean_log_ret_pct": -0.0373,
+      "sd_log_ret_pct": 0.9014,
+      "min_log_ret_pct": -4.049,
+      "max_log_ret_pct": 4.0226,
+      "year_return_pct": -8.9799,
+      "annualised_vol_pct": 14.3099
+    },
+    {
+      "Year": 2004,
+      "sessions": 250,
+      "first_close": 169.16,
+      "last_close": 239.29,
+      "mean_log_ret_pct": 0.144,
+      "sd_log_ret_pct": 1.3319,
+      "min_log_ret_pct": -4.7511,
+      "max_log_ret_pct": 4.6986,
+      "year_return_pct": 41.4578,
+      "annualised_vol_pct": 21.1431
+    },
+    {
+      "Year": 2005,
+      "sessions": 251,
+      "first_close": 237.23,
+      "last_close": 307.5,
+      "mean_log_ret_pct": 0.0999,
+      "sd_log_ret_pct": 0.7692,
+      "min_log_ret_pct": -3.3348,
+      "max_log_ret_pct": 4.7348,
+      "year_return_pct": 29.621,
+      "annualised_vol_pct": 12.2109
+    },
+    {
+      "Year": 2006,
+      "sessions": 250,
+      "first_close": 305.28,
+      "last_close": 751.77,
+      "mean_log_ret_pct": 0.3576,
+      "sd_log_ret_pct": 2.0162,
+      "min_log_ret_pct": -4.9713,
+      "max_log_ret_pct": 4.6484,
+      "year_return_pct": 146.2559,
+      "annualised_vol_pct": 32.0056
+    },
+    {
+      "Year": 2007,
+      "sessions": 248,
+      "first_close": 741.27,
+      "last_close": 927.02,
+      "mean_log_ret_pct": 0.0845,
+      "sd_log_ret_pct": 1.715,
+      "min_log_ret_pct": -4.4683,
+      "max_log_ret_pct": 4.1384,
+      "year_return_pct": 25.0583,
+      "annualised_vol_pct": 27.2243
+    },
+    {
+      "Year": 2008,
+      "sessions": 245,
+      "first_close": 921.07,
+      "last_close": 315.62,
+      "mean_log_ret_pct": -0.4398,
+      "sd_log_ret_pct": 2.3406,
+      "min_log_ret_pct": -4.8019,
+      "max_log_ret_pct": 4.6421,
+      "year_return_pct": -65.7333,
+      "annualised_vol_pct": 37.1556
+    },
+    {
+      "Year": 2009,
+      "sessions": 251,
+      "first_close": 313.34,
+      "last_close": 494.77,
+      "mean_log_ret_pct": 0.1791,
+      "sd_log_ret_pct": 2.1755,
+      "min_log_ret_pct": -4.6714,
+      "max_log_ret_pct": 4.6468,
+      "year_return_pct": 57.902,
+      "annualised_vol_pct": 34.5351
+    },
+    {
+      "Year": 2010,
+      "sessions": 250,
+      "first_close": 517.05,
+      "last_close": 484.66,
+      "mean_log_ret_pct": -0.0083,
+      "sd_log_ret_pct": 1.3239,
+      "min_log_ret_pct": -4.0239,
+      "max_log_ret_pct": 4.4047,
+      "year_return_pct": -6.2644,
+      "annualised_vol_pct": 21.0166
+    },
+    {
+      "Year": 2011,
+      "sessions": 248,
+      "first_close": 485.97,
+      "last_close": 351.55,
+      "mean_log_ret_pct": -0.1295,
+      "sd_log_ret_pct": 1.3333,
+      "min_log_ret_pct": -4.1149,
+      "max_log_ret_pct": 3.3627,
+      "year_return_pct": -27.6601,
+      "annualised_vol_pct": 21.1654
+    },
+    {
+      "Year": 2012,
+      "sessions": 250,
+      "first_close": 350.0,
+      "last_close": 413.73,
+      "mean_log_ret_pct": 0.0651,
+      "sd_log_ret_pct": 1.2684,
+      "min_log_ret_pct": -4.7871,
+      "max_log_ret_pct": 3.9278,
+      "year_return_pct": 18.2086,
+      "annualised_vol_pct": 20.1357
+    },
+    {
+      "Year": 2013,
+      "sessions": 250,
+      "first_close": 418.35,
+      "last_close": 504.63,
+      "mean_log_ret_pct": 0.0794,
+      "sd_log_ret_pct": 1.0823,
+      "min_log_ret_pct": -3.9299,
+      "max_log_ret_pct": 3.4094,
+      "year_return_pct": 20.6239,
+      "annualised_vol_pct": 17.1811
+    },
+    {
+      "Year": 2014,
+      "sessions": 247,
+      "first_close": 504.51,
+      "last_close": 545.63,
+      "mean_log_ret_pct": 0.0316,
+      "sd_log_ret_pct": 1.1185,
+      "min_log_ret_pct": -6.0512,
+      "max_log_ret_pct": 2.9942,
+      "year_return_pct": 8.1505,
+      "annualised_vol_pct": 17.7552
+    },
+    {
+      "Year": 2015,
+      "sessions": 248,
+      "first_close": 544.45,
+      "last_close": 579.03,
+      "mean_log_ret_pct": 0.024,
+      "sd_log_ret_pct": 1.0501,
+      "min_log_ret_pct": -5.424,
+      "max_log_ret_pct": 2.9578,
+      "year_return_pct": 6.3514,
+      "annualised_vol_pct": 16.6696
+    },
+    {
+      "Year": 2016,
+      "sessions": 251,
+      "first_close": 574.41,
+      "last_close": 664.87,
+      "mean_log_ret_pct": 0.0551,
+      "sd_log_ret_pct": 0.8806,
+      "min_log_ret_pct": -3.1179,
+      "max_log_ret_pct": 3.7784,
+      "year_return_pct": 15.7483,
+      "annualised_vol_pct": 13.9785
+    },
+    {
+      "Year": 2017,
+      "sessions": 250,
+      "first_close": 672.01,
+      "last_close": 984.24,
+      "mean_log_ret_pct": 0.1569,
+      "sd_log_ret_pct": 0.6204,
+      "min_log_ret_pct": -2.4452,
+      "max_log_ret_pct": 2.4193,
+      "year_return_pct": 46.4621,
+      "annualised_vol_pct": 9.8481
+    },
+    {
+      "Year": 2018,
+      "sessions": 249,
+      "first_close": 995.77,
+      "last_close": 892.54,
+      "mean_log_ret_pct": -0.0393,
+      "sd_log_ret_pct": 1.4071,
+      "min_log_ret_pct": -5.2321,
+      "max_log_ret_pct": 3.7008,
+      "year_return_pct": -10.3669,
+      "annualised_vol_pct": 22.3363
+    },
+    {
+      "Year": 2019,
+      "sessions": 250,
+      "first_close": 891.75,
+      "last_close": 960.99,
+      "mean_log_ret_pct": 0.0296,
+      "sd_log_ret_pct": 0.6832,
+      "min_log_ret_pct": -2.5363,
+      "max_log_ret_pct": 1.9,
+      "year_return_pct": 7.7645,
+      "annualised_vol_pct": 10.8453
+    },
+    {
+      "Year": 2020,
+      "sessions": 252,
+      "first_close": 966.67,
+      "last_close": 1103.87,
+      "mean_log_ret_pct": 0.055,
+      "sd_log_ret_pct": 1.448,
+      "min_log_ret_pct": -6.482,
+      "max_log_ret_pct": 4.86,
+      "year_return_pct": 14.1931,
+      "annualised_vol_pct": 22.9865
+    },
+    {
+      "Year": 2021,
+      "sessions": 250,
+      "first_close": 1120.47,
+      "last_close": 1498.28,
+      "mean_log_ret_pct": 0.1222,
+      "sd_log_ret_pct": 1.3376,
+      "min_log_ret_pct": -6.9076,
+      "max_log_ret_pct": 3.792,
+      "year_return_pct": 33.7189,
+      "annualised_vol_pct": 21.233
+    },
+    {
+      "Year": 2022,
+      "sessions": 249,
+      "first_close": 1525.58,
+      "last_close": 1007.09,
+      "mean_log_ret_pct": -0.1595,
+      "sd_log_ret_pct": 1.5719,
+      "min_log_ret_pct": -5.0796,
+      "max_log_ret_pct": 4.7019,
+      "year_return_pct": -33.9864,
+      "annualised_vol_pct": 24.9531
+    },
+    {
+      "Year": 2023,
+      "sessions": 249,
+      "first_close": 1043.9,
+      "last_close": 1129.9301,
+      "mean_log_ret_pct": 0.0462,
+      "sd_log_ret_pct": 1.0744,
+      "min_log_ret_pct": -4.603,
+      "max_log_ret_pct": 3.5899,
+      "year_return_pct": 8.2412,
+      "annualised_vol_pct": 17.0562
+    },
+    {
+      "Year": 2024,
+      "sessions": 250,
+      "first_close": 1131.72,
+      "last_close": 1266.78,
+      "mean_log_ret_pct": 0.0457,
+      "sd_log_ret_pct": 0.8558,
+      "min_log_ret_pct": -4.8132,
+      "max_log_ret_pct": 2.3677,
+      "year_return_pct": 11.9341,
+      "annualised_vol_pct": 13.5847
+    },
+    {
+      "Year": 2025,
+      "sessions": 235,
+      "first_close": 1269.71,
+      "last_close": 1698.9,
+      "mean_log_ret_pct": 0.1249,
+      "sd_log_ret_pct": 1.3244,
+      "min_log_ret_pct": -6.9102,
+      "max_log_ret_pct": 6.5469,
+      "year_return_pct": 33.8022,
+      "annualised_vol_pct": 21.025
+    }
+  ]
+}

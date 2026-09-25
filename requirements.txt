@@ -1,0 +1,15 @@
+# Verified against the environment this project was actually executed in:
+# Python 3.11.9 on Windows 11.
+# Lower bounds reflect the installed versions; they are not upper-pinned so the
+# project stays installable, but these are the versions the reported results
+# were produced with.
+
+pandas>=2.2          # installed: 3.0.1
+numpy>=1.26          # installed: 1.26.4
+scipy>=1.11          # installed: 1.17.0
+statsmodels>=0.14    # installed: 0.15.0
+matplotlib>=3.8      # installed: 3.10.8
+requests>=2.31       # installed: 2.32.5
+
+# Optional - only needed for the GARCH step (src/volatility.py).
+# arch>=6.3

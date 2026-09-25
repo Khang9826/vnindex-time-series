@@ -1,0 +1,21 @@
+{
+  "source_name": "DNSE Entrade public chart API",
+  "source_url": "https://services.entrade.com.vn/chart-api/v2/ohlcs/index",
+  "symbol": "VNINDEX",
+  "resolution": "1D",
+  "downloaded_at_utc": "2026-09-25T14:54:58+00:00",
+  "requested_start": "2000-01-01",
+  "n_rows_downloaded": 6329,
+  "first_date": "2000-07-28",
+  "last_date": "2026-09-25",
+  "columns": [
+    "Date",
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "Volume",
+    "t"
+  ],
+  "note": "Raw artefact - written once by src/data_loader.py and never edited by downstream steps. 'Volume' is matched volume in shares as reported by the source; no adjusted-close series is published for a price index."
+}

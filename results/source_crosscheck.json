@@ -1,0 +1,137 @@
+{
+  "primary": {
+    "name": "Kaggle: keithvo/vnstockdata (Vietnam Stock Intraday), file HOSE_DLY_VNINDEX1D.csv",
+    "n_sessions": 6179,
+    "period": [
+      "2000-07-28",
+      "2025-12-11"
+    ],
+    "n_unexplained_gaps": 1,
+    "missing_business_days_in_unexplained_gaps": 3
+  },
+  "secondary": {
+    "name": "DNSE Entrade public chart API",
+    "n_sessions_in_common_window": 6136,
+    "n_unexplained_gaps": 6,
+    "missing_business_days_in_unexplained_gaps": 26
+  },
+  "comparison_window": [
+    "2000-07-28",
+    "2025-12-11"
+  ],
+  "n_common_sessions": 6136,
+  "n_sessions_only_in_primary": 43,
+  "n_sessions_only_in_secondary": 0,
+  "sessions_only_in_primary_by_year": {
+    "2002": 3,
+    "2003": 4,
+    "2005": 1,
+    "2007": 1,
+    "2018": 1,
+    "2020": 16,
+    "2021": 15,
+    "2023": 1,
+    "2024": 1
+  },
+  "close_correlation": 0.9999994211118318,
+  "median_abs_rel_diff": 3.076656519242317e-08,
+  "mean_abs_rel_diff": 0.0002346454384519296,
+  "max_abs_rel_diff": 0.016738954812142406,
+  "disagreement_tiers": {
+    "rel_diff_gt_1e-06": {
+      "n_sessions": 2029,
+      "pct_of_common_sessions": 33.07
+    },
+    "rel_diff_gt_0.0001": {
+      "n_sessions": 1476,
+      "pct_of_common_sessions": 24.05
+    },
+    "rel_diff_gt_0.001": {
+      "n_sessions": 505,
+      "pct_of_common_sessions": 8.23
+    },
+    "rel_diff_gt_0.01": {
+      "n_sessions": 2,
+      "pct_of_common_sessions": 0.03
+    }
+  },
+  "sessions_with_rel_diff_gt_1e-3_by_year": {
+    "2003": 138,
+    "2004": 144,
+    "2005": 122,
+    "2006": 24,
+    "2007": 1,
+    "2008": 33,
+    "2009": 2,
+    "2011": 3,
+    "2015": 1,
+    "2018": 2,
+    "2019": 3,
+    "2020": 18,
+    "2021": 1,
+    "2022": 13
+  },
+  "worst_10_disagreements": [
+    {
+      "Date": "2020-05-18",
+      "Close_primary": 837.01001,
+      "Close_secondary": 823.23,
+      "rel_diff": 0.016739
+    },
+    {
+      "Date": "2021-03-26",
+      "Close_primary": 1162.209961,
+      "Close_secondary": 1148.46,
+      "rel_diff": 0.011973
+    },
+    {
+      "Date": "2006-04-12",
+      "Close_primary": 539.22998,
+      "Close_secondary": 534.0,
+      "rel_diff": 0.009794
+    },
+    {
+      "Date": "2011-08-05",
+      "Close_primary": 400.880005,
+      "Close_secondary": 397.66,
+      "rel_diff": 0.008097
+    },
+    {
+      "Date": "2020-06-11",
+      "Close_primary": 867.369995,
+      "Close_secondary": 873.39,
+      "rel_diff": 0.006893
+    },
+    {
+      "Date": "2022-10-31",
+      "Close_primary": 1027.939941,
+      "Close_secondary": 1021.42,
+      "rel_diff": 0.006383
+    },
+    {
+      "Date": "2020-05-26",
+      "Close_primary": 869.130005,
+      "Close_secondary": 863.74,
+      "rel_diff": 0.00624
+    },
+    {
+      "Date": "2003-12-08",
+      "Close_primary": 161.009995,
+      "Close_secondary": 162.0,
+      "rel_diff": 0.006111
+    },
+    {
+      "Date": "2020-07-13",
+      "Close_primary": 868.719971,
+      "Close_secondary": 874.05,
+      "rel_diff": 0.006098
+    },
+    {
+      "Date": "2020-06-01",
+      "Close_primary": 878.669983,
+      "Close_secondary": 873.62,
+      "rel_diff": 0.005781
+    }
+  ],
+  "verdict": "The two independent feeds track the same series (close correlation 0.99999942, median absolute relative difference 3.08e-08 over 6,136 common sessions). The primary source additionally covers 43 sessions absent from the secondary feed and is missing none that the secondary feed has (0). Level disagreements are concentrated in the thin-market years before 2010 and never exceed 2% on any session. The primary source is corroborated; residual vendor disagreement is a documented limitation, not a defect that invalidates the analysis."
+}

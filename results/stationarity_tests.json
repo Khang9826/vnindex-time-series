@@ -1,0 +1,269 @@
+{
+  "alpha": 0.05,
+  "tests": [
+    {
+      "series": "VN-Index level (points)",
+      "regression": "c",
+      "adf": {
+        "series": "VN-Index level (points)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "c",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary",
+        "statistic": -0.7383734698419889,
+        "p_value": 0.8365580447975407,
+        "lags_used": 33,
+        "n_obs": 6145,
+        "critical_values": {
+          "1%": -3.4314146108633556,
+          "5%": -2.862010462176699,
+          "10%": -2.56702042426682
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "conclusion": "Fail to reject H0 at alpha=0.05: unit root cannot be ruled out"
+      },
+      "kpss": {
+        "series": "VN-Index level (points)",
+        "test": "KPSS",
+        "regression": "c",
+        "H0": "The series is stationary around a constant",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 10.120787508616788,
+        "p_value": 0.01,
+        "lags_used": 45,
+        "critical_values": {
+          "10%": 0.347,
+          "5%": 0.463,
+          "2.5%": 0.574,
+          "1%": 0.739
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Reject H0 at alpha=0.05: evidence against stationarity"
+      },
+      "verdict": "NON-STATIONARY (ADF cannot reject a unit root, KPSS rejects stationarity)"
+    },
+    {
+      "series": "VN-Index level (points)",
+      "regression": "ct",
+      "adf": {
+        "series": "VN-Index level (points)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "ct",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary around a deterministic trend",
+        "statistic": -2.603566810167249,
+        "p_value": 0.2782535575658359,
+        "lags_used": 33,
+        "n_obs": 6145,
+        "critical_values": {
+          "1%": -3.9602439999597885,
+          "5%": -3.411204706536273,
+          "10%": -3.1274708688890724
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "conclusion": "Fail to reject H0 at alpha=0.05: unit root cannot be ruled out"
+      },
+      "kpss": {
+        "series": "VN-Index level (points)",
+        "test": "KPSS",
+        "regression": "ct",
+        "H0": "The series is stationary around a deterministic trend",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 0.9686071191682161,
+        "p_value": 0.01,
+        "lags_used": 45,
+        "critical_values": {
+          "10%": 0.119,
+          "5%": 0.146,
+          "2.5%": 0.176,
+          "1%": 0.216
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Reject H0 at alpha=0.05: evidence against stationarity"
+      },
+      "verdict": "NON-STATIONARY (ADF cannot reject a unit root, KPSS rejects stationarity)"
+    },
+    {
+      "series": "log(VN-Index level)",
+      "regression": "c",
+      "adf": {
+        "series": "log(VN-Index level)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "c",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary",
+        "statistic": -2.056304237528076,
+        "p_value": 0.26244377207133457,
+        "lags_used": 14,
+        "n_obs": 6164,
+        "critical_values": {
+          "1%": -3.4314113279237977,
+          "5%": -2.862009011671878,
+          "10%": -2.5670196521269593
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "conclusion": "Fail to reject H0 at alpha=0.05: unit root cannot be ruled out"
+      },
+      "kpss": {
+        "series": "log(VN-Index level)",
+        "test": "KPSS",
+        "regression": "c",
+        "H0": "The series is stationary around a constant",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 10.26500076972468,
+        "p_value": 0.01,
+        "lags_used": 45,
+        "critical_values": {
+          "10%": 0.347,
+          "5%": 0.463,
+          "2.5%": 0.574,
+          "1%": 0.739
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Reject H0 at alpha=0.05: evidence against stationarity"
+      },
+      "verdict": "NON-STATIONARY (ADF cannot reject a unit root, KPSS rejects stationarity)"
+    },
+    {
+      "series": "log(VN-Index level)",
+      "regression": "ct",
+      "adf": {
+        "series": "log(VN-Index level)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "ct",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary around a deterministic trend",
+        "statistic": -3.354509143444067,
+        "p_value": 0.057769117088167496,
+        "lags_used": 14,
+        "n_obs": 6164,
+        "critical_values": {
+          "1%": -3.960239454164693,
+          "5%": -3.4112025027782975,
+          "10%": -3.1274695712769094
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "conclusion": "Fail to reject H0 at alpha=0.05: unit root cannot be ruled out"
+      },
+      "kpss": {
+        "series": "log(VN-Index level)",
+        "test": "KPSS",
+        "regression": "ct",
+        "H0": "The series is stationary around a deterministic trend",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 0.4282181467159441,
+        "p_value": 0.01,
+        "lags_used": 45,
+        "critical_values": {
+          "10%": 0.119,
+          "5%": 0.146,
+          "2.5%": 0.176,
+          "1%": 0.216
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is smaller than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Reject H0 at alpha=0.05: evidence against stationarity"
+      },
+      "verdict": "NON-STATIONARY (ADF cannot reject a unit root, KPSS rejects stationarity)"
+    },
+    {
+      "series": "First difference of level (points)",
+      "regression": "c",
+      "adf": {
+        "series": "First difference of level (points)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "c",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary",
+        "statistic": -12.1070856268324,
+        "p_value": 1.9576558034083307e-22,
+        "lags_used": 32,
+        "n_obs": 6145,
+        "critical_values": {
+          "1%": -3.4314146108633556,
+          "5%": -2.862010462176699,
+          "10%": -2.56702042426682
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "conclusion": "Reject H0 at alpha=0.05: evidence of stationarity"
+      },
+      "kpss": {
+        "series": "First difference of level (points)",
+        "test": "KPSS",
+        "regression": "c",
+        "H0": "The series is stationary around a constant",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 0.10169955407159291,
+        "p_value": 0.1,
+        "lags_used": 18,
+        "critical_values": {
+          "10%": 0.347,
+          "5%": 0.463,
+          "2.5%": 0.574,
+          "1%": 0.739
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Fail to reject H0 at alpha=0.05: stationarity is not contradicted"
+      },
+      "verdict": "STATIONARY (ADF rejects a unit root, KPSS does not reject stationarity)"
+    },
+    {
+      "series": "Daily log return (%)",
+      "regression": "c",
+      "adf": {
+        "series": "Daily log return (%)",
+        "test": "ADF (Augmented Dickey-Fuller)",
+        "regression": "c",
+        "H0": "The series contains a unit root (non-stationary)",
+        "H1": "The series is stationary",
+        "statistic": -17.509752450097963,
+        "p_value": 4.341298735482719e-30,
+        "lags_used": 13,
+        "n_obs": 6164,
+        "critical_values": {
+          "1%": -3.4314113279237977,
+          "5%": -2.862009011671878,
+          "10%": -2.5670196521269593
+        },
+        "alpha": 0.05,
+        "reject_H0": true,
+        "conclusion": "Reject H0 at alpha=0.05: evidence of stationarity"
+      },
+      "kpss": {
+        "series": "Daily log return (%)",
+        "test": "KPSS",
+        "regression": "c",
+        "H0": "The series is stationary around a constant",
+        "H1": "The series is non-stationary (unit root)",
+        "statistic": 0.09045183288893233,
+        "p_value": 0.1,
+        "lags_used": 26,
+        "critical_values": {
+          "10%": 0.347,
+          "5%": 0.463,
+          "2.5%": 0.574,
+          "1%": 0.739
+        },
+        "alpha": 0.05,
+        "reject_H0": false,
+        "p_value_note": "The test statistic is outside of the range of p-values available in the look-up table. The actual p-value is greater than the p-value returned.; kpss currently returns a plain tuple whose length and layout depends on the store argument (and which silently drops `lags` when store=True). In release 0.16 or after July 2027, whichever is later, the default behavior will switch to always returning a KPSSResult. Set result_object=True to switch now, or result_object=False to keep the current behavior and silence this warning.",
+        "conclusion": "Fail to reject H0 at alpha=0.05: stationarity is not contradicted"
+      },
+      "verdict": "STATIONARY (ADF rejects a unit root, KPSS does not reject stationarity)"
+    }
+  ]
+}

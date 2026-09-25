@@ -1,0 +1,142 @@
+{
+  "shape": {
+    "n_rows": 6179,
+    "n_cols": 7,
+    "columns": [
+      "Date",
+      "Open",
+      "High",
+      "Low",
+      "Close",
+      "Volume",
+      "time"
+    ],
+    "dtypes": {
+      "Date": "datetime64[us]",
+      "Open": "float64",
+      "High": "float64",
+      "Low": "float64",
+      "Close": "float64",
+      "Volume": "int64",
+      "time": "int64"
+    },
+    "first_date": "2000-07-28",
+    "last_date": "2025-12-11",
+    "calendar_span_days": 9267
+  },
+  "missing": {
+    "missing_per_column": {
+      "Date": 0,
+      "Open": 0,
+      "High": 0,
+      "Low": 0,
+      "Close": 0,
+      "Volume": 0,
+      "time": 0
+    },
+    "rows_with_any_missing": 0
+  },
+  "duplicates": {
+    "n_duplicated_dates": 0,
+    "n_rows_in_duplicate_date_groups": 0,
+    "n_fully_identical_rows": 0,
+    "example_duplicate_dates": []
+  },
+  "ordering": {
+    "is_monotonic_increasing": true,
+    "n_out_of_order_steps": 0
+  },
+  "impossible_values": {
+    "non_positive_price": 0,
+    "high_lt_low": 0,
+    "close_outside_high_low": 0,
+    "open_outside_high_low": 0,
+    "negative_volume": 0,
+    "zero_volume_sessions": 0,
+    "zero_volume_date_range": null
+  },
+  "trading_calendar": {
+    "n_sessions": 6179,
+    "n_business_days_in_span": 6620,
+    "n_business_days_without_a_session": 441,
+    "pct_business_days_covered": 93.34,
+    "gap_days_distribution": {
+      "1": 4695,
+      "2": 173,
+      "3": 1207,
+      "4": 34,
+      "5": 34,
+      "6": 8,
+      "7": 4,
+      "8": 6,
+      "10": 12,
+      "11": 5
+    },
+    "largest_gaps": [
+      {
+        "end": "2004-01-27",
+        "gap_days": 11.0
+      },
+      {
+        "end": "2007-02-26",
+        "gap_days": 11.0
+      },
+      {
+        "end": "2008-02-12",
+        "gap_days": 11.0
+      },
+      {
+        "end": "2011-02-08",
+        "gap_days": 11.0
+      },
+      {
+        "end": "2015-02-24",
+        "gap_days": 11.0
+      },
+      {
+        "end": "2001-01-29",
+        "gap_days": 10.0
+      },
+      {
+        "end": "2005-02-14",
+        "gap_days": 10.0
+      },
+      {
+        "end": "2006-02-06",
+        "gap_days": 10.0
+      },
+      {
+        "end": "2009-02-02",
+        "gap_days": 10.0
+      },
+      {
+        "end": "2010-02-22",
+        "gap_days": 10.0
+      }
+    ],
+    "sessions_per_weekday": {
+      "Wednesday": 1276,
+      "Friday": 1273,
+      "Monday": 1239,
+      "Thursday": 1200,
+      "Tuesday": 1191
+    },
+    "n_weekend_sessions": 0
+  },
+  "gap_anomalies": {
+    "min_missing_business_days": 2,
+    "n_gaps_examined": 71,
+    "n_holiday_consistent": 70,
+    "n_unexplained": 1,
+    "unexplained_gaps": [
+      {
+        "prev_session": "2008-05-26",
+        "next_session": "2008-05-30",
+        "calendar_gap_days": 4,
+        "missing_business_days": 3,
+        "classification": "UNEXPLAINED - outside every known holiday window"
+      }
+    ],
+    "total_missing_business_days_in_unexplained_gaps": 3
+  }
+}
