@@ -56,3 +56,6 @@ desktop.ini
 .vscode/
 *.swp
 *~
+
+# --- Report build tooling ------------------------------------------------
+node_modules/

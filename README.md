@@ -207,7 +207,8 @@ TimeSeries/
 │   └── run_all.py          end-to-end pipeline runner
 ├── figures/        01..09 PNG, 150 dpi
 ├── results/        JSON + CSV, one file per analysis stage
-├── reports/        (final academic report — not written yet)
+├── reports/        build_report.js  — generates the Word report from results/
+│                   BaoCao_PhanTichChuoiThoiGian_VNIndex.docx (+ .pdf)
 ├── tests/          pytest suite
 └── requirements.txt
 ```
@@ -247,14 +248,14 @@ pipeline reproduces the numbers above exactly.
 | Stationarity ADF + KPSS (`stationarity.py`) | **VERIFIED** |
 | ACF / PACF + Ljung-Box (`autocorrelation.py`) | **VERIFIED** |
 | Figures 01–09 | **VERIFIED** — files exist on disk |
-| Test suite (`tests/`) | **VERIFIED** — 14 passed |
+| Test suite (`tests/`) | **VERIFIED** — 19 passed |
+| Vietnamese Word report (`reports/`) | **VERIFIED** — 40 pages, built from `results/`, TOC/figure/table lists populated |
 | Volatility modelling (ARCH-LM, GARCH) | **NOT IMPLEMENTED** |
 | Chronological train/val/test split | **NOT IMPLEMENTED** |
 | Forecasting models (naive, MA, ETS, ARIMA) | **NOT IMPLEMENTED** |
 | Forecast evaluation vs naive baseline | **NOT IMPLEMENTED** |
 | Residual diagnostics of fitted models | **NOT IMPLEMENTED** |
 | Notebooks | **NOT IMPLEMENTED** |
-| Academic report (`reports/`) | **NOT IMPLEMENTED** |
 
 ## 6. Sources
 

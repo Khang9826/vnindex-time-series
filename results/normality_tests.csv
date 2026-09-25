@@ -1,7 +1,7 @@
 series,test,H0,H1,statistic,p_value,df,n
-Daily log return (%),Jarque-Bera,Sample skewness and kurtosis match a normal distribution,Skewness and/or kurtosis differ from normal,3449.7730719491115,0.0,2.0,6328
-Daily log return (%),DAgostino-Pearson K2,Sample comes from a normal distribution,Sample does not come from a normal distribution,689.4829925276483,1.9084047531105903e-150,2.0,6328
-Daily log return (%),Shapiro-Wilk (n=5000 sub-sample),Sample comes from a normal distribution,Sample does not come from a normal distribution,0.9397607935134991,4.597387572526087e-41,,5000
-Daily simple return (%),Jarque-Bera,Sample skewness and kurtosis match a normal distribution,Skewness and/or kurtosis differ from normal,3161.1793411588983,0.0,2.0,6328
-Daily simple return (%),DAgostino-Pearson K2,Sample comes from a normal distribution,Sample does not come from a normal distribution,597.9264119646316,1.451875409962544e-130,2.0,6328
-Daily simple return (%),Shapiro-Wilk (n=5000 sub-sample),Sample comes from a normal distribution,Sample does not come from a normal distribution,0.9422523399001895,2.027317079772467e-40,,5000
+Daily log return (%),Jarque-Bera,Sample skewness and kurtosis match a normal distribution,Skewness and/or kurtosis differ from normal,3475.057781684408,0.0,2.0,6178
+Daily log return (%),DAgostino-Pearson K2,Sample comes from a normal distribution,Sample does not come from a normal distribution,685.150136079284,1.665475746864407e-149,2.0,6178
+Daily log return (%),Shapiro-Wilk (n=5000 sub-sample),Sample comes from a normal distribution,Sample does not come from a normal distribution,0.9375511811188276,1.2845416659306472e-41,,5000
+Daily simple return (%),Jarque-Bera,Sample skewness and kurtosis match a normal distribution,Skewness and/or kurtosis differ from normal,3184.318907761227,0.0,2.0,6178
+Daily simple return (%),DAgostino-Pearson K2,Sample comes from a normal distribution,Sample does not come from a normal distribution,593.7826532920452,1.1527499517050885e-129,2.0,6178
+Daily simple return (%),Shapiro-Wilk (n=5000 sub-sample),Sample comes from a normal distribution,Sample does not come from a normal distribution,0.9397373579758119,4.534741255107306e-41,,5000

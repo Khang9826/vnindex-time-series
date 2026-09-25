@@ -79,11 +79,14 @@ def main() -> int:
     import analysis
     desc = analysis.descriptive_table(features)
     desc.to_csv(config.RESULTS_DIR / "descriptive_statistics.csv")
+    norm = (
+        analysis.normality_tests(features["LogReturn_pct"], "Daily log return (%)")
+        + analysis.normality_tests(features["SimpleReturn_pct"], "Daily simple return (%)")
+    )
+    import pandas as _pd
+    _pd.DataFrame(norm).to_csv(config.RESULTS_DIR / "normality_tests.csv", index=False)
     payload = {
-        "normality_tests": analysis.normality_tests(features["LogReturn_pct"],
-                                                    "Daily log return (%)")
-        + analysis.normality_tests(features["SimpleReturn_pct"],
-                                   "Daily simple return (%)"),
+        "normality_tests": norm,
         "tail_comparison_log_returns": analysis.tail_comparison(features["LogReturn_pct"]),
         "extreme_moves": analysis.extreme_moves(features),
         "day_of_week_effect": analysis.day_of_week_effect(features),
