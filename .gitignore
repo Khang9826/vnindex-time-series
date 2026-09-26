@@ -59,3 +59,6 @@ desktop.ini
 
 # --- Report build tooling ------------------------------------------------
 node_modules/
+
+# Report PDF is not tracked - the .docx is the deliverable
+reports/*.pdf

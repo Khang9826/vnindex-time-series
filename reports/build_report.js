@@ -64,6 +64,25 @@ const norm = readCSV("results/normality_tests.csv");
 const stat = readCSV("results/stationarity_tests.csv");
 const ljung = readCSV("results/ljung_box_tests.csv");
 
+// --- multi-series layer ----------------------------------------------------
+const inventory = readJSON("results/series_inventory.json");
+const squality = readJSON("results/series_quality.json");
+const battery = readJSON("results/multiseries_battery.json");
+const crossFam = readCSV("results/cross_family_checks.csv");
+
+const BY = Object.fromEntries(battery.series.map((s) => [s.key, s]));
+const matched1D = battery.matched_period_comparison["1D"];
+const corr1D = battery.return_correlations["1D"];
+const scaleVNI = Object.fromEntries(
+  battery.frequency_scaling.VNINDEX.rows.map((r) => [r.timeframe, r])
+);
+const totalBars = Object.values(inventory).reduce((a, m) => a + m.n_rows, 0);
+const nPrimary = battery.series.length;
+const nTrimmed = Object.values(inventory).filter((m) => m.trim && m.trim.applied).length;
+const nNonStationary = battery.series.filter((s) => s.level_verdict === "NON-STATIONARY").length;
+const nNonNormal = battery.series.filter((s) => s.jarque_bera.reject_normal).length;
+const nAmbiguous = battery.series.filter((s) => s.return_verdict !== "STATIONARY");
+
 // ---------------------------------------------------------------------------
 // Dinh dang so
 // ---------------------------------------------------------------------------
@@ -128,6 +147,25 @@ const Bullet = (text) =>
     children: [new TextRun({ text, size: 26 })],
   });
 
+// --- Danh so bang ----------------------------------------------------------
+// Cac tham chieu "Bang N" trong than bai KHONG duoc go tay: chung duoc tra ra
+// tu danh sach thu tu duoi day. Truong SEQ trong caption va bo dem nay cung
+// chay theo thu tu tai lieu nen luon khop nhau; ham TabCaption kiem tra lai
+// dieu do va nem loi neu thu tu bi lech.
+const TABLE_ORDER = [
+  "variables", "crossSource", "coverage", "session", "quality", "multiQuality",
+  "descriptive", "normality", "tails", "stationarity", "acf", "ljung",
+  "yearVol", "dow", "calendarTests", "extreme",
+  "universal", "matched", "scaling", "corr1D", "fx", "crossFam",
+  "status",
+];
+const TAB_NO = Object.fromEntries(TABLE_ORDER.map((id, i) => [id, i + 1]));
+const tn = (id) => {
+  if (!(id in TAB_NO)) throw new Error(`unknown table id: ${id}`);
+  return TAB_NO[id];
+};
+let _tabSeen = 0;
+
 // Caption cho hinh / bang, dung style "Caption" de sinh danh muc tu dong
 const FigCaption = (text) =>
   new Paragraph({
@@ -141,8 +179,16 @@ const FigCaption = (text) =>
     ],
   });
 
-const TabCaption = (text) =>
-  new Paragraph({
+const TabCaption = (id, text) => {
+  _tabSeen += 1;
+  if (TABLE_ORDER[_tabSeen - 1] !== id) {
+    throw new Error(
+      `table order mismatch at position ${_tabSeen}: emitted "${id}" but ` +
+      `TABLE_ORDER expects "${TABLE_ORDER[_tabSeen - 1]}". Update TABLE_ORDER ` +
+      `so in-text "Bảng N" references stay correct.`
+    );
+  }
+  return new Paragraph({
     style: "Caption",
     alignment: AlignmentType.CENTER,
     spacing: { before: 200, after: 80, line: 276 },
@@ -152,6 +198,7 @@ const TabCaption = (text) =>
       new TextRun({ text: ": " + text, size: 24 }),
     ],
   });
+};
 
 const Figure = (file, ratioHeight) => {
   const width = 590;
@@ -551,7 +598,14 @@ const tblStatus = makeTable(
     ["Phân tích biến động mô tả (rolling, phân rã theo năm)", "ĐÃ KIỂM CHỨNG"],
     ["Phân tích hiệu ứng lịch", "ĐÃ KIỂM CHỨNG"],
     ["Phân tích quan sát cực đoan", "ĐÃ KIỂM CHỨNG"],
-    ["Bộ kiểm thử tự động (19 test)", "ĐÃ KIỂM CHỨNG"],
+    ["Đăng ký toàn bộ 19 tệp nguồn (catalog.py)", "ĐÃ KIỂM CHỨNG"],
+    ["Nạp và kiểm tra chất lượng toàn bộ 19 chuỗi", "ĐÃ KIỂM CHỨNG"],
+    ["Đối chiếu chéo giữa hai họ tệp dữ liệu", "ĐÃ KIỂM CHỨNG"],
+    ["Bộ thống kê so sánh trên 13 chuỗi chính", "ĐÃ KIỂM CHỨNG"],
+    ["Kiểm soát giai đoạn mẫu giữa các chỉ số", "ĐÃ KIỂM CHỨNG"],
+    ["Phân tích theo tần suất lấy mẫu và cấu trúc trong phiên", "ĐÃ KIỂM CHỨNG"],
+    ["Ma trận tương quan giữa các lớp tài sản", "ĐÃ KIỂM CHỨNG"],
+    ["Bộ kiểm thử tự động (176 test)", "ĐÃ KIỂM CHỨNG"],
     ["Kiểm định ARCH-LM", "CHƯA TRIỂN KHAI"],
     ["Mô hình GARCH", "CHƯA TRIỂN KHAI"],
     ["Chia tập train/validation/test theo thời gian", "CHƯA TRIỂN KHAI"],
@@ -560,6 +614,128 @@ const tblStatus = makeTable(
     ["Chẩn đoán phần dư của mô hình", "CHƯA TRIỂN KHAI"],
   ],
   [64, 36], { size: 21 }
+);
+
+// ---------------------------------------------------------------------------
+// Bang cho phan phan tich da chuoi
+// ---------------------------------------------------------------------------
+const TF_VI = { "1D": "Ngày", H4: "Phiên nửa ngày", H1: "1 giờ", M30: "30 phút" };
+
+const tblDatasetCoverage = makeTable(
+  ["Chuỗi", "Tần suất", "Họ tệp", "Khối lượng", "Số quan sát", "Giai đoạn"],
+  battery.series.map((s) => {
+    const inv = inventory[s.key];
+    return [
+      s.symbol, TF_VI[s.timeframe] || s.timeframe, s.family,
+      inv.has_volume ? "Có" : "Không", int(inv.n_rows),
+      `${inv.first_date} – ${inv.last_date}`,
+    ];
+  }),
+  [14, 16, 15, 12, 15, 28], { size: 20 }
+);
+
+const tblSessionStructure = makeTable(
+  ["Tần suất", "Số thanh/phiên", "Giờ mở của các thanh", "Ghi chú"],
+  [
+    ["30 phút", "10", "09:00, 09:30, 10:00, 10:30, 11:00, 11:30, 13:00, 13:30, 14:00, 14:30",
+     "Thanh 11:30 chỉ dài 15 phút"],
+    ["1 giờ", "5", "09:00, 10:00, 11:00, 13:00, 14:00", "Thanh 11:00 chỉ dài 30 phút"],
+    ["Phiên nửa ngày", "2", "09:00, 13:00", "Mỗi thanh là một phiên, không phải 4 giờ đồng hồ"],
+    ["Ngày", "1", "09:00", "Một thanh cho cả ngày giao dịch"],
+  ],
+  [16, 13, 42, 29], { size: 20 }
+);
+
+const tblMultiQuality = makeTable(
+  ["Hạng mục kiểm tra trên toàn bộ dữ liệu", "Kết quả"],
+  (() => {
+    const sum = (f) => Object.values(squality).reduce((a, r) => a + (r[f] || 0), 0);
+    return [
+      ["Số chuỗi được kiểm tra", String(Object.keys(squality).length)],
+      ["Tổng số quan sát", int(totalBars)],
+      ["Timestamp trùng lặp", int(sum("n_duplicate_timestamps"))],
+      ["Dòng khuyết giá trị OHLC", int(sum("ohlcv_missing_rows"))],
+      ["Giá ≤ 0", int(sum("non_positive_price"))],
+      ["High < Low", int(sum("high_lt_low"))],
+      ["Thanh OHLC mâu thuẫn nội tại", int(sum("ohlc_inconsistent_bars"))],
+      ["Thanh rơi vào cuối tuần", int(sum("weekend_bars"))],
+      ["Số đuôi dữ liệu chưa hoàn tất đã cắt bỏ", String(nTrimmed)],
+    ];
+  })(),
+  [58, 42]
+);
+
+const tblUniversal = makeTable(
+  ["Đặc trưng thống kê", "Số chuỗi thỏa mãn", "Tỷ lệ"],
+  [
+    ["Chuỗi mức KHÔNG dừng (ADF và KPSS đồng thuận)",
+     `${nNonStationary}/${nPrimary}`, `${num(100 * nNonStationary / nPrimary, 1)}%`],
+    ["Lợi suất KHÔNG tuân theo phân phối chuẩn (Jarque–Bera)",
+     `${nNonNormal}/${nPrimary}`, `${num(100 * nNonNormal / nPrimary, 1)}%`],
+    ["Có cụm biến động (Ljung–Box trên r², p < 0.05)",
+     `${battery.series.filter((s) => s.ljung_box_sq_p10 < 0.05).length}/${nPrimary}`,
+     `${num(100 * battery.series.filter((s) => s.ljung_box_sq_p10 < 0.05).length / nPrimary, 1)}%`],
+  ],
+  [58, 24, 18]
+);
+
+const tblMatched = makeTable(
+  ["Chỉ số", "ACF(1) trên mẫu riêng", "ACF(1) trên giai đoạn chung", "Có ý nghĩa thống kê?"],
+  ["VNINDEX", "VN30", "VN100"].map((sym) => [
+    sym,
+    num(BY[`${sym}_1D`].acf1_return, 4),
+    num(matched1D.stats[sym].acf1, 4),
+    matched1D.stats[sym].acf1_significant ? "Có" : "Không",
+  ]),
+  [20, 27, 30, 23], { numericFrom: 1 }
+);
+
+const tblScaling = makeTable(
+  ["Tần suất", "Số thanh/ngày", "Độ lệch chuẩn (%)", "Quy về đơn vị ngày (%)", "Độ nhọn vượt"],
+  ["M30", "H1", "H4", "1D"].filter((tf) => scaleVNI[tf]).map((tf) => {
+    const r = scaleVNI[tf];
+    return [TF_VI[tf], String(r.bars_per_day), num(r.sd_pct, 4),
+            num(r.sd_scaled_to_daily_pct, 4), num(r.excess_kurtosis, 2)];
+  }),
+  [20, 16, 21, 24, 19], { numericFrom: 1 }
+);
+
+const tblCorr1D = makeTable(
+  ["", ...corr1D.symbols],
+  corr1D.symbols.map((a) => [a, ...corr1D.symbols.map((b) => num(corr1D.pearson[a][b], 4))]),
+  [22, ...corr1D.symbols.map(() => Math.round(78 / corr1D.symbols.length))],
+  { numericFrom: 1 }
+);
+
+const tblCrossFam = makeTable(
+  ["Chuỗi chính", "Chuỗi đối chiếu", "Số thanh chung", "Tương quan", "Trung vị sai lệch", "Sai lệch > 0.1%"],
+  crossFam.map((r) => [
+    r.primary, r.crosscheck, int(r.n_common_bars),
+    num(r.close_correlation, 8),
+    Number(r.median_abs_rel_diff).toExponential(2),
+    num(r["pct_bars_differing_gt_0.1pct"], 3) + "%",
+  ]),
+  [17, 19, 14, 18, 17, 15], { numericFrom: 2, size: 19 }
+);
+
+const uFX = BY["USDVND_1D"];
+const tblFX = makeTable(
+  ["Đặc trưng", "USD/VND", "Ba chỉ số cổ phiếu (ngày)"],
+  [
+    ["Độ nhọn vượt", num(uFX.excess_kurtosis, 2),
+     ["VNINDEX", "VN30", "VN100"].map((s) => num(BY[`${s}_1D`].excess_kurtosis, 2)).join(" / ")],
+    ["ACF(1) của lợi suất", num(uFX.acf1_return, 4),
+     ["VNINDEX", "VN30", "VN100"].map((s) => num(BY[`${s}_1D`].acf1_return, 4)).join(" / ")],
+    ["Tỷ lệ Open trùng Close phiên trước",
+     num(squality.USDVND_1D.stale_open_share * 100, 1) + "%",
+     ["VNINDEX", "VN30", "VN100"].map((s) => num(squality[`${s}_1D`].stale_open_share * 100, 1) + "%").join(" / ")],
+    ["Kết luận tính dừng của lợi suất",
+     uFX.return_verdict === "STATIONARY" ? "DỪNG" : uFX.return_verdict === "AMBIGUOUS" ? "MƠ HỒ" : "KHÔNG DỪNG",
+     "DỪNG / DỪNG / DỪNG"],
+    ["Số khoảng trống ≥ 2 ngày làm việc",
+     String(squality.USDVND_1D.gaps_ge_2_business_days), "—"],
+  ],
+  [34, 22, 44], { size: 20 }
 );
 
 // ---------------------------------------------------------------------------
@@ -675,11 +851,18 @@ add(H("Câu hỏi nghiên cứu", HeadingLevel.HEADING_2));
 
 add(H("Phạm vi nghiên cứu", HeadingLevel.HEADING_2));
 add(Rich([
-  T("Phạm vi dữ liệu của nghiên cứu là chuỗi VN-Index tần suất ngày trong giai đoạn từ "),
+  T("Chuỗi nghiên cứu trọng tâm là VN-Index tần suất ngày trong giai đoạn từ "),
   T(meta.first_date, { b: true }), T(" đến "), T(meta.last_date, { b: true }),
   T(`, tương ứng ${int(meta.n_rows)} phiên giao dịch. Biến phân tích chính là giá trị đóng cửa (Close); khối lượng khớp lệnh được sử dụng để mô tả bối cảnh thanh khoản.`),
 ]));
-add(P("Nghiên cứu không bao gồm dữ liệu trong phiên (intraday), không bao gồm các chỉ số thành phần như VN30 hay VN100, không phân tích cổ phiếu riêng lẻ và không sử dụng biến kinh tế vĩ mô. Giai đoạn phân tích kết thúc ở ngày cuối cùng có dữ liệu đầy đủ của nguồn dữ liệu chính."));
+add(Rich([
+  T("Ngoài chuỗi trọng tâm, nghiên cứu sử dụng "),
+  T("toàn bộ bộ dữ liệu nguồn", { b: true }),
+  T(`, gồm ${Object.keys(inventory).length} tệp với tổng cộng `),
+  T(int(totalBars) + " quan sát", { b: true }),
+  T(": ba chỉ số cổ phiếu (VN-Index, VN30, VN100) ở bốn tần suất lấy mẫu (30 phút, 1 giờ, phiên nửa ngày, ngày) và một chuỗi tỷ giá USD/VND. Phần dữ liệu mở rộng này phục vụ ba mục đích: kiểm tra xem các kết luận rút ra từ VN-Index có đúng với các phân khúc thị trường khác hay không, xem chúng thay đổi thế nào theo tần suất lấy mẫu, và so sánh với một chuỗi tài chính khác lớp tài sản."),
+]));
+add(P("Nghiên cứu không phân tích cổ phiếu riêng lẻ và không sử dụng biến kinh tế vĩ mô. Giai đoạn phân tích của mỗi chuỗi kết thúc ở quan sát hoàn chỉnh cuối cùng mà nguồn dữ liệu cung cấp cho chuỗi đó; các mốc kết thúc khác nhau giữa hai họ tệp và được ghi rõ trong Chương 3."));
 
 add(new Paragraph({ children: [new PageBreak()] }));
 
@@ -753,18 +936,18 @@ add(Rich([
   T(` phiên giao dịch, trải dài từ ${meta.first_date} đến ${meta.last_date}. Các biến được mô tả trong Bảng `),
   T("1", { b: true }), T("."),
 ]));
-add(TabCaption("Mô tả các biến trong bộ dữ liệu VN-Index"));
+add(TabCaption("variables", "Mô tả các biến trong bộ dữ liệu VN-Index"));
 add(tblVariables);
 add(Note("Nguồn: data/raw/vnindex_raw_meta.json (sinh bởi src/data_loader.py)."));
 
 add(P("Hai đặc tính của nguồn dữ liệu được xử lý một cách tường minh thay vì bỏ qua:"));
 add(Rich([
   T("Thứ nhất, thanh dữ liệu cuối cùng trong tệp nguồn (ngày "),
-  T(meta.dropped_final_partial_bar.date, { b: true }),
+  T(meta.trim.dropped_date, { b: true }),
   T(") là một phiên CHƯA HOÀN TẤT. Bộ dữ liệu được công bố vào giữa phiên giao dịch đó; khối lượng của thanh này chỉ đạt "),
-  T(int(meta.dropped_final_partial_bar.volume), { b: true }),
+  T(int(meta.trim.volume), { b: true }),
   T(" cổ phiếu so với trung vị 21 phiên gần nhất là "),
-  T(int(Math_round(meta.dropped_final_partial_bar.median_volume_last_21_sessions)), { b: true }),
+  T(int(Math_round(meta.trim.median_volume_last_21_bars)), { b: true }),
   T(" cổ phiếu. Thanh này đã bị loại bỏ và việc loại bỏ được ghi lại trong tệp siêu dữ liệu."),
 ]));
 add(Rich([
@@ -774,8 +957,8 @@ add(Rich([
 ]));
 
 add(H("Đối chiếu với nguồn dữ liệu độc lập", HeadingLevel.HEADING_2));
-add(P("Do nguồn chính là bản phân phối lại bởi bên thứ ba chứ không phải công bố chính thức của HOSE, nghiên cứu thực hiện đối chiếu định lượng với nguồn độc lập. Kết quả được trình bày trong Bảng 2."));
-add(TabCaption("Kết quả đối chiếu nguồn dữ liệu chính với nguồn độc lập"));
+add(P(`Do nguồn chính là bản phân phối lại bởi bên thứ ba chứ không phải công bố chính thức của HOSE, nghiên cứu thực hiện đối chiếu định lượng với nguồn độc lập. Kết quả được trình bày trong Bảng ${tn('crossSource')}.`));
+add(TabCaption("crossSource", "Kết quả đối chiếu nguồn dữ liệu chính với nguồn độc lập"));
 add(tblCross);
 add(Note("Nguồn: results/source_crosscheck.json (sinh bởi src/data_crosscheck.py)."));
 add(Rich([
@@ -789,9 +972,48 @@ add(Rich([
 ]));
 add(P("Phần sai lệch còn lại tập trung ở giai đoạn thị trường mỏng trước năm 2010 và được ghi nhận như một hạn chế của dữ liệu, không phải khiếm khuyết làm vô hiệu phân tích."));
 
+add(H("Toàn bộ bộ dữ liệu nguồn", HeadingLevel.HEADING_2));
+add(Rich([
+  T(`Bộ dữ liệu nguồn gồm ${Object.keys(inventory).length} tệp CSV, được sử dụng đầy đủ trong nghiên cứu này với tổng cộng `),
+  T(int(totalBars) + " quan sát", { b: true }),
+  T(". Các tệp thuộc hai họ có lược đồ và mốc kết thúc khác nhau:"),
+]));
+[
+  "Họ HOSE_DLY (6 tệp): có cột khối lượng, dữ liệu kéo dài tới 2025-12-12, nhưng chỉ cung cấp tần suất ngày và 30 phút.",
+  "Họ HOSE (13 tệp): không có cột khối lượng, kết thúc ở 2024-12-09, nhưng cung cấp đủ bốn tần suất và là nguồn duy nhất của chuỗi USD/VND.",
+].forEach((t) => add(Bullet(t)));
+add(P(`Vì không họ nào bao phủ toàn bộ, nghiên cứu chọn một tệp CHÍNH cho mỗi cặp (chỉ số, tần suất) và giữ tệp trùng lặp của họ còn lại làm phiên bản ĐỐI CHIẾU độc lập. Họ HOSE_DLY được ưu tiên ở nơi nó tồn tại vì có khối lượng và dài hơn một năm; họ HOSE là nguồn chính cho tần suất 1 giờ, phiên nửa ngày và cho USD/VND. Bảng ${tn('coverage')} liệt kê toàn bộ các chuỗi chính.`));
+add(TabCaption("coverage", "Các chuỗi dữ liệu chính được sử dụng trong nghiên cứu"));
+add(tblDatasetCoverage);
+add(Note("Nguồn: results/series_inventory.json (sinh bởi src/data_loader.py, đăng ký trong src/catalog.py)."));
+
+add(H("Cấu trúc phiên giao dịch và hệ quả đối với dữ liệu trong phiên", HeadingLevel.HEADING_2));
+add(P(`Cấu trúc phiên được xác định TỪ CHÍNH DỮ LIỆU (thời điểm mở của các thanh), không phải từ giả định. Sàn HOSE giao dịch buổi sáng 09:00–11:30 và buổi chiều 13:00–14:45 theo giờ Việt Nam. Bảng ${tn('session')} tóm tắt số thanh dữ liệu tương ứng mỗi phiên.`));
+add(TabCaption("session", "Cấu trúc phiên giao dịch theo từng tần suất lấy mẫu"));
+add(tblSessionStructure);
+add(Note("Nguồn: src/catalog.py, đối chiếu với phân bố thời điểm thanh trong dữ liệu thực tế."));
+add(P("Hai hệ quả được xử lý tường minh thay vì bỏ qua:"));
+add(Rich([
+  T("Thứ nhất, thanh cuối mỗi phiên là thanh cụt: thanh 11:30 ở tần suất 30 phút chỉ dài 15 phút, thanh 11:00 ở tần suất 1 giờ chỉ dài 30 phút. Tần suất gọi là \"4 giờ\" thực chất là "),
+  T("một thanh cho mỗi phiên nửa ngày", { b: true }),
+  T(", không phải thanh 4 giờ đồng hồ."),
+]));
+add(Rich([
+  T("Thứ hai, trên lưới trong phiên các thanh liên tiếp "),
+  T("KHÔNG cách đều nhau theo thời gian thực", { b: true }),
+  T(". Thanh đầu tiên của một ngày bắc qua khoảng nghỉ đêm (khoảng 18 giờ) và thanh 13:00 bắc qua giờ nghỉ trưa. Nếu gộp chung, ta sẽ trộn một lợi suất một ngày vào mẫu các lợi suất 30 phút và làm sai lệch mọi ước lượng mô men. Vì vậy các thanh này được ĐÁNH DẤU và LOẠI khỏi thống kê trong phiên. Riêng ở tần suất phiên nửa ngày thì mọi thanh đều bắc qua một khoảng nghỉ, nên sự phân biệt này không còn ý nghĩa và toàn bộ thanh được sử dụng — điều này được nêu rõ chứ không xử lý ngầm."),
+]));
+
+add(H("Xử lý đuôi dữ liệu chưa hoàn tất", HeadingLevel.HEADING_2));
+add(Rich([
+  T("Các tệp họ HOSE_DLY được công bố vào giữa phiên giao dịch ngày 2025-12-12, nên quan sát cuối của chúng là quan sát dở dang. Quy tắc cắt bỏ được chọn theo tần suất: với thanh ngày, cắt thanh cuối khi khối lượng của nó tụt xuống dưới 60% trung vị gần nhất (tỷ lệ quan sát thực tế 0.40–0.47 ở cả ba chỉ số); với dữ liệu trong phiên, cắt cả NGÀY cuối cùng khi ngày đó có ít thanh hơn một phiên đầy đủ (quan sát thực tế: 7 trên 10 thanh). Tổng cộng "),
+  T(nTrimmed + " đuôi dữ liệu", { b: true }),
+  T(" đã được cắt bỏ. Họ HOSE kết thúc bằng các phiên hoàn chỉnh nên không bị cắt — điều này đã được kiểm chứng chứ không giả định."),
+]));
+
 add(H("Kiểm tra chất lượng dữ liệu", HeadingLevel.HEADING_2));
-add(P("Quy trình kiểm tra chất lượng chỉ thực hiện đo lường và báo cáo, không thay đổi dữ liệu. Kết quả được tổng hợp trong Bảng 3."));
-add(TabCaption("Kết quả kiểm tra chất lượng dữ liệu thô"));
+add(P(`Quy trình kiểm tra chất lượng chỉ thực hiện đo lường và báo cáo, không thay đổi dữ liệu. Kết quả được tổng hợp trong Bảng ${tn('quality')}.`));
+add(TabCaption("quality", "Kết quả kiểm tra chất lượng dữ liệu thô"));
 add(tblQuality);
 add(Note("Nguồn: results/data_quality_report.json (sinh bởi src/data_quality.py)."));
 add(Rich([
@@ -802,6 +1024,22 @@ add(Rich([
   T(" khoảng trống phù hợp với các kỳ nghỉ lễ Việt Nam (Tết Nguyên đán, Giỗ Tổ Hùng Vương, 30/4–1/5, Quốc khánh, Tết Dương lịch) và "),
   T(int(gq.n_unexplained), { b: true }),
   T(" khoảng trống không giải thích được. Quan sát lợi suất tính qua khoảng trống này được ĐÁNH DẤU chứ không bị loại bỏ."),
+]));
+
+add(P(`Quy trình kiểm tra tương tự được áp dụng cho TOÀN BỘ các chuỗi trong bộ dữ liệu, không riêng chuỗi trọng tâm. Kết quả tổng hợp trong Bảng ${tn('multiQuality')}.`));
+add(TabCaption("multiQuality", "Kết quả kiểm tra chất lượng trên toàn bộ bộ dữ liệu"));
+add(tblMultiQuality);
+add(Note("Nguồn: results/series_quality.json (sinh bởi src/data_quality.py)."));
+add(Rich([
+  T("Trên "), T(int(totalBars), { b: true }),
+  T(" quan sát của toàn bộ bộ dữ liệu, không phát hiện "),
+  T("bất kỳ", { b: true }),
+  T(" timestamp trùng lặp, giá trị khuyết, giá phi lý, thanh có High < Low, thanh OHLC mâu thuẫn nội tại hay thanh rơi vào cuối tuần nào. Đây là mức chất lượng cao bất thường đối với dữ liệu thị trường được phân phối lại bởi bên thứ ba, và là lý do bộ dữ liệu này được chấp nhận làm nguồn chính."),
+]));
+add(Rich([
+  T("Một lưu ý quan trọng về phạm vi áp dụng: bộ phân loại khoảng trống lịch mã hóa lịch nghỉ lễ của sàn HOSE, nên nó CHỈ được áp dụng cho ba chỉ số cổ phiếu niêm yết trên HOSE. Chuỗi USD/VND giao dịch theo lịch hoàn toàn khác; với chuỗi này các khoảng trống vẫn được đếm nhưng "),
+  T("không được gán kết luận", { b: true }),
+  T(", vì gọi một khoảng trống của thị trường ngoại hối là \"không giải thích được\" khi đối chiếu với lịch nghỉ lễ chứng khoán Việt Nam là một phán quyết vô nghĩa."),
 ]));
 
 add(H("Tiền xử lý dữ liệu", HeadingLevel.HEADING_2));
@@ -847,8 +1085,8 @@ add(H("KẾT QUẢ VÀ THẢO LUẬN", HeadingLevel.HEADING_1));
 add(Note(`Toàn bộ số liệu trong chương này được sinh ra từ việc thực thi thực tế mã nguồn của dự án trên bộ dữ liệu ${meta.first_date} – ${meta.last_date}, và được đọc trực tiếp từ các tệp trong thư mục results/ khi tạo báo cáo này.`));
 
 add(H("Thống kê mô tả", HeadingLevel.HEADING_2));
-add(P("Bảng 4 trình bày thống kê mô tả của chuỗi mức chỉ số và các chuỗi lợi suất. Cần nhấn mạnh rằng thống kê mô tả của chuỗi mức và chuỗi lợi suất có ý nghĩa diễn giải hoàn toàn khác nhau: các thống kê của chuỗi mức chỉ mô tả vị trí của chỉ số trong giai đoạn quan sát và không phải là đại lượng ổn định theo thời gian."));
-add(TabCaption("Thống kê mô tả chuỗi VN-Index và chuỗi lợi suất"));
+add(P(`Bảng ${tn('descriptive')} trình bày thống kê mô tả của chuỗi mức chỉ số và các chuỗi lợi suất. Cần nhấn mạnh rằng thống kê mô tả của chuỗi mức và chuỗi lợi suất có ý nghĩa diễn giải hoàn toàn khác nhau: các thống kê của chuỗi mức chỉ mô tả vị trí của chỉ số trong giai đoạn quan sát và không phải là đại lượng ổn định theo thời gian.`));
+add(TabCaption("descriptive", "Thống kê mô tả chuỗi VN-Index và chuỗi lợi suất"));
 add(tblDescriptive);
 add(Note("Nguồn: results/descriptive_statistics.csv."));
 add(Rich([
@@ -891,8 +1129,8 @@ add(P("Khác với chuỗi mức, chuỗi lợi suất dao động quanh mức g
 add(P("Hình 4 khảo sát phân phối của chuỗi lợi suất bằng ba góc nhìn: biểu đồ tần suất đối chiếu với phân phối chuẩn khớp, cùng biểu đồ đó ở thang mật độ logarit để quan sát phần đuôi, và biểu đồ Q-Q chuẩn."));
 add(Figure("04_return_distribution.png", 595 / 1934));
 add(FigCaption("Phân phối lợi suất logarit hàng ngày của VN-Index"));
-add(P("Trên biểu đồ Q-Q, các quan sát ở hai đầu lệch rõ khỏi đường chuẩn, cho thấy cả hai đuôi đều dày hơn phân phối chuẩn. Tuy nhiên, quan sát trực quan không đủ để kết luận; kết quả kiểm định hình thức được trình bày trong Bảng 5."));
-add(TabCaption("Kết quả kiểm định tính chuẩn của phân phối lợi suất"));
+add(P(`Trên biểu đồ Q-Q, các quan sát ở hai đầu lệch rõ khỏi đường chuẩn, cho thấy cả hai đuôi đều dày hơn phân phối chuẩn. Tuy nhiên, quan sát trực quan không đủ để kết luận; kết quả kiểm định hình thức được trình bày trong Bảng ${tn('normality')}.`));
+add(TabCaption("normality", "Kết quả kiểm định tính chuẩn của phân phối lợi suất"));
 add(tblNormality);
 add(Note("Nguồn: results/normality_tests.csv. Cả ba kiểm định đều có H₀: mẫu tuân theo phân phối chuẩn."));
 add(Rich([
@@ -904,8 +1142,8 @@ add(Rich([
   T(num(norm[2].statistic, 4), { b: true }), T(" với p-value "), T(pv(norm[2].p_value), { b: true }), T("."),
 ]));
 add(P("Kết luận: ở mức ý nghĩa α = 0.05, bác bỏ giả thuyết phân phối chuẩn. Đây là câu trả lời cho câu hỏi nghiên cứu CH2. Hệ quả phương pháp là mọi khoảng tin cậy hoặc kiểm định dựa trên giả định chuẩn tắc áp dụng trực tiếp cho lợi suất VN-Index đều cần được diễn giải thận trọng."));
-add(P("Bảng 6 định lượng mức độ dày của đuôi bằng cách so sánh số phiên vượt ngưỡng k lần độ lệch chuẩn với kỳ vọng dưới phân phối chuẩn."));
-add(TabCaption("So sánh tần suất quan sát ở đuôi với kỳ vọng dưới phân phối chuẩn"));
+add(P(`Bảng ${tn('tails')} định lượng mức độ dày của đuôi bằng cách so sánh số phiên vượt ngưỡng k lần độ lệch chuẩn với kỳ vọng dưới phân phối chuẩn.`));
+add(TabCaption("tails", "So sánh tần suất quan sát ở đuôi với kỳ vọng dưới phân phối chuẩn"));
 add(tblTails);
 add(Note("Nguồn: results/eda_results.json, mục tail_comparison_log_returns."));
 add(Rich([
@@ -921,8 +1159,8 @@ add(Figure("05_return_boxplots.png", 660 / 1935));
 add(FigCaption("Biểu đồ hộp của lợi suất logarit theo năm và theo ngày trong tuần"));
 
 add(H("Kết quả kiểm định tính dừng", HeadingLevel.HEADING_2));
-add(P("Bảng 7 trình bày kết quả kiểm định ADF và KPSS trên sáu chuỗi."));
-add(TabCaption("Kết quả kiểm định tính dừng ADF và KPSS (α = 0.05)"));
+add(P(`Bảng ${tn('stationarity')} trình bày kết quả kiểm định ADF và KPSS trên sáu chuỗi.`));
+add(TabCaption("stationarity", "Kết quả kiểm định tính dừng ADF và KPSS (α = 0.05)"));
 add(tblStationarity);
 add(Note("Nguồn: results/stationarity_tests.csv. Ký hiệu c = hằng số, ct = hằng số và xu thế. Giá trị p của KPSS bị chặn trong khoảng bảng tra [0.01, 0.10]."));
 add(P("Cách đọc kết quả như sau. Với chuỗi mức chỉ số, kiểm định ADF KHÔNG bác bỏ được giả thuyết nghiệm đơn vị, đồng thời kiểm định KPSS BÁC BỎ giả thuyết chuỗi dừng. Hai kiểm định có giả thuyết gốc trái ngược nhau cùng chỉ về một hướng, nên kết luận chuỗi mức không dừng là kết luận vững, không phải kết quả mơ hồ."));
@@ -951,8 +1189,8 @@ add(Rich([
   T(num(acorr.acf_pacf["VN-Index level (points)"].values[0].acf, 4), { b: true }),
   T(" và toàn bộ 40 độ trễ đều có ý nghĩa thống kê, trong khi PACF cắt cụt gần như ngay sau độ trễ 1. Đây là dạng đặc trưng của quá trình có nghiệm đơn vị, hoàn toàn nhất quán với kết quả kiểm định ở mục trước."),
 ]));
-add(P("Chuỗi lợi suất có cấu trúc khác hẳn. Bảng 8 trình bày năm độ trễ đầu tiên của ACF cho ba chuỗi liên quan."));
-add(TabCaption("Hệ số tự tương quan ACF tại năm độ trễ đầu tiên"));
+add(P(`Chuỗi lợi suất có cấu trúc khác hẳn. Bảng ${tn('acf')} trình bày năm độ trễ đầu tiên của ACF cho ba chuỗi liên quan.`));
+add(TabCaption("acf", "Hệ số tự tương quan ACF tại năm độ trễ đầu tiên"));
 add(tblACF);
 add(Note(`Nguồn: results/autocorrelation.json. Dải nhiễu trắng 95% là ±${num(acorr.acf_pacf["Daily log return (%)"].white_noise_band_95, 4)}.`));
 add(Rich([
@@ -962,14 +1200,22 @@ add(Rich([
   T(". Tổng cộng có "), T(`${acorr.acf_pacf["Daily log return (%)"].n_significant_acf_lags}/40`, { b: true }),
   T(" độ trễ có ý nghĩa. Mức tự tương quan bậc một dương và đáng kể này là đặc trưng thường thấy ở các thị trường mới nổi, nơi thông tin được phản ánh vào giá chậm hơn."),
 ]));
-add(P("Bảng 9 trình bày kết quả kiểm định Ljung–Box."));
-add(TabCaption("Kết quả kiểm định Ljung–Box tại các độ trễ 5, 10, 20 và 40"));
+add(P(`Bảng ${tn('ljung')} trình bày kết quả kiểm định Ljung–Box.`));
+add(TabCaption("ljung", "Kết quả kiểm định Ljung–Box tại các độ trễ 5, 10, 20 và 40"));
 add(tblLjung);
 add(Note("Nguồn: results/ljung_box_tests.csv. H₀: không có tự tương quan tới độ trễ h."));
 add(Rich([
   T("Giả thuyết nhiễu trắng bị bác bỏ ở mọi độ trễ được kiểm tra. Với chuỗi lợi suất, Q(10) = "),
   T(num(ljung[1].statistic, 2), { b: true }), T(" với p-value "), T(pv(ljung[1].p_value), { b: true }),
   T(". Đây là câu trả lời cho câu hỏi nghiên cứu CH3: lợi suất VN-Index CÓ phụ thuộc chuỗi có ý nghĩa thống kê, tuy mức độ khiêm tốn và tập trung ở độ trễ ngắn."),
+]));
+add(Rich([
+  T("CẢNH BÁO QUAN TRỌNG VỀ CÁCH DIỄN GIẢI. ", { b: true }),
+  T("Giá trị ACF(1) = "),
+  T(num(acorr.acf_pacf["Daily log return (%)"].values[0].acf, 4), { b: true }),
+  T(" nêu trên được tính trên TOÀN BỘ mẫu 2000–2025. Phân tích đa chuỗi ở mục 4.9 cho thấy con số này phần lớn phản ánh giai đoạn thị trường mỏng 2000–2013 chứ không phải đặc tính hiện tại của VN-Index: khi đo trên giai đoạn 2014–2025, hệ số này giảm xuống còn "),
+  T(num(matched1D.stats.VNINDEX.acf1, 4), { b: true }),
+  T(". Mọi phát biểu về mức độ phụ thuộc chuỗi của VN-Index chỉ dựa trên con số toàn mẫu mà bỏ qua lưu ý này đều gây hiểu nhầm."),
 ]));
 
 add(H("Kết quả phân tích biến động", HeadingLevel.HEADING_2));
@@ -993,8 +1239,8 @@ add(Rich([
   T(num(ljung[1].statistic, 2), { b: true }),
   T(" cho chuỗi lợi suất gốc. Đây là câu trả lời cho câu hỏi nghiên cứu CH4: VN-Index CÓ hiện tượng cụm biến động rõ rệt."),
 ]));
-add(P("Bảng 10 phân rã biến động theo từng năm dương lịch, cho phép so sánh định lượng giữa các giai đoạn yên tĩnh và các giai đoạn nhiều biến động."));
-add(TabCaption("Lợi suất và biến động quy đổi theo năm của VN-Index"));
+add(P(`Bảng ${tn('yearVol')} phân rã biến động theo từng năm dương lịch, cho phép so sánh định lượng giữa các giai đoạn yên tĩnh và các giai đoạn nhiều biến động.`));
+add(TabCaption("yearVol", "Lợi suất và biến động quy đổi theo năm của VN-Index"));
 add(tblYearVol);
 add(Note("Nguồn: results/eda_results.json, mục yearly_summary. Biến động quy đổi theo năm = độ lệch chuẩn lợi suất ngày × căn bậc hai của 252."));
 add(P("Bảng này cho thấy khoảng cách giữa năm yên tĩnh nhất và năm biến động nhất trong mẫu là rất lớn, củng cố kết luận rằng giả định phương sai không đổi là không phù hợp với chuỗi này."));
@@ -1004,11 +1250,11 @@ add(H("Kết quả phân tích hiệu ứng lịch", HeadingLevel.HEADING_2));
 add(P("Hình 9 trình bày lợi suất trung bình theo ngày trong tuần, theo tháng trong năm và lợi suất tích lũy theo năm."));
 add(Figure("07_calendar_effects.png", 585 / 1935));
 add(FigCaption("Lợi suất trung bình theo ngày trong tuần, theo tháng và lợi suất tích lũy theo năm"));
-add(P("Bảng 11 trình bày thống kê mô tả theo ngày trong tuần và Bảng 12 trình bày kết quả kiểm định hình thức."));
-add(TabCaption("Thống kê lợi suất logarit theo ngày trong tuần"));
+add(P(`Bảng ${tn('dow')} trình bày thống kê mô tả theo ngày trong tuần và Bảng ${tn('calendarTests')} trình bày kết quả kiểm định hình thức.`));
+add(TabCaption("dow", "Thống kê lợi suất logarit theo ngày trong tuần"));
 add(tblDow);
 add(Note("Nguồn: results/eda_results.json, mục day_of_week_effect."));
-add(TabCaption("Kết quả kiểm định hiệu ứng lịch"));
+add(TabCaption("calendarTests", "Kết quả kiểm định hiệu ứng lịch"));
 add(tblCalendarTests);
 add(Note("Nguồn: results/eda_results.json. H₀ của ANOVA và Kruskal–Wallis: các nhóm có phân phối/trung bình như nhau. H₀ của Levene: phương sai các nhóm bằng nhau."));
 add(Rich([
@@ -1040,9 +1286,9 @@ add(Rich([
   T("Nghiên cứu xác định các phiên có lợi suất vượt ngưỡng ±4 độ lệch chuẩn. Có "),
   T(int(em.n_beyond_threshold), { b: true }), T(" phiên như vậy, chiếm "),
   T(num(em.pct_of_sample_beyond_threshold, 3) + "%", { b: true }),
-  T(" tổng số quan sát. Bảng 13 liệt kê tám phiên giảm mạnh nhất và tám phiên tăng mạnh nhất."),
+  T(` tổng số quan sát. Bảng ${tn('extreme')} liệt kê tám phiên giảm mạnh nhất và tám phiên tăng mạnh nhất.`),
 ]));
-add(TabCaption("Các phiên biến động cực đoan nhất của VN-Index"));
+add(TabCaption("extreme", "Các phiên biến động cực đoan nhất của VN-Index"));
 add(tblExtreme);
 add(Note("Nguồn: results/eda_results.json, mục extreme_moves. z là số lần độ lệch chuẩn so với trung bình lợi suất."));
 add(Rich([
@@ -1056,6 +1302,118 @@ add(Rich([
   T("). Do đó không có quan sát cực đoan nào được quy cho lỗi dữ liệu đã biết, và nghiên cứu KHÔNG loại bỏ bất kỳ quan sát cực đoan nào."),
 ]));
 add(P("Quyết định giữ lại toàn bộ quan sát cực đoan được biện minh như sau: các phiên này là biến động thị trường thực, và chúng chính là phần thông tin quan trọng nhất của chuỗi đối với bài toán quản trị rủi ro. Loại bỏ chúng sẽ làm giảm giả tạo ước lượng biến động và làm sai lệch kết luận về độ dày đuôi phân phối."));
+
+add(H("Kết quả phân tích so sánh trên toàn bộ bộ dữ liệu", HeadingLevel.HEADING_2));
+add(Rich([
+  T("Các mục trước tập trung vào VN-Index tần suất ngày. Mục này sử dụng toàn bộ "),
+  T(nPrimary + " chuỗi chính", { b: true }),
+  T(" để trả lời ba câu hỏi mà một chuỗi đơn lẻ không thể trả lời: các kết luận trên có đúng với những phân khúc thị trường khác không, chúng thay đổi thế nào theo tần suất lấy mẫu, và một chuỗi tài chính khác lớp tài sản có hành xử tương tự không."),
+]));
+
+add(P(`Trước hết là những đặc trưng ĐÚNG VỚI MỌI CHUỖI, được trình bày trong Bảng ${tn('universal')}.`));
+add(TabCaption("universal", "Các đặc trưng thống kê phổ quát trên toàn bộ các chuỗi chính"));
+add(tblUniversal);
+add(Note("Nguồn: results/multiseries_battery.json (sinh bởi src/multiseries.py)."));
+add(P("Cả ba đặc trưng cốt lõi tìm được ở VN-Index đều không phải là đặc thù riêng của chỉ số này: tính không dừng của chuỗi mức, tính phi chuẩn của phân phối lợi suất và hiện tượng cụm biến động xuất hiện ở tất cả các chuỗi, bất kể phân khúc thị trường, tần suất lấy mẫu hay lớp tài sản. Đây là các tính chất của thị trường chứ không phải của một chỉ số cụ thể."));
+
+add(H("Kiểm soát giai đoạn mẫu: một kết quả cần đính chính", HeadingLevel.HEADING_2));
+add(Rich([
+  T("So sánh trực tiếp giữa các chỉ số cho một kết quả trông rất ấn tượng: VN-Index ngày có ACF(1) = "),
+  T(num(BY["VNINDEX_1D"].acf1_return, 4), { b: true }),
+  T(" trong khi VN30 chỉ đạt "), T(num(BY["VN30_1D"].acf1_return, 4), { b: true }),
+  T(" và VN100 đạt "), T(num(BY["VN100_1D"].acf1_return, 4), { b: true }),
+  T(" — gấp khoảng năm lần. Cách đọc tự nhiên là chỉ số rộng có mức phụ thuộc chuỗi cao hơn hẳn vì nó chứa nhiều cổ phiếu thanh khoản thấp, phản ánh thông tin vào giá chậm hơn."),
+]));
+add(Rich([
+  T("Cách đọc đó KHÔNG đứng vững trước kiểm soát. ", { b: true }),
+  T("VN-Index ngày bắt đầu từ năm 2000, VN30 từ 2012 và VN100 từ 2014, nên phép so sánh thô đã trộn lẫn hai yếu tố: phân khúc thị trường và giai đoạn mẫu. Khi giới hạn cả ba chuỗi về đúng "),
+  T(int(matched1D.n_common) + " phiên", { b: true }),
+  T(` mà cả ba cùng có (${matched1D.start} – ${matched1D.end}), kết quả đảo chiều như Bảng ${tn('matched')}.`),
+]));
+add(TabCaption("matched", "Tự tương quan bậc một: mẫu riêng của từng chỉ số so với giai đoạn chung"));
+add(tblMatched);
+add(Note("Nguồn: results/multiseries_battery.json, mục matched_period_comparison. Mọi chỉ số được đo trên đúng cùng một tập quan sát."));
+add(Rich([
+  T("Khoảng cách thu hẹp từ khoảng năm lần xuống còn khoảng 1,7 lần. Mức tự tương quan cao của VN-Index chủ yếu là "),
+  T("hiệu ứng giai đoạn", { b: true }),
+  T(", nằm ở thị trường mỏng và biên độ hẹp của những năm 2000–2013, chứ không phải khác biệt cấu trúc giữa các phân khúc ở hiện tại. Kết quả này được trình bày ở đây chính vì nó đính chính một kết luận mà phép so sánh thô sẽ dẫn tới."),
+]));
+add(Figure("12_matched_period_and_correlation.png", 645 / 1800));
+add(FigCaption("Tự tương quan bậc một trước và sau khi kiểm soát giai đoạn mẫu, cùng ma trận tương quan lợi suất ngày"));
+
+add(H("Ảnh hưởng của tần suất lấy mẫu", HeadingLevel.HEADING_2));
+add(P(`Bảng ${tn('scaling')} trình bày các đặc trưng của VN-Index ở bốn tần suất lấy mẫu.`));
+add(TabCaption("scaling", "Đặc trưng lợi suất VN-Index theo tần suất lấy mẫu"));
+add(tblScaling);
+add(Note("Nguồn: results/multiseries_battery.json, mục frequency_scaling. Mỗi dòng được đo trên giai đoạn mẫu riêng của tần suất đó, nên bảng mang tính gợi ý chứ không phải một kiểm định có kiểm soát."));
+add(Rich([
+  T("Hai quy luật hiện ra. Thứ nhất, độ lệch chuẩn quy về đơn vị ngày (nhân với căn bậc hai số thanh mỗi ngày) tương đối ổn định ở VN30 và VN100 (0,94–1,16 so với mức ngày 1,19), tức là biến động xấp xỉ tuân theo quy tắc căn bậc hai của thời gian. Thứ hai, và rõ rệt hơn: "),
+  T("độ nhọn vượt giảm đơn điệu khi thanh dữ liệu rộng dần", { b: true }),
+  T(`, từ ${num(scaleVNI.M30.excess_kurtosis, 2)} ở tần suất 30 phút xuống ${num(scaleVNI["1D"].excess_kurtosis, 2)} ở tần suất ngày. Đây là hiệu ứng "tiệm cận chuẩn khi tổng hợp" (aggregational Gaussianity) quen thuộc trong tài chính thực nghiệm: lợi suất tần suất càng cao thì đuôi phân phối càng dày.`),
+]));
+add(Figure("13_distribution_by_timeframe.png", 380 / 1400));
+add(FigCaption("Phân phối lợi suất chuẩn hóa của VN-Index ở bốn tần suất, đối chiếu với phân phối chuẩn"));
+add(Figure("11_frequency_scaling.png", 420 / 1300));
+add(FigCaption("Biến động, độ dày đuôi và tự tương quan theo tần suất lấy mẫu"));
+
+add(H("Cấu trúc trong phiên", HeadingLevel.HEADING_2));
+add(P("Dữ liệu tần suất 30 phút cho phép quan sát cấu trúc theo thời điểm trong ngày, điều mà dữ liệu ngày không thể hiện được."));
+add(Figure("14_intraday_pattern.png", 460 / 1900));
+add(FigCaption("Lợi suất trung bình và biến động của VN-Index theo thời điểm trong ngày (tần suất 30 phút)"));
+add(P("Biến động đạt đỉnh ở thanh mở cửa 09:00, giảm dần trong phiên sáng, rồi tăng trở lại ở thanh 14:00 trước giờ đóng cửa — dạng chữ U quen thuộc của thị trường cổ phiếu. Thanh 11:30 có biến động thấp nhất trong ngày, nhưng đây là một ĐẶC ĐIỂM KỸ THUẬT chứ không phải phát hiện kinh tế: thanh này chỉ dài 15 phút thay vì 30 phút, nên đương nhiên tích lũy ít biến động hơn. Việc nêu rõ điều này là cần thiết để tránh diễn giải sai một tạo tác của cấu trúc dữ liệu thành một quy luật thị trường."));
+
+add(H("So sánh giữa các lớp tài sản", HeadingLevel.HEADING_2));
+add(Rich([
+  T(`Bảng ${tn('corr1D')} trình bày ma trận tương quan lợi suất ngày trên `),
+  T(int(corr1D.n_overlapping_bars) + " phiên chung", { b: true }),
+  T(` (${corr1D.overlap_start} – ${corr1D.overlap_end}).`),
+]));
+add(TabCaption("corr1D", "Ma trận tương quan Pearson của lợi suất logarit ngày"));
+add(tblCorr1D);
+add(Note("Nguồn: results/multiseries_battery.json, mục return_correlations."));
+add(Rich([
+  T("Ba chỉ số cổ phiếu gần như chuyển động cùng nhau (VN30–VN100 đạt "),
+  T(num(corr1D.pearson.VN30.VN100, 3), { b: true }),
+  T("), điều này hợp lý vì VN30 là tập con của VN100 và cả hai đều nằm trong VN-Index. Ngược lại, USD/VND có tương quan âm nhẹ với cả ba chỉ số (khoảng "),
+  T(num(corr1D.pearson.VNINDEX.USDVND, 2), { b: true }),
+  T("): giai đoạn đồng Việt Nam mất giá có xu hướng trùng với giai đoạn thị trường cổ phiếu yếu, tuy mức độ liên hệ là yếu và báo cáo này không kiểm định quan hệ nhân quả."),
+]));
+add(Figure("10_index_and_fx_comparison.png", 700 / 1100));
+add(FigCaption("Ba chỉ số cổ phiếu quy về gốc 100 và tỷ giá USD/VND trên cùng giai đoạn"));
+
+add(H("USD/VND là một chuỗi khác biệt về bản chất", HeadingLevel.HEADING_2));
+add(P(`Chuỗi tỷ giá được đưa vào để so sánh, nhưng kết quả cho thấy nó không thể được đối xử như một chuỗi ngang hàng với ba chỉ số cổ phiếu. Bảng ${tn('fx')} đối chiếu trực tiếp.`));
+add(TabCaption("fx", "So sánh đặc trưng của USD/VND với ba chỉ số cổ phiếu tần suất ngày"));
+add(tblFX);
+add(Note("Nguồn: results/multiseries_battery.json và results/series_quality.json."));
+add(Rich([
+  T("Độ nhọn vượt "), T(num(uFX.excess_kurtosis, 2), { b: true }),
+  T(" cao hơn một bậc độ lớn so với các chỉ số cổ phiếu, và tự tương quan bậc một "),
+  T(num(uFX.acf1_return, 4), { b: true }),
+  T(" mang dấu ÂM — ngược dấu hoàn toàn với mọi chuỗi cổ phiếu. Các con số này nhất quán với đặc thù của một tỷ giá được điều hành và niêm yết theo đơn vị đồng chẵn: chuỗi đứng yên trong thời gian dài rồi nhảy bậc, điều này vừa tạo ra độ nhọn rất lớn vừa tạo ra hiệu ứng hồi quy về trung bình trong sai phân bậc một."),
+]));
+add(Rich([
+  T("Chất lượng dữ liệu của chuỗi này cũng yếu hơn hẳn: giá mở cửa trùng với giá đóng cửa phiên trước ở "),
+  T(num(squality.USDVND_1D.stale_open_share * 100, 1) + "%", { b: true }),
+  T(" số dòng, và chuỗi có "),
+  T(String(squality.USDVND_1D.gaps_ge_2_business_days) + " khoảng trống", { b: true }),
+  T(" từ hai ngày làm việc trở lên, trong đó phần lớn nằm ở giai đoạn trước năm 2007. Phần dữ liệu trước 2007 do đó KHÔNG nên được coi là một chuỗi ngày sạch. Báo cáo trình bày chuỗi này kèm đầy đủ các cảnh báo trên thay vì xếp ngang hàng với các chỉ số cổ phiếu."),
+]));
+
+add(H("Đối chiếu chéo giữa hai họ tệp dữ liệu", HeadingLevel.HEADING_2));
+add(P(`Sáu cặp chuỗi trùng lặp giữa hai họ tệp cho phép một phép kiểm chứng nội bộ, độc lập với nguồn đối chiếu bên ngoài ở mục 3.3. Kết quả trong Bảng ${tn('crossFam')}.`));
+add(TabCaption("crossFam", "Đối chiếu giữa chuỗi chính (HOSE_DLY) và phiên bản trùng lặp (HOSE)"));
+add(tblCrossFam);
+add(Note("Nguồn: results/cross_family_checks.csv (sinh bởi src/multiseries.py)."));
+add(P("VN100 tần suất ngày khớp nhau tới độ chính xác biểu diễn số thực. VN-Index và VN30 tần suất ngày lệch trên 0,1% ở lần lượt khoảng 1,9% và 2,8% số thanh, và các sai lệch này tập trung gần như toàn bộ vào giai đoạn 2012–2013 (111 trên 112 trường hợp đối với VN-Index). Đây là một điểm yếu đã xác định được vị trí của bộ dữ liệu và được ghi nhận như một hạn chế, chứ không phải một khiếm khuyết lan tỏa."));
+
+add(H("Những kết luận còn mơ hồ", HeadingLevel.HEADING_2));
+add(Rich([
+  T("Không phải mọi chuỗi đều cho kết luận dứt khoát. Với "),
+  T(String(nAmbiguous.length) + " chuỗi", { b: true }),
+  T(" — " + nAmbiguous.map((s) => s.key).join(", ") +
+    " — kiểm định tính dừng của chuỗi lợi suất cho kết quả MƠ HỒ: cả ADF và KPSS đều bác bỏ giả thuyết gốc của chính mình. Báo cáo ghi nhận đúng tình trạng mơ hồ này thay vì chọn một hướng kết luận gọn gàng hơn nhưng không có cơ sở."),
+]));
 
 add(H("Kết quả mô hình dự báo", HeadingLevel.HEADING_2));
 add(NotEvaluated("Chưa có mô hình dự báo nào được huấn luyện trong dự án. Không có tham số ước lượng, không có giá trị dự báo, và báo cáo này không trình bày bất kỳ kết quả mô hình nào."));
@@ -1076,6 +1434,16 @@ add(P("Thứ hai, phân phối lợi suất lệch trái và có đuôi dày hơ
 add(P("Thứ ba, tồn tại tự tương quan bậc một dương có ý nghĩa thống kê trong chuỗi lợi suất, nhưng mức độ khiêm tốn và tập trung ở độ trễ ngắn. Điều này biện minh cho việc thử nghiệm mô hình trung bình dạng AR(1) hoặc ARMA bậc thấp, nhưng không đủ cơ sở để kỳ vọng khả năng dự báo cao."));
 add(P("Thứ tư, và là đặc trưng nổi bật nhất, chuỗi thể hiện cụm biến động rất mạnh và dai dẳng. Sự tương phản giữa tự tương quan yếu của lợi suất và tự tương quan mạnh của |r| và r² là lập luận thực nghiệm trực tiếp cho việc sử dụng mô hình phương sai có điều kiện ở giai đoạn tiếp theo."));
 add(P("Thứ năm, không có bằng chứng về tính mùa vụ theo tháng. Đây là một kết quả âm nhưng có giá trị phương pháp: nó loại trừ lớp mô hình SARIMA khỏi danh sách ứng viên dựa trên dữ liệu chứ không dựa trên cảm tính."));
+add(Rich([
+  T("Thứ sáu, phân tích mở rộng trên toàn bộ bộ dữ liệu cho thấy bốn đặc trưng đầu tiên KHÔNG phải là đặc thù của VN-Index: tính không dừng, tính phi chuẩn và cụm biến động xuất hiện ở cả "),
+  T(nPrimary + "/" + nPrimary + " chuỗi", { b: true }),
+  T(", bất kể phân khúc thị trường, tần suất lấy mẫu hay lớp tài sản. Điều này làm tăng đáng kể độ tin cậy của các kết luận, vì chúng được xác nhận lặp lại trên nhiều mẫu độc lập chứ không chỉ trên một chuỗi."),
+]));
+add(Rich([
+  T("Thứ bảy, và quan trọng về mặt phương pháp: mức tự tương quan cao của VN-Index là "),
+  T("hiệu ứng giai đoạn chứ không phải hiệu ứng phân khúc", { b: true }),
+  T(". Nếu không thực hiện kiểm soát giai đoạn mẫu, nghiên cứu sẽ kết luận sai rằng chỉ số rộng có mức phụ thuộc chuỗi cao gấp năm lần các chỉ số vốn hóa lớn. Đây là minh họa cụ thể cho nguyên tắc: khi so sánh các chuỗi có giai đoạn quan sát khác nhau, bắt buộc phải kiểm soát giai đoạn trước khi quy sự khác biệt cho bản chất của đối tượng."),
+]));
 add(P("Tổng hợp lại, các đặc trưng tìm được trả lời câu hỏi nghiên cứu CH6 như sau: lớp mô hình phù hợp là mô hình trung bình bậc thấp trên chuỗi lợi suất, kết hợp với mô hình phương sai có điều kiện; mô hình mùa vụ không được dữ liệu ủng hộ. Việc kiểm chứng hiệu quả thực tế của các mô hình này vẫn còn ở phía trước."));
 
 add(new Paragraph({ children: [new PageBreak()] }));
@@ -1097,6 +1465,17 @@ add(Rich([
   `Có ${int(em.n_beyond_threshold)} phiên biến động vượt 4σ, tập trung chủ yếu ở năm 2001; không phiên nào quy được cho lỗi dữ liệu và không phiên nào bị loại bỏ.`,
 ].forEach((t) => add(Bullet(t)));
 
+add(P("Các phát hiện từ phân tích mở rộng trên toàn bộ bộ dữ liệu:"));
+[
+  `Tính không dừng của chuỗi mức, tính phi chuẩn của lợi suất và hiện tượng cụm biến động đúng với cả ${nPrimary}/${nPrimary} chuỗi chính, tức là chúng là tính chất của thị trường chứ không phải đặc thù của VN-Index.`,
+  `Mức tự tương quan cao của VN-Index là hiệu ứng giai đoạn: ACF(1) giảm từ ${num(BY["VNINDEX_1D"].acf1_return, 4)} trên toàn mẫu xuống ${num(matched1D.stats.VNINDEX.acf1, 4)} khi đo trên ${int(matched1D.n_common)} phiên chung với VN30 và VN100.`,
+  `Độ dày đuôi phân phối giảm đơn điệu khi tổng hợp thời gian: độ nhọn vượt từ ${num(scaleVNI.M30.excess_kurtosis, 2)} ở tần suất 30 phút xuống ${num(scaleVNI["1D"].excess_kurtosis, 2)} ở tần suất ngày.`,
+  `Biến động trong phiên có dạng chữ U: cao nhất ở thanh mở cửa 09:00 và tăng trở lại trước giờ đóng cửa.`,
+  `Ba chỉ số cổ phiếu tương quan rất cao với nhau (VN30–VN100 đạt ${num(corr1D.pearson.VN30.VN100, 3)}), trong khi USD/VND tương quan âm nhẹ với cả ba (khoảng ${num(corr1D.pearson.VNINDEX.USDVND, 2)}).`,
+  `USD/VND khác biệt về bản chất so với các chỉ số cổ phiếu: độ nhọn vượt ${num(uFX.excess_kurtosis, 2)} và ACF(1) = ${num(uFX.acf1_return, 4)} mang dấu âm.`,
+  `Chất lượng dữ liệu trên toàn bộ ${int(totalBars)} quan sát: không phát hiện bất kỳ lỗi nào thuộc các hạng mục đã kiểm tra.`,
+].forEach((t) => add(Bullet(t)));
+
 add(H("Ý nghĩa của kết quả", HeadingLevel.HEADING_2));
 add(P("Về mặt phương pháp, kết quả nghiên cứu cho thấy việc chuyển thẳng sang mô hình dự báo trên chuỗi mức VN-Index là sai về mặt kỹ thuật, vì chuỗi mức không dừng. Đồng thời, kết quả cũng cho thấy việc áp dụng mô hình mùa vụ cho chuỗi này là không có cơ sở thực nghiệm."));
 add(P("Về mặt thực tiễn, đặc trưng đuôi dày và cụm biến động có hàm ý trực tiếp cho quản trị rủi ro: các thước đo rủi ro giả định phân phối chuẩn và phương sai không đổi sẽ đánh giá thấp rủi ro thực tế của thị trường Việt Nam, đặc biệt trong các giai đoạn thị trường căng thẳng."));
@@ -1111,6 +1490,10 @@ add(H("Hạn chế của nghiên cứu", HeadingLevel.HEADING_2));
   "Cấu trúc thị trường Việt Nam thay đổi rất lớn trong giai đoạn quan sát (số lượng cổ phiếu niêm yết, biên độ dao động giá, chu kỳ thanh toán). Nghiên cứu chưa kiểm định điểm gãy cấu trúc, nên các thống kê tính trên toàn mẫu cần được hiểu là giá trị trung bình qua nhiều chế độ thị trường khác nhau.",
   "Hiệu ứng ngày trong tuần chưa được kiểm tra sau khi kiểm soát biến động và phân kỳ mẫu, nên chưa thể kết luận về tính bền vững của hiệu ứng này.",
   "Phần mô hình hóa, dự báo và đánh giá chưa được thực hiện, nên nghiên cứu chưa đưa ra kết luận nào về khả năng dự báo của VN-Index.",
+  "Hai họ tệp trong bộ dữ liệu lệch nhau trên 0,1% ở khoảng 1,9–2,8% số thanh đối với VN-Index và VN30 tần suất ngày, tập trung ở giai đoạn 2012–2013. Nghiên cứu sử dụng họ HOSE_DLY làm nguồn chính nhưng không có cơ sở độc lập để khẳng định họ nào đúng trong giai đoạn đó.",
+  `Các chuỗi có giai đoạn bắt đầu và kết thúc khác nhau (VN-Index từ 2000, VN30 từ 2012, VN100 từ 2014; dữ liệu 1 giờ và phiên nửa ngày dừng ở 2024-12-09). Phép so sánh giữa các tần suất trong Bảng ${tn('scaling')} do đó mang tính gợi ý chứ chưa phải một kiểm định có kiểm soát giai đoạn đầy đủ.`,
+  "Chuỗi USD/VND có chất lượng thấp hơn hẳn: giá mở cửa lặp lại giá đóng cửa phiên trước ở phần lớn số dòng và dữ liệu trước năm 2007 rất thưa. Các kết luận về chuỗi này chỉ nên được coi là mô tả sơ bộ.",
+  "Dữ liệu trong phiên chỉ có từ 2016–2017 trở đi, nên không cho phép khảo sát cấu trúc trong phiên ở các giai đoạn thị trường trước đó.",
 ].forEach((t) => add(Bullet(t)));
 
 add(H("Hướng nghiên cứu tiếp theo", HeadingLevel.HEADING_2));
@@ -1154,16 +1537,16 @@ add(new Paragraph({ children: [new PageBreak()] }));
 add(HPlain("PHỤ LỤC", HeadingLevel.HEADING_1));
 
 add(HPlain("Phụ lục A — Trạng thái thực thi các thành phần", HeadingLevel.HEADING_2));
-add(P("Bảng 14 liệt kê trạng thái thực thi của từng thành phần trong dự án tại thời điểm lập báo cáo."));
-add(TabCaption("Trạng thái thực thi các thành phần của dự án"));
+add(P(`Bảng ${tn('status')} liệt kê trạng thái thực thi của từng thành phần trong dự án tại thời điểm lập báo cáo.`));
+add(TabCaption("status", "Trạng thái thực thi các thành phần của dự án"));
 add(tblStatus);
 
 add(HPlain("Phụ lục B — Cấu trúc dự án", HeadingLevel.HEADING_2));
 add(P("Dự án được tổ chức theo cấu trúc tách biệt dữ liệu thô, dữ liệu đã xử lý, mã nguồn, kết quả và hình ảnh:"));
 [
-  "data/raw/ — tệp nguồn được lưu kèm, tệp thô chuẩn hóa và siêu dữ liệu xuất xứ. Không bao giờ bị chỉnh sửa bởi các bước sau.",
+  "data/raw/kaggle/ — toàn bộ 19 tệp nguồn được lưu kèm nguyên trạng. Không bao giờ bị chỉnh sửa bởi các bước sau.",
   "data/processed/ — dữ liệu sau làm sạch và bảng đặc trưng, được sinh lại hoàn toàn từ dữ liệu thô.",
-  "src/ — mã nguồn dạng mô-đun: config.py, data_loader.py, data_crosscheck.py, data_quality.py, preprocessing.py, analysis.py, stationarity.py, autocorrelation.py, plots.py và run_all.py.",
+  "src/ — mã nguồn dạng mô-đun: config.py, catalog.py, data_loader.py, data_crosscheck.py, data_quality.py, preprocessing.py, analysis.py, stationarity.py, autocorrelation.py, multiseries.py, plots.py, plots_multiseries.py và run_all.py.",
   "results/ — toàn bộ kết quả thống kê ở định dạng JSON và CSV.",
   "figures/ — các hình trong báo cáo, độ phân giải 150 dpi.",
   "tests/ — bộ kiểm thử tự động gồm 19 test.",
@@ -1195,6 +1578,10 @@ add(P("Các con số trong báo cáo được đọc trực tiếp từ những 
   "results/autocorrelation.json — hệ số ACF/PACF.",
   "results/ljung_box_tests.csv — kiểm định Ljung–Box.",
   "results/eda_results.json — so sánh đuôi phân phối, hiệu ứng lịch, quan sát cực đoan, tổng hợp theo năm.",
+  "results/series_inventory.json — danh mục và siêu dữ liệu của toàn bộ 19 chuỗi.",
+  "results/series_quality.json — kết quả kiểm tra chất lượng từng chuỗi.",
+  "results/multiseries_battery.json — bộ thống kê so sánh, kiểm soát giai đoạn, tần suất và tương quan.",
+  "results/cross_family_checks.csv — đối chiếu giữa hai họ tệp dữ liệu.",
 ].forEach((t) => add(Bullet(t)));
 
 // helper dung o tren (khai bao sau khi dung trong template string can hoisting)

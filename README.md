@@ -348,7 +348,7 @@ TimeSeries/
 ├── figures/        01..14 PNG, 150 dpi
 ├── results/        JSON + CSV, one file per analysis stage
 ├── reports/        build_report.js  — generates the Word report from results/
-│                   BaoCao_PhanTichChuoiThoiGian_VNIndex.docx (+ .pdf)
+│                   BaoCao_PhanTichChuoiThoiGian_VNIndex.docx
 ├── tests/          pytest suite (test_pipeline.py, test_multiseries.py)
 └── requirements.txt
 ```
@@ -400,7 +400,7 @@ pipeline reproduces the numbers above exactly.
 | Frequency scaling + correlations (`multiseries.py`) | **VERIFIED** |
 | Figures 01–14 | **VERIFIED** — files exist on disk |
 | Test suite (`tests/`) | **VERIFIED** — 176 passed |
-| Vietnamese Word report (`reports/`) | **VERIFIED** — 40 pages; covers the headline series only, **not yet updated for the multi-series work** |
+| Vietnamese Word report (`reports/`) | **VERIFIED** — 50 pages, 23 tables, 14 figures; covers the headline series **and** the multi-series analysis |
 | Volatility modelling (ARCH-LM, GARCH) | **NOT IMPLEMENTED** |
 | Chronological train/val/test split | **NOT IMPLEMENTED** |
 | Forecasting models (naive, MA, ETS, ARIMA) | **NOT IMPLEMENTED** |
